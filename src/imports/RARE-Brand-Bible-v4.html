@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RARE — Brand Bible 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF4EE;--linen:#F2DDD5;--rose:#C9897A;--gold:#D4AF7A;
+  --terra:#A4594A;--dark:#2E1A1A;--mauve:#7A4A4A;--muted:#B09080;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--dark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--linen);}::-webkit-scrollbar-thumb{background:var(--rose);}
+
+.cover{min-height:100vh;background:linear-gradient(150deg,var(--dark) 0%,#3e2424 55%,#2e1a1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:60px 40px;}
+.cover-ring{position:absolute;border-radius:50%;border:1px solid rgba(212,175,122,0.12);pointer-events:none;}
+.c-tag{font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;}
+.c-title{font-family:'Playfair Display',serif;font-size:clamp(72px,12vw,130px);font-weight:300;letter-spacing:24px;color:var(--cream);line-height:1;padding-right:24px;}
+.c-title span{color:var(--gold);}
+.c-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:rgba(212,175,122,0.65);letter-spacing:4px;margin-top:18px;}
+.c-line{width:1px;height:56px;background:linear-gradient(to bottom,var(--gold),transparent);margin:36px auto;}
+.c-meta{font-size:10px;letter-spacing:4px;color:rgba(212,175,122,0.35);}
+.c-updated{font-size:9px;letter-spacing:2px;color:rgba(212,175,122,0.2);margin-top:8px;}
+
+.toc{position:fixed;top:50%;left:0;transform:translateY(-50%);z-index:100;padding:20px 0 20px 14px;}
+.toc a{display:block;width:6px;height:6px;border-radius:50%;background:rgba(201,137,122,0.25);margin:8px 0;transition:all 0.3s;text-decoration:none;position:relative;}
+.toc a:hover,.toc a.active{background:var(--rose);width:18px;border-radius:3px;}
+.toc a span{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);white-space:nowrap;opacity:0;transition:opacity 0.3s;pointer-events:none;background:var(--cream);padding:2px 8px;border-radius:2px;}
+.toc a:hover span{opacity:1;}
+
+.sec{padding:88px 80px 88px 96px;border-bottom:1px solid rgba(201,137,122,0.1);}
+.sec:nth-child(even){background:var(--linen);}
+.sec-num{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,38px);font-weight:300;color:var(--dark);margin-bottom:40px;}
+.sec-title em{font-style:italic;color:var(--rose);}
+.divider{height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,0.1));margin:0 0 36px;}
+.eyebrow{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;margin-top:28px;display:block;}
+.eyebrow:first-child{margin-top:0;}
+.note-box{background:var(--dark);border-radius:4px;padding:26px 30px;margin-top:8px;}
+.note-box .label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.note-box p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--cream);line-height:1.6;}
+
+/* FOUNDATION */
+.found-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:24px;}
+.found-card{padding:28px;background:#fff;}
+.found-card:nth-child(even){background:var(--linen);}
+.fc-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.fc-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:300;color:var(--dark);}
+.fc-sub{font-size:12px;color:var(--muted);margin-top:6px;}
+.tone-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.tone-card{background:#fff;padding:18px;text-align:center;}
+.tone-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.tone-val{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--rose);}
+
+/* PALETTE */
+.palette-bar{display:flex;border-radius:6px;overflow:hidden;box-shadow:0 4px 28px rgba(46,26,26,0.1);margin-bottom:40px;}
+.pb-swatch{flex:1;padding:32px 14px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:flex 0.4s;}
+.pb-swatch:hover{flex:2;}
+.pb-pct{font-size:18px;font-weight:300;}
+.pb-name{font-size:9px;letter-spacing:2px;text-transform:uppercase;text-align:center;}
+.pb-hex{font-size:10px;font-family:monospace;opacity:0.7;}
+.colour-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.cc{background:#fff;border-radius:4px;padding:22px;border-left:3px solid var(--rose);}
+.cc-hex{font-family:monospace;font-size:11px;color:var(--muted);margin-bottom:4px;}
+.cc-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;margin-bottom:3px;}
+.cc-pct{font-size:11px;color:var(--muted);margin-bottom:12px;}
+.cc-rules{list-style:none;padding:0;border-top:1px solid rgba(201,137,122,0.1);padding-top:10px;}
+.cc-rules li{font-size:11px;color:var(--mauve);line-height:1.8;padding-left:12px;position:relative;}
+.cc-rules li::before{content:'—';position:absolute;left:0;color:var(--rose);}
+
+/* CONTRAST */
+.contrast-safe{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.cs-card{border-radius:4px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;}
+.cs-preview{font-family:'Playfair Display',serif;font-size:17px;}
+.cs-preview small{display:block;font-family:'Jost',sans-serif;font-size:11px;font-weight:300;margin-top:3px;opacity:0.75;}
+.badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 10px;border-radius:20px;}
+.badge-pass{background:rgba(100,180,100,0.18);color:#3a7a3a;}
+.rule-list{list-style:none;padding:0;}
+.rule-list li{font-size:12px;color:var(--mauve);padding:7px 0;border-bottom:1px solid rgba(201,137,122,0.08);line-height:1.6;}
+.rule-list li:last-child{border-bottom:none;}
+.rule-ok::before{content:'✓  ';color:#5a9a5a;}
+.rule-warn::before{content:'⚠  ';color:var(--gold);}
+.rule-no::before{content:'✗  ';color:#c05050;}
+
+/* TYPOGRAPHY */
+.font-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:36px;}
+.ft{background:#fff;padding:30px;text-align:center;}
+.ft:nth-child(even){background:var(--linen);}
+.ft-sample{font-size:50px;line-height:1.1;margin-bottom:12px;}
+.ft-name{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.ft-use{font-size:11px;color:var(--rose);}
+.type-scale{border-radius:4px;overflow:hidden;}
+.ts-row{display:grid;grid-template-columns:100px 1fr 80px 120px;align-items:center;gap:20px;padding:13px 18px;background:#fff;}
+.ts-row:nth-child(even){background:var(--linen);}
+.ts-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.ts-size{font-size:10px;font-family:monospace;color:var(--muted);}
+.ts-col{display:flex;align-items:center;gap:7px;font-size:10px;font-family:monospace;color:var(--muted);}
+.cdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* LOGO */
+.logo-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:24px;}
+.lbox{padding:52px 36px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.lbox-a{background:var(--cream);border:1px solid rgba(201,137,122,0.15);}
+.lbox-b{background:var(--linen);}
+.lbox-c{background:var(--dark);}
+.lw{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;letter-spacing:14px;padding-right:14px;line-height:1;}
+.lw-line{width:52px;height:1px;background:linear-gradient(to right,var(--gold),var(--rose));}
+.lw-sub{font-size:8px;letter-spacing:4px;text-transform:uppercase;}
+.lbox-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:12px;}
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:24px;}
+.do-box,.dn-box{padding:26px;}
+.do-box{background:#fff;border-top:2px solid #7aba7a;}
+.dn-box{background:var(--linen);border-top:2px solid #d47a7a;}
+.dd-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.do-box .dd-title{color:#4a8a4a;}
+.dn-box .dd-title{color:#a44a4a;}
+
+/* PHOTOGRAPHY */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.photo-card{border-radius:4px;padding:26px;}
+.photo-card.do-card{background:#fff;border-top:2px solid #7aba7a;}
+.photo-card.dont-card{background:var(--linen);border-top:2px solid #d47a7a;}
+.photo-do{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#4a8a4a;margin-bottom:14px;}
+.photo-dont{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#a44a4a;margin-bottom:14px;}
+.overlay-box{background:var(--dark);border-radius:4px;padding:26px 30px;}
+.ov-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.ov-code{font-family:monospace;font-size:12.5px;line-height:2.2;color:rgba(250,244,238,0.65);}
+.ov-code .ov-k{color:var(--gold);}
+.ov-code .ov-v{color:var(--rose);}
+
+/* SOCIAL */
+.social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;}
+.sc{background:#fff;border-radius:4px;padding:18px;text-align:center;}
+.sc:nth-child(even){background:var(--linen);}
+.sc-thumb{margin:0 auto 12px;border-radius:3px;background:rgba(201,137,122,0.12);}
+.sc-plat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.sc-fmt{font-size:11px;color:var(--mauve);}
+.sc-sz{font-family:monospace;font-size:10px;color:var(--rose);}
+.caption-box{background:var(--dark);border-radius:4px;padding:28px 34px;}
+.cap-row{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.cap-row:last-child{border-bottom:none;}
+.cap-num{font-size:9px;letter-spacing:2px;color:var(--gold);padding-top:2px;flex-shrink:0;width:18px;}
+.cap-text{font-size:12px;line-height:1.7;color:rgba(250,244,238,0.65);}
+.cap-text strong{color:var(--cream);font-weight:400;}
+
+/* LAYOUT & BUTTONS */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.spec-card{background:#fff;border-radius:4px;padding:22px;}
+.spec-card:nth-child(even){background:var(--linen);}
+.spec-title{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;}
+.spec-item{font-size:12px;color:var(--mauve);padding:6px 0;border-bottom:1px solid rgba(201,137,122,0.08);line-height:1.6;}
+.spec-item:last-child{border-bottom:none;}
+.spec-item code{font-family:monospace;font-size:11px;color:var(--terra);background:rgba(164,89,74,0.08);padding:1px 5px;border-radius:2px;}
+
+.btn-table{width:100%;border-collapse:collapse;border-radius:4px;overflow:hidden;margin-bottom:20px;}
+.btn-table th{background:var(--dark);color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:13px 16px;text-align:left;font-weight:400;}
+.btn-table td{padding:13px 16px;font-size:12px;border-bottom:1px solid rgba(201,137,122,0.1);}
+.btn-table tr:nth-child(odd) td{background:#fff;}
+.btn-table tr:nth-child(even) td{background:var(--linen);}
+.btn-table td:first-child{font-family:'Playfair Display',serif;font-size:14px;color:var(--dark);}
+.btn-table td code{font-family:monospace;font-size:11px;color:var(--terra);background:rgba(164,89,74,0.08);padding:1px 5px;border-radius:2px;}
+.btn-preview-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:24px;}
+.btn-prev{font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:13px 28px;cursor:default;transition:all 0.3s;font-family:'Jost',sans-serif;font-weight:400;}
+.btn-p{background:var(--dark);color:var(--cream);border:none;}
+.btn-p:hover{background:var(--terra);}
+.btn-o{background:transparent;border:0.5px solid var(--gold);color:var(--dark);}
+.btn-o:hover{border-color:var(--rose);color:var(--rose);}
+.btn-g{background:transparent;border:1px solid var(--rose);color:var(--rose);}
+.btn-g:hover{background:rgba(201,137,122,0.1);}
+
+/* MOTION & ICONS */
+.motion-grid,.icon-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.motion-card,.icon-card{background:#fff;border-radius:4px;padding:20px;}
+.motion-card:nth-child(even),.icon-card:nth-child(even){background:var(--linen);}
+.m-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.m-val{font-family:monospace;font-size:12px;color:var(--terra);}
+.m-desc{font-size:11px;color:var(--muted);margin-top:6px;}
+
+/* TONE OF VOICE */
+.tov-table{width:100%;border-collapse:collapse;border-radius:4px;overflow:hidden;}
+.tov-table th{background:var(--dark);color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:13px 16px;text-align:left;font-weight:400;}
+.tov-table td{padding:13px 16px;font-size:12px;border-bottom:1px solid rgba(201,137,122,0.1);}
+.tov-table tr:nth-child(odd) td{background:#fff;}
+.tov-table tr:nth-child(even) td{background:var(--linen);}
+.tov-table td:first-child{color:var(--mauve);font-size:11px;letter-spacing:1px;}
+.tov-on{color:#4a7a4a;}
+.tov-off{color:#a04040;}
+
+/* NEVER DO */
+.never-list{list-style:none;padding:0;border-radius:4px;overflow:hidden;}
+.never-list li{font-size:13px;color:#7a3030;padding:12px 16px 12px 40px;border-bottom:1px solid rgba(201,137,122,0.1);line-height:1.6;position:relative;}
+.never-list li:nth-child(odd){background:#fff;}
+.never-list li:nth-child(even){background:var(--linen);}
+.never-list li::before{content:'✗';position:absolute;left:14px;color:#c05050;}
+.never-list li:last-child{border-bottom:none;}
+
+/* PROMPT */
+.prompt-wrap{background:var(--dark);border-radius:4px;padding:34px;border:1px solid rgba(212,175,122,0.12);position:relative;margin-bottom:12px;}
+.prompt-wrap::before{content:'MASTER PROMPT';position:absolute;top:-1px;left:34px;font-size:8px;letter-spacing:4px;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:4px 12px;font-weight:500;}
+.prompt-code{font-family:monospace;font-size:11px;line-height:2;color:rgba(250,244,238,0.7);white-space:pre-wrap;}
+.pk{color:var(--gold);font-weight:600;}
+.pv{color:var(--rose);}
+.pn{color:#d47a7a;}
+.copy-btn{display:inline-block;background:transparent;border:1px solid rgba(212,175,122,0.35);color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:10px 22px;cursor:pointer;transition:all 0.3s;font-family:'Jost',sans-serif;margin-top:18px;}
+.copy-btn:hover{background:var(--gold);color:var(--dark);}
+
+/* QUICK REF */
+.qr-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;}
+.qr-card{background:#fff;border-radius:4px;padding:20px;}
+.qr-card:nth-child(even){background:var(--linen);}
+.qr-title{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;}
+.qr-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(201,137,122,0.08);font-size:11px;}
+.qr-item:last-child{border-bottom:none;}
+.qr-name{color:var(--mauve);}
+.qr-val{font-family:monospace;font-size:10px;color:var(--terra);}
+.qr-swatch{width:12px;height:12px;border-radius:2px;flex-shrink:0;margin-right:6px;}
+
+/* FILE NAMING */
+.fn-table{width:100%;border-collapse:collapse;border-radius:4px;overflow:hidden;}
+.fn-table th{background:var(--dark);color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:12px 16px;text-align:left;font-weight:400;}
+.fn-table td{padding:11px 16px;font-size:12px;border-bottom:1px solid rgba(201,137,122,0.1);}
+.fn-table tr:nth-child(odd) td{background:#fff;}
+.fn-table tr:nth-child(even) td{background:var(--linen);}
+.fn-table td:first-child{font-family:monospace;font-size:11px;color:var(--terra);}
+.fn-table td:last-child{font-size:11px;color:var(--muted);}
+
+.bible-footer{background:var(--dark);padding:52px 80px;text-align:center;}
+.bf-logo{font-family:'Playfair Display',serif;font-size:52px;letter-spacing:18px;color:var(--cream);margin-bottom:10px;}
+.bf-logo span{color:var(--gold);}
+.bf-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:rgba(212,175,122,0.45);letter-spacing:3px;margin-bottom:24px;}
+.bf-divline{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:0 auto 24px;}
+.bf-updated{font-size:10px;color:rgba(212,175,122,0.3);margin-bottom:6px;}
+.bf-copy{font-size:10px;color:rgba(250,244,238,0.15);}
+
+@media(max-width:860px){
+  .sec{padding:56px 28px;}
+  .found-grid,.colour-cards,.contrast-safe,.font-trio,.logo-trio,.photo-grid,.spec-grid,.motion-grid,.icon-grid,.do-dont,.tone-strip,.qr-grid{grid-template-columns:1fr;}
+  .social-grid{grid-template-columns:1fr 1fr;}
+  .ts-row{grid-template-columns:80px 1fr;}
+  .toc{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover" id="cover">
+  <div class="cover-ring" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="cover-ring" style="width:460px;height:460px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="cover-ring" style="width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <p class="c-tag">Relaxed &amp; Refresh — Complete Brand Identity System</p>
+  <h1 class="c-title">R<span>A</span>RE</h1>
+  <p class="c-sub">Brand Bible · 2025</p>
+  <div class="c-line"></div>
+  <p class="c-meta">Dusty Rose &amp; Champagne Gold Edition · 17 Sections</p>
+  <p class="c-updated">Last Updated: March 2025</p>
+</section>
+
+<!-- SIDEBAR NAV -->
+<nav class="toc">
+  <a href="#foundation"><span>01 Foundation</span></a>
+  <a href="#colours"><span>02 Colours</span></a>
+  <a href="#contrast"><span>03 Contrast</span></a>
+  <a href="#typography"><span>04 Typography</span></a>
+  <a href="#logo"><span>05 Logo</span></a>
+  <a href="#photography"><span>06 Photography</span></a>
+  <a href="#social"><span>07 Social</span></a>
+  <a href="#layout"><span>08 Layout</span></a>
+  <a href="#buttons"><span>09 Buttons</span></a>
+  <a href="#motion"><span>10 Motion</span></a>
+  <a href="#iconography"><span>11 Icons</span></a>
+  <a href="#voice"><span>12 Voice</span></a>
+  <a href="#neverdo"><span>13 Never Do</span></a>
+  <a href="#prompt"><span>14 Prompt</span></a>
+  <a href="#quickref"><span>15 Quick Ref</span></a>
+  <a href="#filenaming"><span>16 File Names</span></a>
+</nav>
+
+<!-- 01 FOUNDATION -->
+<section class="sec" id="foundation">
+  <p class="sec-num">01</p>
+  <h2 class="sec-title">Brand <em>Foundation</em></h2>
+  <div class="divider"></div>
+  <div class="found-grid">
+    <div class="found-card"><div class="fc-label">Brand Name</div><div class="fc-val">RARE</div><div class="fc-sub">Relaxed &amp; Refresh</div></div>
+    <div class="found-card"><div class="fc-label">Target Audience</div><div class="fc-val">Women 20–35</div><div class="fc-sub">Multi-category wellness</div></div>
+    <div class="found-card"><div class="fc-label">Positioning</div><div class="fc-val" style="font-style:italic;color:var(--rose);font-size:18px;">Romantic · Soft · Luxurious</div><div class="fc-sub">Never loud. Never clinical.</div></div>
+  </div>
+  <div class="note-box"><div class="label">Brand Essence</div><p>"RARE is the feeling of being deeply taken care of."</p></div>
+  <span class="eyebrow" style="margin-top:28px;">Brand Tone</span>
+  <div class="tone-strip">
+    <div class="tone-card"><div class="tone-label">Tone</div><div class="tone-val">Calm</div></div>
+    <div class="tone-card"><div class="tone-label">Tone</div><div class="tone-val">Intimate</div></div>
+    <div class="tone-card"><div class="tone-label">Tone</div><div class="tone-val">Elevated</div></div>
+    <div class="tone-card"><div class="tone-label">Tone</div><div class="tone-val">Graceful</div></div>
+  </div>
+</section>
+
+<!-- 02 COLOURS -->
+<section class="sec" id="colours">
+  <p class="sec-num">02</p>
+  <h2 class="sec-title">Colour <em>System</em></h2>
+  <div class="divider"></div>
+  <div class="palette-bar">
+    <div class="pb-swatch" style="background:#FAF4EE;"><div class="pb-pct" style="color:#7a4a4a;">75%</div><div class="pb-name" style="color:#7a4a4a;">Warm Cream</div><div class="pb-hex" style="color:#7a4a4a;">#FAF4EE</div></div>
+    <div class="pb-swatch" style="background:#F2DDD5;"><div class="pb-pct" style="color:#7a4a4a;">15%</div><div class="pb-name" style="color:#7a4a4a;">Blush Linen</div><div class="pb-hex" style="color:#7a4a4a;">#F2DDD5</div></div>
+    <div class="pb-swatch" style="background:#C9897A;"><div class="pb-pct" style="color:#fff;">5%</div><div class="pb-name" style="color:#fff;">Dusty Rose</div><div class="pb-hex" style="color:rgba(255,255,255,0.7);">#C9897A</div></div>
+    <div class="pb-swatch" style="background:#D4AF7A;"><div class="pb-pct" style="color:#fff;">3%</div><div class="pb-name" style="color:#fff;">Champagne Gold</div><div class="pb-hex" style="color:rgba(255,255,255,0.7);">#D4AF7A</div></div>
+    <div class="pb-swatch" style="background:#A4594A;"><div class="pb-pct" style="color:#fff;">1.5%</div><div class="pb-name" style="color:#fff;">Terracotta</div><div class="pb-hex" style="color:rgba(255,255,255,0.7);">#A4594A</div></div>
+    <div class="pb-swatch" style="background:#2E1A1A;"><div class="pb-pct" style="color:rgba(212,175,122,0.8);">0.5%</div><div class="pb-name" style="color:rgba(212,175,122,0.8);">Dark Mocha</div><div class="pb-hex" style="color:rgba(212,175,122,0.5);">#2E1A1A</div></div>
+  </div>
+  <div class="colour-cards">
+    <div class="cc" style="border-left-color:#e8d4c0;"><div class="cc-hex">#FAF4EE · #F2DDD5</div><div class="cc-name">Cream &amp; Linen</div><div class="cc-pct">90% of every page</div><ul class="cc-rules"><li>All page backgrounds</li><li>Card &amp; section fills</li><li>Form inputs</li><li>Never use as text colour</li></ul></div>
+    <div class="cc"><div class="cc-hex">#C9897A</div><div class="cc-name">Dusty Rose</div><div class="cc-pct">Primary brand accent</div><ul class="cc-rules"><li>Logo accent letter "A"</li><li>Primary CTA buttons</li><li>Eyebrow labels</li><li>Active nav, icon strokes</li></ul></div>
+    <div class="cc" style="border-left-color:var(--gold);"><div class="cc-hex">#D4AF7A</div><div class="cc-name">Champagne Gold</div><div class="cc-pct" style="color:var(--terra);">Max 3 uses per page</div><ul class="cc-rules"><li>Thin divider lines only</li><li>Price text on products</li><li>Star ratings</li><li>Never as background</li></ul></div>
+    <div class="cc" style="border-left-color:var(--terra);"><div class="cc-hex">#A4594A</div><div class="cc-name">Terracotta</div><div class="cc-pct">Hover &amp; depth</div><ul class="cc-rules"><li>Button hover states</li><li>Focus outlines (not Gold)</li><li>Pull quote text</li><li>Active/pressed states</li></ul></div>
+    <div class="cc" style="border-left-color:var(--dark);grid-column:span 2;"><div class="cc-hex">#2E1A1A · #7A4A4A · #B09080</div><div class="cc-name">Dark Mocha · Mauve · Warm Grey</div><div class="cc-pct">Text hierarchy</div><ul class="cc-rules" style="columns:2;gap:20px;"><li>Headings &amp; footer: Dark Mocha</li><li>Body copy: Mauve #7A4A4A</li><li>Captions: Warm Grey #B09080</li><li>Never body copy in Dark Mocha</li></ul></div>
+  </div>
+  <div class="note-box" style="margin-top:12px;"><div class="label">The One Accent Rule</div><p>Champagne Gold appears on maximum 3 elements per page. It is a whisper, not a shout. Overuse destroys the luxury signal entirely.</p></div>
+</section>
+
+<!-- 03 CONTRAST -->
+<section class="sec" id="contrast">
+  <p class="sec-num">03</p>
+  <h2 class="sec-title">Contrast <em>Rules</em></h2>
+  <div class="divider"></div>
+  <span class="eyebrow">✅ Safe — Always Use</span>
+  <div class="contrast-safe">
+    <div class="cs-card" style="background:#FAF4EE;"><div><div class="cs-preview" style="color:#2E1A1A;">Heading Text<small style="color:#7A4A4A;">Body copy in Mauve</small></div><div style="font-size:11px;color:#B09080;margin-top:4px;">Dark Mocha on Warm Cream</div></div><span class="badge badge-pass">✓ High</span></div>
+    <div class="cs-card" style="background:#F2DDD5;"><div><div class="cs-preview" style="color:#2E1A1A;">Card Title<small style="color:#7A4A4A;">Card body text</small></div><div style="font-size:11px;color:#B09080;margin-top:4px;">Dark Mocha on Blush Linen</div></div><span class="badge badge-pass">✓ High</span></div>
+    <div class="cs-card" style="background:#2E1A1A;"><div><div class="cs-preview" style="color:#FAF4EE;">Footer Text<small style="opacity:0.6;">Inverted section</small></div><div style="font-size:11px;color:#8a7060;margin-top:4px;">Warm Cream on Dark Mocha</div></div><span class="badge badge-pass">✓ High</span></div>
+    <div class="cs-card" style="background:#C9897A;"><div><div class="cs-preview" style="color:#FAF4EE;">Button Label<small style="opacity:0.7;">CTA text</small></div><div style="font-size:11px;color:rgba(250,244,238,0.5);margin-top:4px;">Warm Cream on Dusty Rose</div></div><span class="badge badge-pass">✓ Good · 14px+</span></div>
+  </div>
+  <span class="eyebrow">⚠️ Weak — Caution</span>
+  <ul class="rule-list" style="margin-bottom:20px;">
+    <li class="rule-warn">Gold #D4AF7A on Cream — display text 28px+ only, never body copy</li>
+    <li class="rule-warn">Rose #C9897A on Blush Linen — decorative labels only, never body</li>
+    <li class="rule-warn">Warm Grey #B09080 on any light background — captions only, 11px min</li>
+  </ul>
+  <span class="eyebrow">❌ Never</span>
+  <ul class="rule-list">
+    <li class="rule-no">Gold text under 18px on any background</li>
+    <li class="rule-no">Pure white #FFFFFF on Cream or Linen backgrounds</li>
+    <li class="rule-no">Body copy set in Dark Mocha — always use Mauve #7A4A4A</li>
+    <li class="rule-no">Champagne Gold as focus outline — use Terracotta #A4594A</li>
+    <li class="rule-no">Any text on photography without the gradient overlay</li>
+  </ul>
+</section>
+
+<!-- 04 TYPOGRAPHY -->
+<section class="sec" id="typography">
+  <p class="sec-num">04</p>
+  <h2 class="sec-title">Typography <em>System</em></h2>
+  <div class="divider"></div>
+  <div class="font-trio">
+    <div class="ft"><div class="ft-sample" style="font-family:'Playfair Display',serif;font-weight:300;color:var(--dark);">Aa</div><div class="ft-name">Playfair Display</div><div class="ft-use">Headings · Titles · Display</div></div>
+    <div class="ft"><div class="ft-sample" style="font-family:'Jost',sans-serif;font-weight:300;color:var(--dark);">Aa</div><div class="ft-name">Jost</div><div class="ft-use">Body · UI · Buttons · Labels</div></div>
+    <div class="ft"><div class="ft-sample" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--rose);">Aa</div><div class="ft-name">Cormorant Garamond</div><div class="ft-use">Quotes · Accent · Editorial</div></div>
+  </div>
+  <div class="type-scale">
+    <div class="ts-row" style="background:var(--dark);">
+      <div class="ts-label" style="color:rgba(212,175,122,0.5);">Display</div>
+      <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:300;color:var(--cream);">Where Rest Becomes <em style="color:var(--rose);">Ritual</em></div>
+      <div class="ts-size" style="color:rgba(212,175,122,0.4);">62–72px</div>
+      <div class="ts-col"><div class="cdot" style="background:#FAF4EE;"></div>#FAF4EE</div>
+    </div>
+    <div class="ts-row"><div class="ts-label">H1</div><div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--dark);">The Art of Self-Care</div><div class="ts-size">48–54px</div><div class="ts-col"><div class="cdot" style="background:#2E1A1A;border:1px solid #ddd;"></div>#2E1A1A</div></div>
+    <div class="ts-row"><div class="ts-label">H2</div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:300;color:var(--dark);">Trending Destinations</div><div class="ts-size">36–42px</div><div class="ts-col"><div class="cdot" style="background:#2E1A1A;border:1px solid #ddd;"></div>#2E1A1A</div></div>
+    <div class="ts-row"><div class="ts-label">H3</div><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--dark);">Lume Wellness Spa</div><div class="ts-size">24–28px</div><div class="ts-col"><div class="cdot" style="background:#2E1A1A;border:1px solid #ddd;"></div>#2E1A1A</div></div>
+    <div class="ts-row"><div class="ts-label">Eyebrow</div><div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);">THE COLLECTION</div><div class="ts-size">9–10px</div><div class="ts-col"><div class="cdot" style="background:#D4AF7A;"></div>#D4AF7A</div></div>
+    <div class="ts-row"><div class="ts-label">Body</div><div style="font-size:13px;font-weight:300;color:var(--mauve);">Discover world-class sanctuaries curated for the art of letting go.</div><div class="ts-size">13–15px</div><div class="ts-col"><div class="cdot" style="background:#7A4A4A;"></div>#7A4A4A</div></div>
+    <div class="ts-row"><div class="ts-label">Caption</div><div style="font-size:11px;font-weight:300;color:var(--muted);">Downtown District · $75.00</div><div class="ts-size">11px</div><div class="ts-col"><div class="cdot" style="background:#B09080;"></div>#B09080</div></div>
+    <div class="ts-row"><div class="ts-label">Button</div><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dark);">BOOK NOW</div><div class="ts-size">10px · +3px</div><div class="ts-col"><div class="cdot" style="background:#2E1A1A;border:1px solid #ddd;"></div>#2E1A1A</div></div>
+    <div class="ts-row"><div class="ts-label">Quote</div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--rose);">"Your skin deserves this ritual."</div><div class="ts-size">22–26px</div><div class="ts-col"><div class="cdot" style="background:#C9897A;"></div>#C9897A</div></div>
+  </div>
+  <div class="note-box" style="margin-top:14px;"><div class="label">Italic Rule</div><p>Italics in Playfair Display always render in Dusty Rose #C9897A — one italic word per headline maximum. This is RARE's signature typographic move.</p></div>
+</section>
+
+<!-- 05 LOGO -->
+<section class="sec" id="logo">
+  <p class="sec-num">05</p>
+  <h2 class="sec-title">Logo <em>Usage Rules</em></h2>
+  <div class="divider"></div>
+  <div class="logo-trio">
+    <div class="lbox lbox-a"><div class="lw" style="color:var(--dark);">R<span style="color:var(--rose);">A</span>RE</div><div class="lw-line"></div><div class="lw-sub" style="color:var(--gold);">Relaxed &amp; Refresh</div><div class="lbox-label">Version A · Light Backgrounds</div></div>
+    <div class="lbox lbox-b"><svg width="40" height="40" viewBox="0 0 42 42" fill="none"><path d="M7 37L7 21Q7 6 21 6Q35 6 35 21L35 37" stroke="#D4AF7A" stroke-width="1.3" fill="none" stroke-linecap="round"/><line x1="3" y1="37" x2="39" y2="37" stroke="#D4AF7A" stroke-width="1.3" stroke-linecap="round"/><circle cx="21" cy="21" r="5.5" stroke="#C9897A" stroke-width="1.1" fill="rgba(201,137,122,0.1)"/><circle cx="21" cy="21" r="2" fill="#C9897A"/></svg><div class="lw" style="color:var(--dark);font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;">RARE</div><div class="lw-sub" style="color:var(--muted);">Relaxed &amp; Refresh</div><div class="lbox-label">Version B · Icon + Wordmark</div></div>
+    <div class="lbox lbox-c"><div class="lw" style="color:var(--cream);">RARE</div><div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin:4px auto;"></div><div class="lw-sub" style="color:rgba(212,175,122,0.55);">Relaxed &amp; Refresh</div><div class="lbox-label" style="color:rgba(212,175,122,0.35);">Version C · Dark Only</div></div>
+  </div>
+  <div class="do-dont">
+    <div class="do-box"><div class="dd-title">✓ Always Do</div><ul class="rule-list"><li class="rule-ok">Clear space equal to height of "R" on all 4 sides</li><li class="rule-ok">Version A on cream and linen backgrounds only</li><li class="rule-ok">Version C on dark mocha backgrounds only</li><li class="rule-ok">Minimum 120px wide on digital screens</li><li class="rule-ok">Standalone "R" lettermark at 32px favicon</li></ul></div>
+    <div class="dn-box"><div class="dd-title">✗ Never Do</div><ul class="rule-list"><li class="rule-no">Stretch or distort the wordmark</li><li class="rule-no">Change the accent letter colour</li><li class="rule-no">Place Version A on dark backgrounds</li><li class="rule-no">Add drop shadows, outlines, or glows</li><li class="rule-no">Retype in a different font</li><li class="rule-no">Use full logo smaller than 120px</li></ul></div>
+  </div>
+</section>
+
+<!-- 06 PHOTOGRAPHY -->
+<section class="sec" id="photography">
+  <p class="sec-num">06</p>
+  <h2 class="sec-title">Photography &amp; <em>Imagery</em></h2>
+  <div class="divider"></div>
+  <div class="photo-grid">
+    <div class="photo-card do-card"><div class="photo-do">✓ DO · Colour Temperature</div><ul class="rule-list"><li class="rule-ok">Warm amber, honey, terracotta tones</li><li class="rule-ok">Soft diffused light — never harsh flash</li><li class="rule-ok">Cream, linen, and nude surfaces</li><li class="rule-ok">Matte textures — stone, fabric, ceramic, wood</li></ul></div>
+    <div class="photo-card do-card"><div class="photo-do">✓ DO · Subject Matter</div><ul class="rule-list"><li class="rule-ok">Spa beds, towels, candles, steam</li><li class="rule-ok">Hands applying skincare — close, intimate</li><li class="rule-ok">Glass serums with warm reflections</li><li class="rule-ok">Women at rest — eyes closed, peaceful</li><li class="rule-ok">Botanicals, petals in cream/blush tones</li></ul></div>
+    <div class="photo-card dont-card"><div class="photo-dont">✗ DON'T · Colour Temperature</div><ul class="rule-list"><li class="rule-no">Cool, blue, or grey-toned images</li><li class="rule-no">Bright clinical white backgrounds</li><li class="rule-no">High-contrast sharp shadows</li></ul></div>
+    <div class="photo-card dont-card"><div class="photo-dont">✗ DON'T · Subject Matter</div><ul class="rule-list"><li class="rule-no">Busy, loud, or overly styled scenes</li><li class="rule-no">Group or corporate imagery</li><li class="rule-no">Stock-looking smiling faces</li></ul></div>
+  </div>
+  <div class="overlay-box">
+    <div class="ov-label">Image Text Overlay — Required CSS</div>
+    <div class="ov-code"><span class="ov-k">background:</span> <span class="ov-v">linear-gradient</span>(<span class="ov-k">to top</span>,
+  <span class="ov-v">rgba(46, 26, 26, 0.85)</span> 0%,
+  <span class="ov-v">rgba(46, 26, 26, 0.00)</span> 100%
+);
+<span style="color:rgba(250,244,238,0.4);font-size:11px;">/* Always apply before placing any text over an image */</span></div>
+  </div>
+</section>
+
+<!-- 07 SOCIAL -->
+<section class="sec" id="social">
+  <p class="sec-num">07</p>
+  <h2 class="sec-title">Social Media <em>Guide</em></h2>
+  <div class="divider"></div>
+  <div class="social-grid">
+    <div class="sc"><div class="sc-thumb" style="width:70px;height:70px;"></div><div class="sc-plat">Instagram</div><div class="sc-fmt">Square Post</div><div class="sc-sz">1080 × 1080</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:56px;height:70px;"></div><div class="sc-plat">Instagram</div><div class="sc-fmt">Portrait Post</div><div class="sc-sz">1080 × 1350</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:39px;height:70px;"></div><div class="sc-plat">Story / Reels</div><div class="sc-fmt">Vertical</div><div class="sc-sz">1080 × 1920</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:47px;height:70px;"></div><div class="sc-plat">Pinterest</div><div class="sc-fmt">Pin</div><div class="sc-sz">1000 × 1500</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:70px;height:27px;"></div><div class="sc-plat">Facebook</div><div class="sc-fmt">Cover</div><div class="sc-sz">820 × 312</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:70px;height:70px;"></div><div class="sc-plat">Facebook</div><div class="sc-fmt">Square Post</div><div class="sc-sz">1200 × 1200</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:70px;height:34px;"></div><div class="sc-plat">WhatsApp</div><div class="sc-fmt">Banner</div><div class="sc-sz">1600 × 768</div></div>
+    <div class="sc"><div class="sc-thumb" style="width:70px;height:70px;border-radius:50%;"></div><div class="sc-plat">All Platforms</div><div class="sc-fmt">Profile Photo</div><div class="sc-sz">400 × 400</div></div>
+  </div>
+  <span class="eyebrow">Caption Formula</span>
+  <div class="caption-box">
+    <div class="cap-row"><div class="cap-num">01</div><div class="cap-text"><strong>Short poetic headline</strong> — Playfair italic style. One sentence. Evocative and calm.</div></div>
+    <div class="cap-row"><div class="cap-num">02</div><div class="cap-text"><strong>One sentence of context</strong> — What is this? Why does it matter to her?</div></div>
+    <div class="cap-row"><div class="cap-num">03</div><div class="cap-text"><strong>Soft CTA</strong> — "Discover the ritual →" Never demanding, never urgent.</div></div>
+    <div class="cap-row"><div class="cap-num">04</div><div class="cap-text"><strong>3–5 hashtags only</strong> — Niche over broad. Never #love or #beauty alone.</div></div>
+  </div>
+</section>
+
+<!-- 08 LAYOUT -->
+<section class="sec" id="layout">
+  <p class="sec-num">08</p>
+  <h2 class="sec-title">Layout &amp; <em>Spacing System</em></h2>
+  <div class="divider"></div>
+  <div class="spec-grid">
+    <div class="spec-card"><div class="spec-title">Grid System</div>
+      <div class="spec-item">Desktop: <code>12-column</code> grid, <code>56px</code> margins</div>
+      <div class="spec-item">Mobile: <code>4-column</code> grid, <code>24px</code> margins</div>
+      <div class="spec-item">Gutter: <code>24px</code> between all columns</div>
+    </div>
+    <div class="spec-card"><div class="spec-title">Spacing Scale — 8pt System</div>
+      <div class="spec-item">Values: <code>8, 16, 24, 32, 40, 56, 64, 80, 96, 120</code></div>
+      <div class="spec-item">Section gaps: <code>120px</code> desktop · <code>80px</code> mobile</div>
+      <div class="spec-item">Never use arbitrary values</div>
+    </div>
+    <div class="spec-card"><div class="spec-title">Card Styles</div>
+      <div class="spec-item">Padding: <code>32px</code> all sides</div>
+      <div class="spec-item">Background: <code>#F2DDD5</code> Blush Linen</div>
+      <div class="spec-item">Hover shadow: <code>0 8px 20px rgba(46,26,26,0.12)</code></div>
+    </div>
+    <div class="spec-card"><div class="spec-title">Focus States</div>
+      <div class="spec-item">Outline: <code>2px solid #A4594A</code> Terracotta</div>
+      <div class="spec-item">Offset: <code>2px</code> from element edge</div>
+      <div class="spec-item">Never use Gold — fails accessibility</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 BUTTONS -->
+<section class="sec" id="buttons">
+  <p class="sec-num">09</p>
+  <h2 class="sec-title">Button <em>System</em></h2>
+  <div class="divider"></div>
+  <span class="eyebrow">Live Preview</span>
+  <div class="btn-preview-row">
+    <button class="btn-prev btn-p">Book Now</button>
+    <button class="btn-prev btn-o">Learn More</button>
+    <button class="btn-prev btn-g">Discover</button>
+  </div>
+  <table class="btn-table">
+    <thead><tr><th>Type</th><th>Default State</th><th>Hover State</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>Primary</td><td><code>bg #2E1A1A</code> · <code>text #FAF4EE</code></td><td><code>bg #A4594A</code> · <code>text #FAF4EE</code></td><td>Main CTA — one per section max</td></tr>
+      <tr><td>Outline</td><td><code>border #D4AF7A 0.5px</code> · <code>text #2E1A1A</code></td><td><code>border #C9897A</code> · <code>text #C9897A</code></td><td>Secondary actions, nav links</td></tr>
+      <tr><td>Ghost</td><td><code>border #C9897A 1px</code> · <code>text #C9897A</code></td><td><code>bg rgba(201,137,122,0.1)</code></td><td>Tertiary / low-emphasis actions</td></tr>
+    </tbody>
+  </table>
+  <div class="note-box"><div class="label">Button Rules</div><p>Jost 400, 10px, ALL CAPS, 3px letter-spacing. Padding: 13px 44px. Min touch target: 44px height on mobile. Transition: 0.3s ease. Never use Gold as button background — fails readability.</p></div>
+</section>
+
+<!-- 10 MOTION -->
+<section class="sec" id="motion">
+  <p class="sec-num">10</p>
+  <h2 class="sec-title">Motion &amp; <em>Transitions</em></h2>
+  <div class="divider"></div>
+  <div class="motion-grid">
+    <div class="motion-card"><div class="m-label">Hover Duration</div><div class="m-val">0.3s ease</div><div class="m-desc">Buttons, links, nav items, colour changes</div></div>
+    <div class="motion-card"><div class="m-label">Page Entrances</div><div class="m-val">0.5s ease</div><div class="m-desc">Section reveals, modals, panels opening</div></div>
+    <div class="motion-card"><div class="m-label">Preferred Easing</div><div class="m-val">cubic-bezier(0.23, 1, 0.32, 1)</div><div class="m-desc">Smooth deceleration — feels natural and premium</div></div>
+    <div class="motion-card"><div class="m-label">Entrance Animation</div><div class="m-val">fadeUp + translateY(26px)</div><div class="m-desc">Elements rise gently into view on scroll</div></div>
+    <div class="motion-card"><div class="m-label">Card Hover</div><div class="m-val">scale(1.02)</div><div class="m-desc">Gentle lift — never abrupt or bouncy</div></div>
+    <div class="motion-card"><div class="m-label">Focus States</div><div class="m-val">#A4594A Terracotta outline</div><div class="m-desc">Accessible — Gold removed (fails contrast)</div></div>
+  </div>
+</section>
+
+<!-- 11 ICONOGRAPHY -->
+<section class="sec" id="iconography">
+  <p class="sec-num">11</p>
+  <h2 class="sec-title">Iconography <em>Standards</em></h2>
+  <div class="divider"></div>
+  <div class="icon-grid">
+    <div class="icon-card"><div class="m-label">Line Weight</div><div class="m-val">1.3px</div><div class="m-desc">Rounded caps and joins. Delicate, never bold.</div></div>
+    <div class="icon-card"><div class="m-label">Primary Colour</div><div class="m-val" style="color:var(--rose);">#C9897A Dusty Rose</div><div class="m-desc">Used for all standard icons throughout the UI</div></div>
+    <div class="icon-card"><div class="m-label">Accent Colour</div><div class="m-val" style="color:var(--gold);">#D4AF7A Champagne Gold</div><div class="m-desc">Max 1 icon per page — obeys One Accent Rule</div></div>
+    <div class="icon-card"><div class="m-label">Inline Size</div><div class="m-val">16px</div><div class="m-desc">Inside body text, buttons, nav items</div></div>
+    <div class="icon-card"><div class="m-label">Standalone Size</div><div class="m-val">24px</div><div class="m-desc">Cards, form labels, feature lists</div></div>
+    <div class="icon-card"><div class="m-label">Feature Size</div><div class="m-val">44px</div><div class="m-desc">Hero sections, service cards, large displays</div></div>
+  </div>
+  <div class="note-box" style="margin-top:18px;"><div class="label">Icon Philosophy</div><p>Icons should feel like whispers, not announcements. If an icon draws more attention than the content beside it, it is too large or too bold.</p></div>
+</section>
+
+<!-- 12 TONE OF VOICE -->
+<section class="sec" id="voice">
+  <p class="sec-num">12</p>
+  <h2 class="sec-title">Tone of <em>Voice</em></h2>
+  <div class="divider"></div>
+  <p style="font-size:13px;color:var(--mauve);line-height:1.8;margin-bottom:28px;max-width:620px;">RARE speaks like a trusted, unhurried friend — never a salesperson. Every word should feel considered, warm, and earned.</p>
+  <table class="tov-table">
+    <thead><tr><th>Situation</th><th>✓ On-Brand — Write Like This</th><th>✗ Off-Brand — Never This</th></tr></thead>
+    <tbody>
+      <tr><td>Product launch</td><td class="tov-on">"A new ritual has arrived."</td><td class="tov-off">"NEW DROP — shop now!"</td></tr>
+      <tr><td>Sale / offer</td><td class="tov-on">"A quiet offer, just for you."</td><td class="tov-off">"50% OFF THIS WEEKEND ONLY!!!"</td></tr>
+      <tr><td>Call to action</td><td class="tov-on">"Begin the ritual →"</td><td class="tov-off">"Buy Now" / "Click Here"</td></tr>
+      <tr><td>Error message</td><td class="tov-on">"Something feels off. Let's try again."</td><td class="tov-off">"Error 404 — Page not found"</td></tr>
+      <tr><td>Empty cart</td><td class="tov-on">"Your ritual awaits. Start here."</td><td class="tov-off">"Your cart is empty!"</td></tr>
+      <tr><td>Confirmation</td><td class="tov-on">"Your order is on its way to you."</td><td class="tov-off">"Order confirmed! Yay!"</td></tr>
+      <tr><td>Newsletter signup</td><td class="tov-on">"Join the ritual. Quietly."</td><td class="tov-off">"Subscribe for EXCLUSIVE deals!"</td></tr>
+      <tr><td>Out of stock</td><td class="tov-on">"This one is resting. Check back soon."</td><td class="tov-off">"SOLD OUT"</td></tr>
+    </tbody>
+  </table>
+  <div class="note-box" style="margin-top:18px;"><div class="label">The Golden Writing Rule</div><p>If it could appear in a loud advertisement, it doesn't belong in RARE. Calm your copy until it feels like a note left on a pillow.</p></div>
+</section>
+
+<!-- 13 NEVER DO -->
+<section class="sec" id="neverdo">
+  <p class="sec-num">13</p>
+  <h2 class="sec-title">Extended <em>Never-Do List</em></h2>
+  <div class="divider"></div>
+  <ul class="never-list">
+    <li>Never use Champagne Gold as a background colour.</li>
+    <li>Never use more than one italic word per headline.</li>
+    <li>Never use harsh drop shadows — soft only (max 0.15 opacity).</li>
+    <li>Never use pure white (#FFFFFF) — always use Warm Cream (#FAF4EE).</li>
+    <li>Never use more than two accent colours on one screen.</li>
+    <li>Never set body copy in Dark Mocha — use Mauve (#7A4A4A).</li>
+    <li>Never use cool-toned or blue-grey photography.</li>
+    <li>Never place text on images without the gradient overlay.</li>
+    <li>Never use Gold as a focus outline — use Terracotta (#A4594A) for accessibility.</li>
+    <li>Never use letter-spacing on body copy — reserved for labels and buttons only.</li>
+    <li>Never use system fonts (Arial, Helvetica, Times New Roman).</li>
+    <li>Never use arbitrary spacing values — stay on the 8pt scale.</li>
+    <li>Never use animation durations over 0.6s — it feels heavy.</li>
+    <li>Never use bouncy or elastic animation easing.</li>
+    <li>Never underline text unless it is a hover or link state.</li>
+  </ul>
+</section>
+
+<!-- 14 MASTER PROMPT -->
+<section class="sec" id="prompt">
+  <p class="sec-num">14</p>
+  <h2 class="sec-title">Master <em>Prompt</em></h2>
+  <div class="divider"></div>
+  <p style="font-size:13px;color:var(--mauve);line-height:1.8;margin-bottom:26px;max-width:580px;">Copy this exactly when prompting any AI tool, developer, or designer. Every output will stay on-brand and consistent.</p>
+  <div class="prompt-wrap">
+<div class="prompt-code"><span class="pk">Design for RARE</span> — a luxury wellness brand for women 20–35.
+
+<span class="pk">COLOUR SYSTEM:</span>
+- Background: <span class="pv">#FAF4EE</span> (Warm Cream) — dominant, 75% of design
+- Cards/sections: <span class="pv">#F2DDD5</span> (Blush Linen)
+- Primary accent: <span class="pv">#C9897A</span> (Dusty Rose) — buttons, logo, labels
+- Luxury detail: <span class="pv">#D4AF7A</span> (Champagne Gold) — lines only, max 3 uses per page
+- Hover/depth: <span class="pv">#A4594A</span> (Terracotta) — also used for focus outlines
+- All headings &amp; footer: <span class="pv">#2E1A1A</span> (Dark Mocha)
+- Body copy: <span class="pv">#7A4A4A</span> (Mauve) — never use Dark Mocha for body text
+- Muted/captions: <span class="pv">#B09080</span> (Warm Grey)
+
+<span class="pk">TYPOGRAPHY:</span>
+- Headings: Playfair Display 300–400, italic accent words in #C9897A (one per headline)
+- Body: Jost 300 Light, #7A4A4A, 13–15px, no letter-spacing
+- Eyebrow labels: Jost 400, 9px, ALL CAPS, 5px letter-spacing, #D4AF7A
+- Buttons: Jost 400, 10px, ALL CAPS, 3px letter-spacing
+- Quotes: Cormorant Garamond 300 Italic, #C9897A
+
+<span class="pk">BUTTONS:</span>
+- Primary:  bg #2E1A1A, text #FAF4EE      | hover: bg #A4594A
+- Outline:  border #D4AF7A 0.5px, text #2E1A1A  | hover: border+text #C9897A
+- Ghost:    border #C9897A 1px, text #C9897A    | hover: bg rgba(201,137,122,0.1)
+
+<span class="pk">LAYOUT:</span>
+- 12-column desktop grid, 56px margins, 24px gutters
+- Spacing scale: 8pt system (8, 16, 24, 32, 40, 56, 64, 80, 96, 120)
+- Card shadow hover: 0 8px 20px rgba(46,26,26,0.12)
+- Min button touch target: 44px height on mobile
+
+<span class="pk">MOTION:</span>
+- Hovers: 0.3s ease | Entrances: 0.5s cubic-bezier(0.23, 1, 0.32, 1)
+- Entrance: fade up + translateY(26px)
+
+<span class="pk">TONE:</span>
+- Romantic, soft, premium — never bright, never clinical
+- Generous white space — emptiness signals luxury
+- Write like a calm, trusted friend — never a salesperson
+
+<span class="pn">NEVER:</span>
+- Pure white #FFFFFF backgrounds (use #FAF4EE instead)
+- More than 2 accent colours on one screen
+- Body copy in Dark Mocha (use Mauve #7A4A4A)
+- Gold as focus outline (use Terracotta #A4594A)
+- Champagne Gold as a background colour
+- Text on images without gradient overlay
+- Bright, saturated, or cool-grey tones anywhere</div>
+    <button class="copy-btn" onclick="const t=this.previousElementSibling.innerText;navigator.clipboard.writeText(t).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',2000)})">Copy Prompt</button>
+  </div>
+</section>
+
+<!-- 15 QUICK REFERENCE -->
+<section class="sec" id="quickref">
+  <p class="sec-num">15</p>
+  <h2 class="sec-title">Quick <em>Reference Sheet</em></h2>
+  <div class="divider"></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">One-page designer summary. Print or pin this page for fast reference during production.</p>
+  <div class="qr-grid">
+    <div class="qr-card">
+      <div class="qr-title">Hex Codes</div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#FAF4EE;border:1px solid #ddd;"></span>Warm Cream</span><span class="qr-val">#FAF4EE</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#F2DDD5;"></span>Blush Linen</span><span class="qr-val">#F2DDD5</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#C9897A;"></span>Dusty Rose</span><span class="qr-val">#C9897A</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#D4AF7A;"></span>Champagne Gold</span><span class="qr-val">#D4AF7A</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#A4594A;"></span>Terracotta</span><span class="qr-val">#A4594A</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#2E1A1A;"></span>Dark Mocha</span><span class="qr-val">#2E1A1A</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#7A4A4A;"></span>Mauve</span><span class="qr-val">#7A4A4A</span></div>
+      <div class="qr-item"><span class="qr-name" style="display:flex;align-items:center;gap:6px;"><span class="qr-swatch" style="background:#B09080;"></span>Warm Grey</span><span class="qr-val">#B09080</span></div>
+    </div>
+    <div class="qr-card">
+      <div class="qr-title">Font Stack</div>
+      <div class="qr-item"><span class="qr-name">Display / H1–H3</span><span class="qr-val">Playfair Display</span></div>
+      <div class="qr-item"><span class="qr-name">Body / UI / Buttons</span><span class="qr-val">Jost</span></div>
+      <div class="qr-item"><span class="qr-name">Quotes / Editorial</span><span class="qr-val">Cormorant Garamond</span></div>
+      <div class="qr-item"><span class="qr-name">Heading weight</span><span class="qr-val">300–400</span></div>
+      <div class="qr-item"><span class="qr-name">Body weight</span><span class="qr-val">300 Light</span></div>
+      <div class="qr-item"><span class="qr-name">Button size</span><span class="qr-val">10px ALL CAPS</span></div>
+      <div class="qr-item"><span class="qr-name">Eyebrow size</span><span class="qr-val">9px +5px spacing</span></div>
+      <div class="qr-item"><span class="qr-name">Body size</span><span class="qr-val">13–15px</span></div>
+    </div>
+    <div class="qr-card">
+      <div class="qr-title">Button Specs</div>
+      <div class="qr-item"><span class="qr-name">Primary bg</span><span class="qr-val">#2E1A1A</span></div>
+      <div class="qr-item"><span class="qr-name">Primary hover</span><span class="qr-val">#A4594A</span></div>
+      <div class="qr-item"><span class="qr-name">Outline border</span><span class="qr-val">#D4AF7A 0.5px</span></div>
+      <div class="qr-item"><span class="qr-name">Ghost border</span><span class="qr-val">#C9897A 1px</span></div>
+      <div class="qr-item"><span class="qr-name">Padding</span><span class="qr-val">13px 44px</span></div>
+      <div class="qr-item"><span class="qr-name">Min height</span><span class="qr-val">44px (mobile)</span></div>
+      <div class="qr-item"><span class="qr-name">Transition</span><span class="qr-val">0.3s ease</span></div>
+      <div class="qr-item"><span class="qr-name">Focus outline</span><span class="qr-val">#A4594A 2px</span></div>
+    </div>
+  </div>
+  <div class="note-box"><div class="label">Spacing Quick Reference</div><p>8pt scale: 8 · 16 · 24 · 32 · 40 · 56 · 64 · 80 · 96 · 120 — section gap 120px desktop / 80px mobile — card padding 32px — gutter 24px</p></div>
+</section>
+
+<!-- 16 FILE NAMING -->
+<section class="sec" id="filenaming">
+  <p class="sec-num">16</p>
+  <h2 class="sec-title">File Naming <em>Convention</em></h2>
+  <div class="divider"></div>
+  <p style="font-size:13px;color:var(--mauve);line-height:1.8;margin-bottom:28px;max-width:680px;">All production assets follow the pattern: <code style="font-family:monospace;font-size:12px;color:var(--terra);">rar_[type]_[descriptor]_[variant].[ext]</code> — lowercase, underscores, no spaces.</p>
+  <table class="fn-table">
+    <thead><tr><th>File Name</th><th>Asset Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>rar_logo_primary.svg</td><td>Logo — Version A (light bg)</td><td>Master vector, always export from here</td></tr>
+      <tr><td>rar_logo_inverted.svg</td><td>Logo — Version C (dark bg)</td><td>Footer and dark-section use only</td></tr>
+      <tr><td>rar_logo_icon.svg</td><td>Logo — Version B (icon mark)</td><td>Gateway arch + wordmark</td></tr>
+      <tr><td>rar_favicon_32.png</td><td>Favicon — "R" lettermark</td><td>32×32px, transparent background</td></tr>
+      <tr><td>rar_card_bg_linen.jpg</td><td>Card background — Blush Linen</td><td>Seamless texture, 800×800</td></tr>
+      <tr><td>rar_hero_spa_01.jpg</td><td>Hero image — spa</td><td>Min 1920×1080, warm-toned</td></tr>
+      <tr><td>rar_hero_skincare_01.jpg</td><td>Hero image — skincare</td><td>Min 1920×1080, warm-toned</td></tr>
+      <tr><td>rar_social_ig_sq_template.psd</td><td>Social — Instagram 1080×1080</td><td>Editable layers, brand fonts embedded</td></tr>
+      <tr><td>rar_social_ig_story_template.psd</td><td>Social — Instagram Story 1080×1920</td><td>Editable layers</td></tr>
+      <tr><td>rar_social_pin_template.psd</td><td>Social — Pinterest 1000×1500</td><td>Editable layers</td></tr>
+      <tr><td>rar_icon_[name]_24.svg</td><td>UI Icon — standalone size</td><td>e.g. rar_icon_leaf_24.svg</td></tr>
+      <tr><td>rar_pattern_botanical_01.png</td><td>Brand pattern</td><td>Seamless, transparent bg, 2000×2000</td></tr>
+      <tr><td>rar_gradient_overlay.png</td><td>Image text overlay</td><td>Dark-to-transparent, 1×100px, export as PNG</td></tr>
+    </tbody>
+  </table>
+  <div class="note-box" style="margin-top:18px;"><div class="label">Naming Rules</div><p>Always lowercase. Use underscores, never hyphens or spaces. Include dimensions for raster files. Version with _v2, _v3 suffixes — never overwrite originals.</p></div>
+</section>
+
+<footer class="bible-footer">
+  <div class="bf-logo">R<span>A</span>RE</div>
+  <div class="bf-sub">Relaxed &amp; Refresh</div>
+  <div class="bf-divline"></div>
+  <p class="bf-updated">Last Updated: March 2025</p>
+  <p class="bf-copy">Brand Bible · Dusty Rose &amp; Champagne Gold Edition · 17 Sections · Confidential</p>
+</footer>
+
+<script>
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.toc a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-220)cur=s.id;});
+  links.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+cur)l.classList.add('active');});
+});
+</script>
+</body>
+</html>

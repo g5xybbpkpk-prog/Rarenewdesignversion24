@@ -1,0 +1,237 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* RARE Brand Colors - Brand Bible v4 */
+  --cream: #FAF4EE;      /* Warm Cream - 75% usage */
+  --linen: #F2DDD5;      /* Blush Linen - 15% usage */
+  --rose: #C9897A;       /* Dusty Rose - 5% usage */
+  --gold: #D4AF7A;       /* Champagne Gold - 3% usage (max 3 elements/page) */
+  --terra: #A4594A;      /* Terracotta - 1.5% usage */
+  --dark: #2E1A1A;       /* Dark Mocha - 0.5% usage (headings & footer only) */
+  --mauve: #7A4A4A;      /* Mauve - ALL body copy */
+  --muted: #B09080;      /* Warm Grey - captions, muted labels */
+
+  /* Tailwind v4 color variables (mapped to RARE brand) */
+  --font-size: 16px;
+  --background: var(--cream);
+  --foreground: var(--mauve);  /* Changed from dark to mauve for body text */
+  --card: var(--linen);
+  --card-foreground: var(--dark);
+  --popover: var(--cream);
+  --popover-foreground: var(--dark);
+  --primary: var(--rose);
+  --primary-foreground: var(--cream);
+  --secondary: var(--gold);
+  --secondary-foreground: var(--dark);
+  --muted: var(--linen);
+  --muted-foreground: var(--muted);
+  --accent: var(--rose);
+  --accent-foreground: var(--cream);
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(201, 137, 122, 0.1);
+  --input: transparent;
+  --input-background: var(--cream);
+  --switch-background: #cbced4;
+  --font-weight-medium: 400;
+  --font-weight-normal: 300;
+  --ring: var(--terra);  /* Focus outline uses Terracotta, never Gold */
+  --radius: 0.25rem;
+  
+  /* Motion & Transitions - Brand Bible */
+  --transition-hover: 0.3s ease;
+  --transition-entrance: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* Spacing Scale - 8pt system */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 56px;
+  --space-7: 64px;
+  --space-8: 80px;
+  --space-9: 96px;
+  --space-10: 120px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  
+  /* RARE specific colors */
+  --color-cream: var(--cream);
+  --color-linen: var(--linen);
+  --color-rose: var(--rose);
+  --color-gold: var(--gold);
+  --color-terra: var(--terra);
+  --color-dark: var(--dark);
+  --color-mauve: var(--mauve);
+  
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;  /* Body weight: 300 Light */
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--linen);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--rose);
+    border-radius: 2px;
+  }
+
+  /* RARE Typography Styles - Brand Bible v4 */
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;  /* H1 uses 400 Regular */
+    color: var(--dark);  /* Headings only use Dark Mocha */
+  }
+
+  h1 {
+    font-size: 48px;  /* H1: 48-54px */
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 36px;  /* H2: 36-42px */
+    line-height: 1.3;
+    font-weight: 300;  /* H2 uses 300 Light */
+  }
+
+  h3 {
+    font-size: 24px;  /* H3: 24-28px */
+    line-height: 1.4;
+    font-weight: 400;  /* H3 uses 400 Regular */
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+    color: var(--dark);
+  }
+
+  p {
+    color: var(--mauve);  /* Body copy ALWAYS uses Mauve, never Dark Mocha */
+    font-size: 14px;  /* Body: 13-15px */
+    line-height: 1.7;
+    font-weight: 300;  /* Body: Jost 300 Light */
+  }
+  
+  /* Italic Rule: Italics in Playfair Display render in Dusty Rose */
+  h1 em, h2 em, h3 em {
+    color: var(--rose);  /* #C9897A Dusty Rose */
+    font-style: italic;
+  }
+
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    transition: var(--transition-hover);  /* 0.3s ease for all buttons */
+  }
+
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+  
+  /* Focus states use Terracotta, never Gold */
+  *:focus-visible {
+    outline: 2px solid var(--terra);  /* #A4594A Terracotta */
+    outline-offset: 2px;
+  }
+
+  /* Marquee Animation */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 26s linear infinite;
+  }
+
+  /* RARE Brand Warm Tone Image Treatment */
+  .warm-tone-image {
+    filter: sepia(0.15) saturate(1.1) brightness(1.02) contrast(0.98);
+  }
+
+  .warm-tone-overlay {
+    position: relative;
+  }
+
+  .warm-tone-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 122, 0.08) 0%,
+      rgba(201, 137, 122, 0.06) 50%,
+      rgba(164, 89, 74, 0.05) 100%
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .warm-tone-soft {
+    filter: sepia(0.12) saturate(1.08) brightness(1.03) hue-rotate(-5deg);
+  }
+}

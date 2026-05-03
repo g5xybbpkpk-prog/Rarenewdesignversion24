@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenity Spa — Partner Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RARE Brand Bible Variables ─────────────────────────────────────────── */
+:root{
+  --cream:#FAF4EE;
+  --linen:#F2DDD5;
+  --rose:#C9897A;
+  --gold:#D4AF7A;
+  --terra:#A4594A;
+  --dark:#2E1A1A;
+  --mauve:#7A4A4A;
+  --muted:#B09080;
+  --border-soft:rgba(201,137,122,0.15);
+  --border-mid:rgba(201,137,122,0.25);
+  --green:#5a9a5a;
+  --amber:#b8860b;
+  --red:#c05050;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--linen)}
+::-webkit-scrollbar-thumb{background:var(--rose);border-radius:2px}
+body{display:flex;min-height:100vh;background:var(--cream);font-family:'Jost',sans-serif;font-weight:300;color:var(--dark);overflow:hidden}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+#sidebar{
+  width:236px;flex-shrink:0;
+  background:var(--dark);
+  border-right:1px solid rgba(212,175,122,0.12);
+  display:flex;flex-direction:column;
+  height:100vh;position:sticky;top:0;
+  transition:width .3s;overflow:hidden;
+}
+#sidebar.collapsed{width:58px}
+.logo-area{
+  padding:24px 20px 20px;
+  border-bottom:1px solid rgba(212,175,122,0.12);
+  display:flex;align-items:center;gap:12px;
+}
+.logo-wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:400;
+  letter-spacing:6px;
+  color:var(--cream);
+  padding-right:6px;
+  flex-shrink:0;
+}
+.logo-wordmark span{color:var(--gold)}
+.logo-text .sub{
+  font-size:8px;color:rgba(212,175,122,0.4);
+  letter-spacing:3px;text-transform:uppercase;
+  margin-top:2px;
+}
+nav{flex:1;padding:12px 8px;overflow-y:auto}
+.ni{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 16px;border-radius:4px;
+  cursor:pointer;transition:all .2s;
+  color:rgba(250,244,238,0.45);
+  font-size:12px;font-weight:300;letter-spacing:.5px;
+  border:none;background:none;width:100%;text-align:left;white-space:nowrap;
+}
+.ni:hover{background:rgba(212,175,122,0.08);color:var(--gold)}
+.ni.act{background:rgba(212,175,122,0.12);color:var(--gold)}
+.ni .ic{font-size:13px;width:18px;text-align:center;flex-shrink:0;opacity:.7}
+.ni.act .ic{opacity:1}
+.sidebar-bottom{padding:16px 20px;border-top:1px solid rgba(212,175,122,0.1)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.collapse-btn{
+  background:none;border:none;
+  color:rgba(212,175,122,0.3);
+  cursor:pointer;padding:10px;
+  border-top:1px solid rgba(212,175,122,0.08);
+  font-family:monospace;font-size:14px;
+  text-align:center;width:100%;transition:color .2s;
+}
+.collapse-btn:hover{color:var(--gold)}
+
+/* ── Main ───────────────────────────────────────────────────────────────── */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100vh}
+.topbar{
+  height:62px;
+  background:var(--cream);
+  border-bottom:1px solid var(--border-soft);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;flex-shrink:0;
+}
+.page-label{
+  font-size:10px;color:var(--gold);
+  letter-spacing:5px;text-transform:uppercase;
+}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.btn-ghost{
+  background:transparent;color:var(--mauve);
+  border:1px solid var(--rose);
+  padding:8px 18px;
+  cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:10px;
+  font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  transition:all .3s;
+}
+.btn-ghost:hover{background:rgba(201,137,122,0.08);color:var(--rose)}
+.notif-btn{
+  background:none;
+  border:1px solid var(--border-soft);
+  color:var(--muted);
+  width:36px;height:36px;
+  cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:all .2s;
+}
+.notif-btn:hover{border-color:var(--rose);color:var(--rose)}
+.ndot{position:absolute;top:-2px;right:-2px;width:7px;height:7px;border-radius:50%;background:var(--terra);border:2px solid var(--cream)}
+.top-divider{width:1px;height:20px;background:var(--border-soft)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:400;flex-shrink:0}
+.notif-dd{
+  position:absolute;top:46px;right:0;width:340px;
+  background:var(--cream);
+  border:1px solid var(--border-soft);
+  z-index:100;overflow:hidden;
+  box-shadow:0 12px 40px rgba(46,26,26,0.1);
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────── */
+#content{flex:1;overflow-y:auto;padding:32px 36px;background:var(--cream)}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.card{
+  background:#fff;
+  border:1px solid var(--border-soft);
+  padding:24px;
+}
+.sc{
+  background:#fff;
+  border:1px solid var(--border-soft);
+  padding:24px;
+  transition:all .3s;
+}
+.sc:hover{border-color:var(--rose);transform:translateY(-1px)}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary{
+  background:var(--dark);color:var(--cream);
+  border:none;padding:10px 20px;
+  cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:10px;
+  font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  transition:all .3s;
+}
+.btn-primary:hover:not(:disabled){background:var(--terra)}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed}
+.btn-outline{
+  background:transparent;border:0.5px solid var(--gold);color:var(--dark);
+  padding:8px 16px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;transition:all .3s;
+}
+.btn-outline:hover{border-color:var(--rose);color:var(--rose)}
+.btn-danger{
+  background:rgba(192,80,80,.08);color:var(--red);
+  border:1px solid rgba(192,80,80,.2);
+  padding:6px 12px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1px;
+  transition:all .2s;
+}
+.btn-danger:hover{background:rgba(192,80,80,.15)}
+.btn-warn{
+  background:rgba(184,134,11,.08);color:var(--amber);
+  border:1px solid rgba(184,134,11,.2);
+  padding:6px 12px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1px;
+  transition:all .2s;
+}
+.btn-warn:hover{background:rgba(184,134,11,.15)}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);padding:10px 14px;
+  border-bottom:1px solid var(--border-soft);text-align:left;font-weight:400;
+  background:var(--dark);
+}
+.tbl td{
+  padding:13px 14px;
+  border-bottom:1px solid var(--border-soft);
+  font-size:13px;color:var(--mauve);font-weight:300;
+}
+.tbl tr:nth-child(odd) td{background:#fff}
+.tbl tr:nth-child(even) td{background:var(--linen)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(201,137,122,0.05)}
+
+/* ── Tags ────────────────────────────────────────────────────────────────── */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;font-size:9px;font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.tag-green{background:rgba(90,154,90,.1);color:#3a7a3a;border:1px solid rgba(90,154,90,.2)}
+.tag-amber{background:rgba(184,134,11,.1);color:#8a6200;border:1px solid rgba(184,134,11,.2)}
+.tag-red{background:rgba(192,80,80,.1);color:var(--red);border:1px solid rgba(192,80,80,.2)}
+.tag-blue{background:rgba(164,89,74,.08);color:var(--terra);border:1px solid rgba(164,89,74,.2)}
+.tag-gray{background:rgba(176,144,128,.08);color:var(--muted);border:1px solid var(--border-soft)}
+
+/* ── Input ───────────────────────────────────────────────────────────────── */
+.inp{
+  background:var(--cream);
+  border:1px solid var(--border-soft);
+  color:var(--dark);
+  padding:10px 14px;
+  font-family:'Jost',sans-serif;font-size:13px;font-weight:300;
+  outline:none;transition:border .2s;width:100%;
+}
+.inp:focus{border-color:var(--terra)}
+select.inp option{background:#fff}
+.lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+
+/* ── Modal ───────────────────────────────────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(46,26,26,.6);
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;backdrop-filter:blur(4px);
+}
+.modal{
+  background:var(--cream);
+  border:1px solid var(--border-soft);
+  padding:32px;width:520px;
+  max-height:88vh;overflow-y:auto;
+  animation:slideIn .2s ease;
+  box-shadow:0 24px 64px rgba(46,26,26,.15);
+}
+@keyframes slideIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ── Toast ───────────────────────────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--dark);
+  border:1px solid rgba(212,175,122,0.2);
+  padding:14px 20px;
+  font-size:12px;color:var(--cream);font-weight:300;
+  display:flex;gap:10px;align-items:center;
+  z-index:300;animation:slideIn .25s ease;
+  box-shadow:0 8px 32px rgba(46,26,26,.2);max-width:320px;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────────────── */
+.pb{height:3px;background:var(--linen);overflow:hidden}
+.pf{height:100%;transition:width .6s ease}
+
+/* ── Stats grid ──────────────────────────────────────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2px}
+.stat-card{background:#fff;padding:24px 22px}
+.stat-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:300;color:var(--dark);line-height:1}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:6px;font-weight:300}
+
+/* ── Section heading ─────────────────────────────────────────────────────── */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--dark);margin-bottom:16px}
+.sec-title em{font-style:italic;color:var(--rose)}
+.sec-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+
+/* ── Booking grid ────────────────────────────────────────────────────────── */
+.bk-row{
+  display:grid;
+  grid-template-columns:80px 1fr 160px 120px 90px 100px 100px 130px;
+  align-items:center;padding:13px 16px;
+  border-bottom:1px solid var(--border-soft);gap:8px;
+  font-size:12px;
+}
+.bk-row:nth-child(even){background:var(--linen)}
+.bk-row:nth-child(odd){background:#fff}
+.bk-row:hover{background:rgba(201,137,122,0.05)}
+
+/* ── Slot pills ──────────────────────────────────────────────────────────── */
+.slot-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 12px;font-size:10px;letter-spacing:1px;
+  cursor:pointer;transition:all .2s;margin:3px;
+  border:1px solid var(--border-soft);color:var(--mauve);
+  background:#fff;
+}
+.slot-pill:hover{border-color:var(--rose);color:var(--rose)}
+.slot-full{opacity:.4;cursor:not-allowed;background:var(--linen)}
+.slot-hold{border-color:rgba(212,175,122,.4);color:var(--gold)}
+
+/* ── Review card ─────────────────────────────────────────────────────────── */
+.review-card{background:#fff;border:1px solid var(--border-soft);padding:20px;margin-bottom:10px}
+
+/* ── Divider line ────────────────────────────────────────────────────────── */
+.gold-line{height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,0.1));margin-bottom:20px}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="logo-area">
+    <div class="logo-wordmark" id="logo-wm">R<span>A</span>RE</div>
+    <div class="logo-text" id="logo-text">
+      <div style="font-size:9px;color:rgba(212,175,122,0.4);letter-spacing:2px;text-transform:uppercase">Partner Portal</div>
+    </div>
+  </div>
+  <nav id="nav"></nav>
+  <div class="sidebar-bottom" id="sb-bottom">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="status-dot"></div>
+      <span style="font-size:10px;color:rgba(212,175,122,0.4);letter-spacing:1px">Open · Closes 9 PM</span>
+    </div>
+  </div>
+  <button class="collapse-btn" id="collapse-btn" onclick="toggleSidebar()">‹</button>
+</aside>
+
+<!-- Main -->
+<div id="main">
+  <header class="topbar">
+    <div class="page-label" id="page-label">Overview</div>
+    <div class="topbar-right">
+      <button class="btn-ghost" onclick="showModal('newBooking')">+ New Booking</button>
+      <button class="btn-ghost" onclick="showPublicPortal()">◎ Customer Portal</button>
+      <div style="position:relative">
+        <button class="notif-btn" id="notif-btn" onclick="toggleNotifs()">🔔<div class="ndot" id="ndot" style="display:none"></div></button>
+        <div id="notif-dd" style="display:none" class="notif-dd">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border-soft);background:var(--dark)">
+            <span style="font-family:'Playfair Display',serif;font-size:15px;color:var(--cream)">Notifications</span>
+            <button style="background:none;border:none;color:rgba(212,175,122,.5);cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif" onclick="markAllRead()">Mark all read</button>
+          </div>
+          <div id="notif-list" style="max-height:320px;overflow-y:auto"></div>
+        </div>
+      </div>
+      <div class="top-divider"></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="av" style="width:34px;height:34px;background:var(--rose);color:var(--cream);font-size:11px;letter-spacing:1px">SS</div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:13px;color:var(--dark)">Serenity Spa</div>
+          <div style="font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase">Admin</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="content" onclick="closeNotifs()"></main>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" style="display:none" onclick="closeModal(event)">
+  <div class="modal" id="modal-body" onclick="event.stopPropagation()"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" style="display:none"></div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────
+const getToday=()=>{const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const TODAY=getToday();
+const tNow=()=>new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+
+let custs=[
+  {id:'c1',name:'Priya Sharma',  phone:'+91 98765 43210',email:'priya@email.com', dob:'1990-03-15',pref:'Deep tissue, firm pressure',allergy:'Lavender oil',visits:8,spend:24600,guest:false},
+  {id:'c2',name:'Rohan Mehta',   phone:'+91 87654 32109',email:'rohan@email.com', dob:'1985-07-22',pref:'Swedish, medium pressure',  allergy:'None',        visits:3,spend:6800, guest:false},
+  {id:'c3',name:'Sunita Patel',  phone:'+91 76543 21098',email:'sunita@email.com',dob:'1992-11-08',pref:'Facials, hydrating',         allergy:'Nuts',         visits:5,spend:18200,guest:false},
+  {id:'c4',name:'Arjun Nair',    phone:'+91 65432 10987',email:'arjun@email.com', dob:'1988-05-30',pref:'Hot stone, full body',       allergy:'None',         visits:2,spend:7100, guest:false},
+  {id:'c5',name:'Meera Iyer',    phone:'+91 54321 09876',email:'meera@email.com', dob:'1995-09-12',pref:'Aromatherapy, light touch',  allergy:'Peppermint',   visits:6,spend:15400,guest:false},
+  {id:'c6',name:'Vikram Singh',  phone:'+91 43210 98765',email:'vikram@email.com',dob:'1982-12-03',pref:'Couples massage',            allergy:'None',         visits:1,spend:4000, guest:false},
+];
+let svcs=[
+  {id:'s1',name:'Swedish Massage',    cat:'Massage', dur:'60 min', price:1500,active:true,slots:[{time:'10:00 AM',cap:2,conf:2,holds:0,wl:[]},{time:'12:00 PM',cap:2,conf:1,holds:1,wl:['c3']},{time:'02:00 PM',cap:2,conf:0,holds:0,wl:[]},{time:'04:00 PM',cap:2,conf:1,holds:0,wl:[]}]},
+  {id:'s2',name:'Deep Tissue Massage',cat:'Massage', dur:'90 min', price:1800,active:true,slots:[{time:'10:00 AM',cap:1,conf:1,holds:0,wl:['c2']},{time:'12:00 PM',cap:1,conf:0,holds:1,wl:[]},{time:'03:00 PM',cap:1,conf:0,holds:0,wl:[]}]},
+  {id:'s3',name:'Hot Stone Therapy',  cat:'Massage', dur:'75 min', price:2500,active:true,slots:[{time:'11:00 AM',cap:2,conf:1,holds:0,wl:[]},{time:'02:00 PM',cap:2,conf:2,holds:0,wl:['c4','c5']},{time:'05:00 PM',cap:2,conf:0,holds:0,wl:[]}]},
+  {id:'s4',name:'Aromatherapy',       cat:'Wellness',dur:'60 min', price:1600,active:true,slots:[{time:'10:00 AM',cap:3,conf:2,holds:1,wl:[]},{time:'01:00 PM',cap:3,conf:1,holds:0,wl:[]},{time:'04:00 PM',cap:3,conf:0,holds:0,wl:[]}]},
+  {id:'s5',name:'Facial + Body Wrap', cat:'Beauty',  dur:'120 min',price:3200,active:true,slots:[{time:'10:00 AM',cap:1,conf:1,holds:0,wl:['c1']},{time:'01:00 PM',cap:1,conf:0,holds:0,wl:[]}]},
+  {id:'s6',name:'Head Spa Treatment', cat:'Beauty',  dur:'45 min', price:1200,active:true,slots:[{time:'09:00 AM',cap:2,conf:1,holds:0,wl:[]},{time:'11:00 AM',cap:2,conf:2,holds:0,wl:['c6']},{time:'02:00 PM',cap:2,conf:1,holds:1,wl:[]},{time:'04:00 PM',cap:2,conf:0,holds:0,wl:[]}]},
+];
+const NOW_MS=Date.now();
+let bks=[
+  {id:'BK001',cid:'c1',name:'Priya Sharma', svcId:'s2',svc:'Deep Tissue Massage',th:'Anjali K.',thId:'st1',time:'10:00 AM',date:TODAY,status:'confirmed',   pay:'paid',        payMode:'online', amt:1800,outcome:null,createdAt:NOW_MS-3600000,dispute:null},
+  {id:'BK002',cid:'c2',name:'Rohan Mehta',  svcId:'s1',svc:'Swedish Massage',    th:'Deepa R.',thId:'st2', time:'12:00 PM',date:TODAY,status:'in-progress',pay:'paid',        payMode:'online', amt:1500,outcome:null,createdAt:NOW_MS-2400000,dispute:null},
+  {id:'BK003',cid:'c3',name:'Sunita Patel', svcId:'s5',svc:'Facial + Body Wrap', th:'Kavya S.',thId:'st3', time:'02:00 PM',date:TODAY,status:'pending',     pay:'paid',        payMode:'online', amt:3200,outcome:null,createdAt:NOW_MS-480000, dispute:null},
+  {id:'BK004',cid:'c4',name:'Arjun Nair',   svcId:'s3',svc:'Hot Stone Therapy',  th:'Anjali K.',thId:'st1',time:'04:00 PM',date:TODAY,status:'confirmed',   pay:'partial',     payMode:'online', amt:2500,outcome:null,createdAt:NOW_MS-7200000,dispute:null},
+  {id:'BK005',cid:'c5',name:'Meera Iyer',   svcId:'s4',svc:'Aromatherapy',       th:'Deepa R.',thId:'st2', time:'10:00 AM',date:TODAY,status:'confirmed',   pay:'paid',        payMode:'online', amt:1600,outcome:null,createdAt:NOW_MS-9000000,dispute:null},
+  {id:'BK006',cid:'c6',name:'Vikram Singh', svcId:'s1',svc:'Swedish Massage',    th:'Kavya S.',thId:'st3', time:'04:00 PM',date:TODAY,status:'pending',    pay:'pay-at-venue',payMode:'venue',  amt:1500,outcome:null,createdAt:NOW_MS-1800000,dispute:null},
+  {id:'BK007',cid:'c2',name:'Rohan Mehta',  svcId:'s1',svc:'Swedish Massage',    th:'Deepa R.',thId:'st2', time:'06:00 PM',date:TODAY,status:'pending',     pay:'paid',        payMode:'online', amt:1500,outcome:null,createdAt:NOW_MS-600000, dispute:null},
+  {id:'BK008',cid:'c1',name:'Priya Sharma', svcId:'s3',svc:'Hot Stone Therapy',  th:'Anjali K.',thId:'st1',time:'11:00 AM',date:TODAY,status:'completed',   pay:'paid',        payMode:'online', amt:2500,outcome:'completed',createdAt:NOW_MS-18000000,dispute:{id:'D001',raisedAt:NOW_MS-3600000,issue:'Service was cut short by 20 minutes',evidence:'Photo of appointment slip',status:'open',resolution:null}},
+];
+let softHolds=[];
+const HOLD_EXPIRY_MS=15*60*1000;
+const ACCEPT_WINDOW_MS=30*60*1000;
+const COMMISSION_RATE=0.12;
+let payouts=[
+  {id:'PO001',period:'1–7 Mar 2026',totalRev:38600,commission:4632,netPayout:33968,status:'paid',    paidOn:'10 Mar 2026'},
+  {id:'PO002',period:'8–14 Mar 2026',totalRev:42100,commission:5052,netPayout:37048,status:'paid',    paidOn:'17 Mar 2026'},
+  {id:'PO003',period:'15–21 Mar 2026',totalRev:12100,commission:1452,netPayout:10648,status:'pending',paidOn:'—'},
+];
+
+const AD_PACKAGES=[
+  {id:'p1',label:'Quick Boost',duration:'24 hours',price:500, views:180,clicks:22,badge:''},
+  {id:'p2',label:'3-Day Boost',duration:'3 days',  price:1200,views:520,clicks:64,badge:'Popular'},
+  {id:'p3',label:'Weekly Boost',duration:'7 days', price:2500,views:1400,clicks:175,badge:'Best value'},
+  {id:'p4',label:'Monthly Boost',duration:'30 days',price:8000,views:6500,clicks:820,badge:''},
+];
+let adCampaigns=[
+  {id:'AD001',pkg:'p3',label:'Weekly Boost',price:2500,status:'active',  startDate:'14 Mar 2026',endDate:'21 Mar 2026',views:980, clicks:118,impressions:3200,paidVia:'UPI'},
+  {id:'AD002',pkg:'p1',label:'Quick Boost', price:500, status:'completed',startDate:'7 Mar 2026', endDate:'8 Mar 2026', views:195, clicks:24, impressions:680, paidVia:'Card'},
+  {id:'AD003',pkg:'p2',label:'3-Day Boost', price:1200,status:'completed',startDate:'1 Mar 2026', endDate:'4 Mar 2026', views:540, clicks:68, impressions:1750,paidVia:'UPI'},
+];
+const BASELINE_WEEKLY={views:210,clicks:18,impressions:620};
+let staff=[
+  {id:'st1',name:'Anjali Kumar', av:'AK',role:'Senior Therapist',  spec:'Deep Tissue, Hot Stone', rating:4.9,leaves:[]},
+  {id:'st2',name:'Deepa Rao',    av:'DR',role:'Wellness Therapist', spec:'Swedish, Aromatherapy',  rating:4.8,leaves:[]},
+  {id:'st3',name:'Kavya Sharma', av:'KS',role:'Beauty Specialist',  spec:'Facials, Body Wraps',    rating:4.7,leaves:[]},
+  {id:'st4',name:'Meenu Pillai', av:'MP',role:'Therapist',          spec:'Head Spa, Reflexology',  rating:4.6,leaves:[{date:TODAY,type:'full',reason:'Personal'}]},
+];
+let docs=[
+  {id:'d1',name:'Shop & Establishment License',status:'verified', expiry:'Dec 2026', type:'Legal'},
+  {id:'d2',name:'GST Certificate',             status:'verified', expiry:'Perpetual',type:'Tax'},
+  {id:'d3',name:'Trade License',               status:'expiring', expiry:'Apr 2026',  type:'Legal'},
+  {id:'d4',name:'PAN Card',                    status:'verified', expiry:'Perpetual',type:'Tax'},
+  {id:'d5',name:'Fire NOC',                    status:'pending',  expiry:'—',          type:'Safety'},
+  {id:'d6',name:'FSSAI License',               status:'verified', expiry:'Aug 2026',  type:'Safety'},
+  {id:'d7',name:'Hygiene Declaration',         status:'expiring', expiry:'Mar 2026',  type:'Platform'},
+];
+let reviews=[
+  {id:'r1',client:'Priya S.',  rating:5,text:'Absolutely divine experience. Anjali\'s deep tissue session was life-changing. Will definitely return.',service:'Deep Tissue Massage',date:'2 days ago'},
+  {id:'r2',client:'Rohan M.',  rating:5,text:'The ambience is so calming. Swedish massage was perfect. Highly recommend.',service:'Swedish Massage',date:'4 days ago'},
+  {id:'r3',client:'Anika T.',  rating:4,text:'Lovely spa. The facial was rejuvenating. Could improve appointment scheduling.',service:'Facial + Body Wrap',date:'1 week ago'},
+  {id:'r4',client:'Vikram S.', rating:5,text:'Best couples massage! The staff was incredibly professional.',service:'Aromatherapy',date:'1 week ago'},
+];
+let settings={spaName:'Serenity Spa & Wellness',owner:'Priya Menon',phone:'+91 98765 43210',email:'hello@serenityspa.in',city:'Mumbai, Maharashtra',open:'09:00',close:'21:00',desc:'Welcome to Serenity Spa. We specialise in holistic wellness and luxury beauty treatments.',holdDuration:300,autoAccept:true,reliabilityScore:96,cancellationPolicy:{before24h:'full',between2and24h:'50pct',under2h:'none'},photos:[],bank:{accountName:'',accountNumber:'',ifsc:'',bankName:'',upiId:'',preferredMethod:'bank'},notif:{bookings:true,reviews:true,documents:false,payments:true}};
+let notifs=[];
+let audit=[
+  {id:'a1',ts:'10:00 AM',action:'Booking Created', entity:'BK001',detail:'Priya Sharma · Deep Tissue · 10:00 AM',user:'Admin'},
+  {id:'a2',ts:'10:12 AM',action:'Payment Received',entity:'BK001',detail:'₹1,800 · Full payment',user:'Admin'},
+  {id:'a3',ts:'10:28 AM',action:'Booking Created', entity:'BK002',detail:'Rohan Mehta · Swedish · 12:00 PM',user:'Admin'},
+];
+
+// ─── NAV ──────────────────────────────────────────────────────────────────
+const NAV=[
+  {id:'overview',  ic:'◈', label:'Overview'},
+  {id:'bookings',  ic:'◷', label:'Bookings'},
+  {id:'services',  ic:'✦', label:'Services & Slots'},
+  {id:'customers', ic:'◎', label:'Customers'},
+  {id:'staff',     ic:'◉', label:'Staff'},
+  {id:'analytics', ic:'◇', label:'Analytics'},
+  {id:'payouts',   ic:'⊛', label:'Payouts'},
+  {id:'marketing', ic:'◭', label:'Marketing & Ads'},
+  {id:'waitlist',  ic:'⊕', label:'Waitlist'},
+  {id:'documents', ic:'▣', label:'Documents'},
+  {id:'reviews',   ic:'◇', label:'Reviews'},
+  {id:'settings',  ic:'⊙', label:'Settings'},
+  {id:'audit',     ic:'≡', label:'Audit Log'},
+];
+let currentNav='overview';
+let sidebarOpen=true;
+
+function buildNav(){
+  document.getElementById('nav').innerHTML=NAV.map(n=>`
+    <button class="ni ${n.id===currentNav?'act':''}" onclick="navigate('${n.id}')">
+      <span class="ic">${n.ic}</span>
+      <span class="nav-lbl">${n.label}</span>
+    </button>`).join('');
+}
+function navigate(id){
+  currentNav=id;
+  document.getElementById('page-label').textContent=NAV.find(n=>n.id===id)?.label||'';
+  buildNav();render();
+}
+function toggleSidebar(){
+  sidebarOpen=!sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('collapsed',!sidebarOpen);
+  document.getElementById('collapse-btn').textContent=sidebarOpen?'‹':'›';
+  document.getElementById('sb-bottom').style.display=sidebarOpen?'block':'none';
+  document.getElementById('logo-text').style.display=sidebarOpen?'block':'none';
+  document.querySelectorAll('.nav-lbl').forEach(el=>el.style.display=sidebarOpen?'inline':'none');
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────
+function toast(msg,icon='✦'){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span style="color:var(--gold)">${icon}</span> ${msg}`;
+  t.style.display='flex';clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.style.display='none',3500);
+}
+function dismissToast(){
+  const t=document.getElementById('toast');
+  clearTimeout(t._timer);t.style.display='none';
+}
+
+// ─── NOTIFS ───────────────────────────────────────────────────────────────
+function addNotif(type,msg){
+  notifs.unshift({id:'n'+Date.now(),type,msg,time:tNow(),read:false});
+  if(notifs.length>50)notifs=notifs.slice(0,50);
+  updateNotifBadge();
+}
+function updateNotifBadge(){
+  document.getElementById('ndot').style.display=notifs.filter(n=>!n.read).length>0?'block':'none';
+}
+function toggleNotifs(){
+  const dd=document.getElementById('notif-dd');
+  const open=dd.style.display==='block';
+  dd.style.display=open?'none':'block';
+  if(!open)renderNotifList();
+}
+function closeNotifs(){document.getElementById('notif-dd').style.display='none'}
+function markAllRead(){notifs=notifs.map(n=>({...n,read:true}));updateNotifBadge();renderNotifList()}
+function renderNotifList(){
+  const typeColor={booking:'#5a9a5a',waitlist:'#b8860b',payment:'#c05050',warning:'#c05050',document:'#A4594A'};
+  document.getElementById('notif-list').innerHTML=notifs.length===0
+    ?`<div style="padding:20px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px">No notifications</div>`
+    :notifs.slice(0,10).map(n=>`
+    <div style="padding:13px 18px;border-bottom:1px solid var(--border-soft);background:${n.read?'#fff':'rgba(201,137,122,.04)'};display:flex;gap:10px">
+      <div style="width:6px;height:6px;border-radius:50%;background:${n.read?'var(--muted)':typeColor[n.type]||'var(--rose)'};margin-top:5px;flex-shrink:0"></div>
+      <div>
+        <div style="font-size:12px;color:var(--mauve);font-weight:300">${n.msg}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px">${n.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── LOG ──────────────────────────────────────────────────────────────────
+function log(action,entity,detail){
+  audit.unshift({id:'a'+Date.now(),ts:tNow(),action,entity,detail,user:'Admin'});
+  if(audit.length>200)audit=audit.slice(0,200);
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────
+function showModal(type,data){
+  document.getElementById('modal-overlay').style.display='flex';
+  const body=document.getElementById('modal-body');
+  if(type==='newBooking')        body.innerHTML=renderNewBookingModal();
+  else if(type==='customer')     body.innerHTML=renderCustomerModal(data);
+  else if(type==='bookingDetail')body.innerHTML=renderBookingDetail(data);
+  else if(type==='addLeave')     body.innerHTML=renderLeaveModal(data);
+  else if(type==='addService')   body.innerHTML=renderServiceModal(null);
+  else if(type==='editService')  body.innerHTML=renderServiceModal(data);
+  else if(type==='addStaff')     body.innerHTML=renderAddStaffModal();
+  else if(type==='editStaff')    body.innerHTML=renderEditStaffModal(data);
+  else if(type==='uploadDoc')    body.innerHTML=renderUploadDocModal(data);
+  else if(type==='respondDispute') body.innerHTML=renderRespondDisputeModal(data);
+  else if(type==='boostListing') body.innerHTML=renderBoostModal();
+  else if(type==='adDetail')     body.innerHTML=renderAdDetailModal(data);
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').style.display='none';
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+const ST_COLORS={
+  confirmed:    ['rgba(90,154,90,.1)','#3a7a3a','rgba(90,154,90,.2)'],
+  'in-progress':['rgba(184,134,11,.1)','#8a6200','rgba(184,134,11,.2)'],
+  pending:      ['rgba(164,89,74,.1)','var(--terra)','rgba(164,89,74,.2)'],
+  cancelled:    ['rgba(192,80,80,.1)','var(--red)','rgba(192,80,80,.2)'],
+  completed:    ['rgba(100,120,200,.1)','#3a4aaa','rgba(100,120,200,.2)'],
+  'no-show':    ['rgba(120,80,120,.1)','#7a3a7a','rgba(120,80,120,.2)'],
+  disputed:     ['rgba(184,134,11,.15)','#8a6200','rgba(184,134,11,.3)'],
+  under_review: ['rgba(100,120,200,.1)','#3a4aaa','rgba(100,120,200,.2)'],
+};
+
+function fmtCountdown(ms){
+  if(ms<=0)return'Expired';
+  const m=Math.floor(ms/60000);
+  const s=Math.floor((ms%60000)/1000);
+  return`${m}:${String(s).padStart(2,'0')}`;
+}
+
+function acceptBooking(id){
+  bks=bks.map(b=>b.id!==id?b:{...b,status:'confirmed'});
+  const b=bks.find(x=>x.id===id);
+  log('Booking Accepted',id,`${b.name} · ${b.svc} · ${b.time}`);
+  addNotif('booking',`Booking accepted: ${b.name} · ${b.svc}`);
+  render();toast(`${b.id} accepted — slot confirmed`,'✦');
+}
+
+const VENUE_ACCEPT_WINDOW_MS=2*60*60*1000; // 2 hours for pay-at-venue
+
+function addSoftHold(svcId,time,svcName){
+  const id='sh'+Date.now();
+  softHolds.push({id,svcId,time,svc:svcName,createdAt:Date.now()});
+  svcs=svcs.map(s=>s.id!==svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==time?sl:{...sl,holds:sl.holds+1})});
+  return id;
+}
+
+function releaseSoftHold(holdId){
+  const h=softHolds.find(x=>x.id===holdId);
+  if(!h)return;
+  softHolds=softHolds.filter(x=>x.id!==holdId);
+  svcs=svcs.map(s=>s.id!==h.svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==h.time?sl:{...sl,holds:Math.max(0,sl.holds-1)})});
+}
+
+function checkHoldExpiry(){
+  const now=Date.now();
+  let changed=false;
+  softHolds=softHolds.filter(h=>{
+    if(now-h.createdAt>HOLD_EXPIRY_MS){
+      svcs=svcs.map(s=>s.id!==h.svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==h.time?sl:{...sl,holds:Math.max(0,sl.holds-1)})});
+      addNotif('warning',`Soft hold released: ${h.svc} · ${h.time} — slot is available again`);
+      changed=true;return false;
+    }
+    return true;
+  });
+  if(changed)render();
+}
+
+function checkPendingExpiry(){
+  const now=Date.now();
+  let changed=false;
+  bks=bks.map(b=>{
+    if(b.status!=='pending'||!b.createdAt)return b;
+    const isVenue=b.pay==='pay-at-venue';
+    const window=isVenue?VENUE_ACCEPT_WINDOW_MS:ACCEPT_WINDOW_MS;
+    if(now-b.createdAt>window){
+      svcs=svcs.map(s=>s.id!==b.svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==b.time?sl:{...sl,conf:Math.max(0,sl.conf-1)})});
+      if(isVenue){
+        addNotif('booking',`Pay-at-venue booking ${b.id} expired — ${b.name} was not confirmed within 2h. Slot released.`);
+        log('Auto-Expired',b.id,'2h venue accept window passed');
+      } else {
+        addNotif('booking',`Booking ${b.id} auto-cancelled — accept window expired. ${b.name} has been refunded.`);
+        log('Auto-Cancelled',b.id,'30-min accept window expired');
+      }
+      changed=true;
+      return{...b,status:'cancelled',outcome:'auto_expired'};
+    }
+    return b;
+  });
+  if(changed)render();
+}
+const PAY_COLORS={
+  paid:          ['rgba(90,154,90,.1)','#3a7a3a','rgba(90,154,90,.2)'],
+  partial:       ['rgba(184,134,11,.1)','#8a6200','rgba(184,134,11,.2)'],
+  unpaid:        ['rgba(192,80,80,.1)','var(--red)','rgba(192,80,80,.2)'],
+  refunded:      ['rgba(164,89,74,.1)','var(--terra)','rgba(164,89,74,.2)'],
+  'pay-at-venue':['rgba(100,120,200,.1)','#3a4aaa','rgba(100,120,200,.2)'],
+};
+function stTag(s){
+  const [bg,fg,border]=ST_COLORS[s]||['var(--linen)','var(--muted)','var(--border-soft)'];
+  return `<span style="display:inline-flex;padding:3px 10px;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:${bg};color:${fg};border:1px solid ${border}">${s}</span>`;
+}
+function payTag(p){
+  const [bg,fg,border]=PAY_COLORS[p]||['var(--linen)','var(--muted)','var(--border-soft)'];
+  return `<span style="display:inline-flex;padding:3px 10px;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:${bg};color:${fg};border:1px solid ${border}">${p}</span>`;
+}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+const AVCOLS=['var(--rose)','var(--terra)','var(--mauve)','var(--muted)'];
+function avColor(i){return AVCOLS[i%AVCOLS.length]}
+function fmtINR(n){return '₹'+n.toLocaleString('en-IN')}
+
+// ─── PANELS ───────────────────────────────────────────────────────────────
+function renderOverview(){
+  const todayBks=bks.filter(b=>b.date===TODAY&&b.status!=='cancelled');
+  const revenue=todayBks.filter(b=>b.pay==='paid').reduce((s,b)=>s+b.amt,0);
+  const needsAccept=!settings.autoAccept?bks.filter(b=>b.status==='pending'&&b.pay!=='pay-at-venue'):[];
+  const openDisputes=bks.filter(b=>b.dispute&&['open','under_review'].includes(b.dispute.status));
+  const pending=todayBks.filter(b=>b.status==='pending').length;
+  const upcoming=todayBks.filter(b=>b.status==='confirmed').length;
+  return `
+${needsAccept.length>0?`<div style="background:rgba(164,89,74,.08);border:1px solid rgba(164,89,74,.3);padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;cursor:pointer" onclick="navigate('bookings')">
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:16px">⏳</span>
+    <div>
+      <div style="font-size:13px;font-weight:400;color:var(--dark)">${needsAccept.length} booking${needsAccept.length>1?'s':''} awaiting your acceptance</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:1px">Auto-cancel in ${fmtCountdown(Math.max(0,ACCEPT_WINDOW_MS-(Date.now()-Math.min(...needsAccept.map(b=>b.createdAt)))))}</div>
+    </div>
+  </div>
+  <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);border:1px solid rgba(164,89,74,.3);padding:5px 12px">Review Now →</span>
+</div>`:''}
+${openDisputes.length>0?`<div style="background:rgba(184,134,11,.06);border:1px solid rgba(184,134,11,.25);padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;cursor:pointer" onclick="navigate('bookings')">
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:16px">⚠</span>
+    <div>
+      <div style="font-size:13px;font-weight:400;color:var(--dark)">${openDisputes.length} open dispute${openDisputes.length>1?'s':''} under review</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:1px">Platform team is reviewing — you may be contacted for your response</div>
+    </div>
+  </div>
+  <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);border:1px solid rgba(184,134,11,.25);padding:5px 12px">View Disputes →</span>
+</div>`:''}
+<div class="stats-grid" style="margin-bottom:24px">
+  <div class="stat-card">
+    <div class="stat-label">Today's Bookings</div>
+    <div class="stat-val">${todayBks.length}</div>
+    <div class="stat-sub">${upcoming} confirmed · ${pending} pending</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Revenue Collected</div>
+    <div class="stat-val" style="color:var(--terra)">${fmtINR(revenue)}</div>
+    <div class="stat-sub">Today's payments</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Registered Clients</div>
+    <div class="stat-val">${custs.length}</div>
+    <div class="stat-sub">Total database</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Staff on Duty</div>
+    <div class="stat-val">${staff.filter(s=>!s.inactive&&!s.leaves.some(l=>l.date===TODAY&&l.type==='full')).length}<span style="font-size:.9rem;color:var(--muted)"> / ${staff.filter(s=>!s.inactive).length}</span></div>
+    <div class="stat-sub">Available today</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 320px;gap:2px">
+  <div class="card">
+    <div class="sec-row">
+      <div>
+        <div class="eyebrow">Today's Schedule</div>
+        <div class="sec-title" style="margin-bottom:0">Morning through <em>Evening</em></div>
+      </div>
+      <button class="btn-primary" onclick="showModal('newBooking')">+ New Booking</button>
+    </div>
+    <div class="gold-line"></div>
+    <div class="bk-row" style="background:var(--dark);border-bottom:1px solid rgba(212,175,122,.12)">
+      ${['ID','Client','Service','Therapist','Time','Status','Payment',''].map(h=>`<div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:400">${h}</div>`).join('')}
+    </div>
+    ${todayBks.map((b,i)=>`
+    <div class="bk-row" onclick="showModal('bookingDetail','${b.id}')" style="cursor:pointer;background:${i%2===0?'#fff':'var(--linen)'}">
+      <div style="font-size:10px;color:var(--muted);font-family:monospace">${b.id}</div>
+      <div style="font-size:13px;color:var(--dark);font-weight:400">${b.name}</div>
+      <div style="font-size:12px;color:var(--mauve)">${b.svc}</div>
+      <div style="font-size:12px;color:var(--mauve)">${b.th}</div>
+      <div style="font-size:12px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic">${b.time}</div>
+      <div>${stTag(b.status)}</div>
+      <div>${payTag(b.pay)}</div>
+      <div style="font-size:11px;color:var(--muted)">View →</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card" style="background:var(--linen)">
+    <div class="eyebrow">Staff Status</div>
+    <div class="sec-title">Today's <em>Team</em></div>
+    <div class="gold-line"></div>
+    ${staff.map((s,i)=>{
+      const onLeave=s.leaves.some(l=>l.date===TODAY);
+      const bkCount=bks.filter(b=>b.thId===s.id&&b.date===TODAY&&b.status!=='cancelled').length;
+      return `<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+        <div class="av" style="width:36px;height:36px;background:${avColor(i)};color:var(--cream);font-size:11px;letter-spacing:1px;flex-shrink:0">${s.av}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;color:var(--dark);font-weight:400">${s.name}</div>
+          <div style="font-size:10px;color:var(--muted);letter-spacing:1px">${s.role}</div>
+        </div>
+        <div style="text-align:right">
+          ${onLeave?`<span style="font-size:9px;color:var(--red);letter-spacing:1px;text-transform:uppercase">On Leave</span>`:`<span style="font-size:9px;color:var(--green);letter-spacing:1px;text-transform:uppercase">Available</span>`}
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${bkCount} booking${bkCount!==1?'s':''}</div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>`;
+}
+
+function renderBookings(){
+  const pendingOnline=bks.filter(b=>b.status==='pending'&&b.pay!=='pay-at-venue');
+  const pendingVenue=bks.filter(b=>b.status==='pending'&&b.pay==='pay-at-venue');
+  const disputed=bks.filter(b=>b.dispute&&['open','under_review'].includes(b.dispute.status));
+  const now=Date.now();
+
+  const makePendingRow=(b,windowMs)=>{
+    const elapsed=now-b.createdAt;
+    const remaining=Math.max(0,windowMs-elapsed);
+    const pct=Math.round(Math.min(100,(elapsed/windowMs)*100));
+    const urgent=(b.pay!=='pay-at-venue'&&remaining<5*60*1000)||(b.pay==='pay-at-venue'&&remaining<10*60*1000);
+    return `<div style="background:#fff;border:1px solid ${urgent?'rgba(192,80,80,.3)':'var(--border-soft)'};padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="flex:1;min-width:160px">
+        <div style="font-size:13px;color:var(--dark);font-weight:400">${b.name}</div>
+        <div style="font-size:11px;color:var(--mauve);margin-top:2px">${b.svc} · ${b.time} · ${b.id}${b.pay==='pay-at-venue'?' · <span style="color:var(--muted)">Pay at venue</span>':''}</div>
+        <div style="margin-top:8px;height:3px;background:var(--linen);border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${urgent?'var(--red)':'var(--terra)'};transition:width 1s linear;border-radius:2px"></div>
+        </div>
+      </div>
+      <div style="text-align:center;flex-shrink:0">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:${urgent?'var(--red)':'var(--terra)'}" id="cd-${b.id}">${fmtCountdown(remaining)}</div>
+        <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:1px">remaining</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-primary" style="font-size:10px;padding:8px 16px" onclick="acceptBooking('${b.id}')">✔ Accept</button>
+        <button class="btn-danger" style="font-size:10px" onclick="cancelBk('${b.id}')">Decline</button>
+      </div>
+    </div>`;
+  };
+
+  return `
+<div class="sec-row" style="margin-bottom:0">
+  <div>
+    <div class="eyebrow">All Bookings</div>
+    <div class="sec-title" style="margin-bottom:0">Booking <em>Management</em></div>
+  </div>
+  <button class="btn-primary" onclick="showModal('newBooking')">+ New Booking</button>
+</div>
+<div class="gold-line"></div>
+
+${!settings.autoAccept&&pendingOnline.length>0?`
+<div style="background:rgba(164,89,74,.06);border:1px solid rgba(164,89,74,.25);padding:18px 20px;margin-bottom:12px">
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--terra);margin-bottom:12px">⏳ Paid Bookings — Awaiting Acceptance (${pendingOnline.length})</div>
+  ${pendingOnline.map(b=>makePendingRow(b,ACCEPT_WINDOW_MS)).join('')}
+  <div style="font-size:11px;color:var(--muted);margin-top:4px">Not accepted within 30 minutes → auto-cancelled and customer refunded.</div>
+</div>`:''}
+
+${pendingVenue.length>0?`
+<div style="background:rgba(100,120,200,.05);border:1px solid rgba(100,120,200,.2);padding:18px 20px;margin-bottom:12px">
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#3a4aaa;margin-bottom:12px">📋 Pay-at-Venue Bookings — Awaiting Acceptance (${pendingVenue.length})</div>
+  ${pendingVenue.map(b=>makePendingRow(b,VENUE_ACCEPT_WINDOW_MS)).join('')}
+  <div style="font-size:11px;color:var(--muted);margin-top:4px">No upfront payment taken. Accept to confirm the slot; decline to release it. Auto-expires after 2 hours.</div>
+</div>`:''}
+
+${settings.autoAccept?`<div style="background:rgba(90,154,90,.06);border:1px solid rgba(90,154,90,.2);padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+  <span style="font-size:11px;color:#3a7a3a">⊛ Instant booking is on — all paid bookings confirm automatically. Pay-at-venue bookings still require your manual acceptance.</span>
+</div>`:''}
+
+${disputed.length>0?`
+<div style="background:rgba(184,134,11,.06);border:1px solid rgba(184,134,11,.25);padding:18px 20px;margin-bottom:12px">
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">⚠ Open Disputes (${disputed.length})</div>
+  ${disputed.map(b=>`
+  <div style="background:#fff;border:1px solid rgba(184,134,11,.2);padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
+    <div style="flex:1;min-width:180px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="font-size:13px;color:var(--dark);font-weight:400">${b.name}</span>
+        <span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;background:${b.dispute.status==='under_review'?'rgba(100,120,200,.1)':'rgba(184,134,11,.1)'};color:${b.dispute.status==='under_review'?'#3a4aaa':'#8a6200'};border:1px solid ${b.dispute.status==='under_review'?'rgba(100,120,200,.2)':'rgba(184,134,11,.2)'}">${b.dispute.status==='under_review'?'Under review':'Open'}</span>
+      </div>
+      <div style="font-size:11px;color:var(--mauve)">${b.svc} · ${b.time} · ${b.id}</div>
+      <div style="margin-top:8px;padding:10px 12px;background:var(--linen);border-left:3px solid var(--amber)">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:3px">Customer's claim</div>
+        <div style="font-size:12px;color:var(--dark)">${b.dispute.issue}</div>
+        ${b.dispute.evidence?`<div style="font-size:10px;color:var(--muted);margin-top:4px">📎 Evidence: ${b.dispute.evidence}</div>`:''}
+        ${b.dispute.vendorResponse?`<div style="margin-top:8px;padding:8px 10px;background:rgba(90,154,90,.06);border-left:2px solid #3a7a3a"><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#3a7a3a;margin-bottom:2px">Your response · <span style="text-transform:capitalize">${b.dispute.vendorPosition||''}</span></div><div style="font-size:12px;color:var(--dark)">${b.dispute.vendorResponse}</div>${b.dispute.vendorEvidence?`<div style="font-size:10px;color:var(--muted);margin-top:4px">📎 Attached: ${b.dispute.vendorEvidence}</div>`:''}</div>`:''}
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+      ${!b.dispute.vendorResponse?`<button class="btn-warn" style="font-size:9px;padding:5px 12px;white-space:nowrap" onclick="showModal('respondDispute','${b.id}')">Respond</button>`:'<span style="font-size:9px;color:#3a7a3a;letter-spacing:1px">Response sent</span>'}
+      <button class="btn-outline" style="font-size:9px;padding:5px 12px" onclick="showModal('bookingDetail','${b.id}')">View</button>
+    </div>
+  </div>`).join('')}
+  <div style="font-size:11px;color:var(--muted);margin-top:4px">Platform team reviews within 24h. Refunds only issued if the claim is validated.</div>
+</div>`:''}
+
+<div class="card" style="padding:0;overflow:hidden">
+  <table class="tbl">
+    <thead><tr>
+      <th>ID</th><th>Client</th><th>Service</th><th>Therapist</th><th>Date</th><th>Time</th><th>Status</th><th>Payment</th><th>Amount</th><th>Actions</th>
+    </tr></thead>
+    <tbody>
+    ${[...bks].reverse().map(b=>{
+      const isActivePendingOnline=b.status==='pending'&&b.pay!=='pay-at-venue'&&!settings.autoAccept;
+      const isActivePendingVenue=b.status==='pending'&&b.pay==='pay-at-venue';
+      const hasDispute=b.dispute&&['open','under_review'].includes(b.dispute.status);
+      return `<tr style="${hasDispute?'background:rgba(184,134,11,.04)':''}">
+        <td style="font-family:monospace;font-size:11px;color:var(--muted)">${b.id}${hasDispute?` <span style="font-size:9px;color:var(--amber)">⚠</span>`:''}${isActivePendingOnline||isActivePendingVenue?` <span style="font-size:9px;color:var(--terra)">⏳</span>`:''}</td>
+        <td style="color:var(--dark);font-weight:400">${b.name}</td>
+        <td>${b.svc}</td>
+        <td>${b.th}</td>
+        <td style="color:${b.date===TODAY?'var(--terra)':'var(--mauve)'}">${b.date===TODAY?'Today':b.date}</td>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold)">${b.time}</td>
+        <td>${hasDispute?stTag(b.dispute.status==='under_review'?'under_review':'disputed'):stTag(b.status)}</td>
+        <td>${payTag(b.pay)}</td>
+        <td style="color:var(--dark);font-weight:400">${fmtINR(b.amt)}</td>
+        <td style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+          ${isActivePendingOnline||isActivePendingVenue?`<button class="btn-primary" style="font-size:9px;padding:5px 10px" onclick="acceptBooking('${b.id}')">Accept</button>`:''}
+          ${!['cancelled','completed','no-show'].includes(b.status)?`<button class="btn-danger" style="font-size:9px;padding:5px 8px" onclick="cancelBk('${b.id}')">✕</button>`:''}
+          <button class="btn-outline" style="font-size:9px;padding:4px 8px" onclick="showModal('bookingDetail','${b.id}')">View</button>
+        </td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>
+</div>`;
+}
+
+function renderServices(){
+  return `
+<div class="sec-row">
+  <div>
+    <div class="eyebrow">Services & Availability</div>
+    <div class="sec-title" style="margin-bottom:0">Slot <em>Management</em></div>
+  </div>
+  <button class="btn-primary" onclick="showModal('addService',null)">+ Add Service</button>
+</div>
+<div class="gold-line"></div>
+<div style="display:grid;gap:2px">
+${svcs.map((s,i)=>`
+<div style="background:${i%2===0?'#fff':'var(--linen)'};border:1px solid var(--border-soft);padding:24px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+    <div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--dark)">${s.name}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:1px">${s.cat} · ${s.dur} · <span style="color:var(--gold)">${fmtINR(s.price)}</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="btn-outline" style="font-size:9px;padding:5px 12px" onclick="showModal('editService','${s.id}')">Edit</button>
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;background:${s.active?'rgba(90,154,90,.1)':'var(--linen)'};color:${s.active?'#3a7a3a':'var(--muted)'};border:1px solid ${s.active?'rgba(90,154,90,.2)':'var(--border-soft)'}">${s.active?'Active':'Inactive'}</span>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:2px">
+    ${s.slots.map(sl=>{
+      const full=sl.conf+sl.holds>=sl.cap;
+      const hasHold=sl.holds>0;
+      return `<span class="slot-pill${full?' slot-full':hasHold?' slot-hold':''}" title="${sl.conf}/${sl.cap} confirmed${sl.holds?' · '+sl.holds+' hold(s)':''}${sl.wl.length?' · '+sl.wl.length+' waitlist':''}">${sl.time} <span style="font-size:9px;opacity:.6">${sl.conf}/${sl.cap}${sl.holds?'+'+sl.holds+'H':''}${sl.wl.length?' ·'+sl.wl.length+'WL':''}</span></span>`;
+    }).join('')}
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <div style="font-size:10px;color:var(--muted);letter-spacing:1px">
+      Slots: ${s.slots.length} · Confirmed: ${s.slots.reduce((a,sl)=>a+sl.conf,0)} · Holds: ${s.slots.reduce((a,sl)=>a+sl.holds,0)} · Waitlist: ${s.slots.reduce((a,sl)=>a+sl.wl.length,0)}
+    </div>
+    ${s.active&&s.slots.some(sl=>sl.conf+sl.holds<sl.cap)?`<button class="btn-outline" style="font-size:9px;padding:4px 12px;color:var(--muted);border-color:var(--border-soft)" onclick="simulateSoftHold('${s.id}')" title="Simulate a customer selecting Pay-at-venue on the customer app">⊕ Simulate hold</button>`:''}
+  </div>
+</div>`).join('')}
+</div>
+${softHolds.length>0?`
+<div style="margin-top:12px;background:rgba(212,175,122,.06);border:1px solid rgba(212,175,122,.2);padding:14px 18px">
+  <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Active Soft Holds (${softHolds.length}) — auto-release in 15 min</div>
+  ${softHolds.map(h=>{
+    const remaining=Math.max(0,HOLD_EXPIRY_MS-(Date.now()-h.createdAt));
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-soft);font-size:12px">
+      <span style="color:var(--mauve)">${h.svc} · ${h.time}</span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">${fmtCountdown(remaining)}</span>
+        <button class="btn-danger" style="font-size:9px;padding:3px 8px" onclick="releaseSoftHold('${h.id}');render()">Release</button>
+      </div>
+    </div>`;
+  }).join('')}
+  <div style="font-size:10px;color:var(--muted);margin-top:8px">These slots are soft-held for customers who selected "Pay at venue" on the booking app. They expire automatically if the customer doesn't complete the booking.</div>
+</div>`:''}`;
+}
+
+function renderCustomers(){
+  return `
+<div class="card">
+  <div class="sec-row">
+    <div>
+      <div class="eyebrow">Client Database</div>
+      <div class="sec-title" style="margin-bottom:0">Customer <em>Profiles</em></div>
+    </div>
+    <span style="font-size:11px;color:var(--muted)">${custs.length} clients</span>
+  </div>
+  <div class="gold-line"></div>
+  <table class="tbl">
+    <thead><tr><th>Client</th><th>Contact</th><th>Preferences</th><th>Allergy</th><th>Visits</th><th>Total Spend</th><th></th></tr></thead>
+    <tbody>
+    ${custs.map((c,i)=>`<tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="av" style="width:34px;height:34px;background:${avColor(i)};color:var(--cream);font-size:10px;letter-spacing:1px">${initials(c.name)}</div>
+          <div><div style="color:var(--dark);font-weight:400">${c.name}</div><div style="font-size:10px;color:var(--muted)">${c.email}</div></div>
+        </div>
+      </td>
+      <td>${c.phone}</td>
+      <td style="font-size:12px;max-width:160px">${c.pref}</td>
+      <td>${c.allergy!=='None'?`<span style="font-size:9px;color:#8a6200;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.2);padding:3px 8px;letter-spacing:1px;text-transform:uppercase">${c.allergy}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td style="color:var(--dark);font-weight:400">${c.visits}</td>
+      <td style="color:var(--terra);font-family:'Cormorant Garamond',serif;font-size:15px">${fmtINR(c.spend)}</td>
+      <td><button class="btn-outline" onclick="showModal('customer','${c.id}')">View</button></td>
+    </tr>`).join('')}
+    </tbody>
+  </table>
+</div>`;
+}
+
+function renderStaff(){
+  const active=staff.filter(s=>!s.inactive);
+  const inactive=staff.filter(s=>s.inactive);
+  return `
+<div class="sec-row">
+  <div>
+    <div class="eyebrow">Team Management</div>
+    <div class="sec-title" style="margin-bottom:0">Staff <em>Roster</em></div>
+  </div>
+  <button class="btn-primary" onclick="showModal('addStaff',null)">+ Add Staff Member</button>
+</div>
+<div class="gold-line"></div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px">
+${active.map((s,i)=>{
+  const onLeave=s.leaves.some(l=>l.date===TODAY);
+  const bkCount=bks.filter(b=>b.thId===s.id&&b.date===TODAY&&b.status!=='cancelled').length;
+  return `<div style="background:${i%2===0?'#fff':'var(--linen)'};border:1px solid var(--border-soft);padding:26px">
+    <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px">
+      <div class="av" style="width:50px;height:50px;background:${s.photo?'transparent':avColor(i)};color:var(--cream);font-size:15px;letter-spacing:1px;flex-shrink:0;overflow:hidden">${s.photo?`<img src="${s.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:s.av}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--dark)">${s.name}</div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:2px;text-transform:uppercase">${s.role}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold);margin-top:3px">${'\u2605'.repeat(Math.floor(s.rating))} ${s.rating}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+        ${onLeave?'<span style="font-size:9px;color:var(--red);letter-spacing:2px;text-transform:uppercase">On Leave</span>':'<span style="font-size:9px;color:var(--green);letter-spacing:2px;text-transform:uppercase">Available</span>'}
+        <div style="display:flex;gap:5px">
+          <button class="btn-outline" style="font-size:9px;padding:4px 10px" onclick="showModal('editStaff','${s.id}')">Edit</button>
+          <button class="btn-danger" style="font-size:9px;padding:4px 10px" onclick="deactivateStaff('${s.id}')">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;padding-top:12px;border-top:1px solid var(--border-soft)">
+      <div><div style="font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:3px">Specialisation</div><div style="color:var(--mauve);font-weight:300">${s.spec}</div></div>
+      <div><div style="font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:3px">Today's Bookings</div><div style="color:var(--dark);font-weight:400">${bkCount}</div></div>
+    </div>
+    ${s.leaves.length>0?`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft)">
+      <div class="eyebrow" style="margin-bottom:8px">Leave Record</div>
+      ${s.leaves.map(l=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--mauve)">${l.date} \u00b7 <span style="text-transform:capitalize">${l.type}</span><span style="color:var(--muted)">${l.reason}</span></div>`).join('')}
+    </div>`:''}
+    <button class="btn-outline" style="margin-top:14px;font-size:10px" onclick="addLeaveUI('${s.id}')">+ Mark Leave</button>
+  </div>`;
+}).join('')}
+</div>
+${inactive.length>0?`<div style="margin-top:12px">
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Inactive Staff (${inactive.length})</div>
+  <div style="display:grid;gap:2px">
+    ${inactive.map(s=>`<div style="background:var(--linen);border:1px solid var(--border-soft);padding:14px 20px;display:flex;align-items:center;gap:12px;opacity:0.65">
+      <div class="av" style="width:36px;height:36px;background:var(--muted);color:var(--cream);font-size:11px;flex-shrink:0">${s.av}</div>
+      <div style="flex:1"><div style="font-size:13px;color:var(--dark);font-weight:400">${s.name}</div><div style="font-size:10px;color:var(--muted);letter-spacing:1px">${s.role} \u00b7 Removed ${s.removedOn||'recently'}</div></div>
+      <button class="btn-outline" style="font-size:9px;padding:5px 12px;color:var(--green);border-color:rgba(90,154,90,.3)" onclick="reactivateStaff('${s.id}')">Reactivate</button>
+    </div>`).join('')}
+  </div>
+</div>`:''}`;
+}
+
+function renderAnalytics(){
+  const byCat={Massage:0,Wellness:0,Beauty:0};
+  bks.forEach(b=>{const s=svcs.find(sv=>sv.id===b.svcId);if(s)byCat[s.cat]=(byCat[s.cat]||0)+b.amt;});
+  const total=Object.values(byCat).reduce((a,v)=>a+v,0);
+  const topCust=[...custs].sort((a,b)=>b.spend-a.spend).slice(0,5);
+  const noShows=bks.filter(b=>b.status==='no-show').length;
+  const completed=bks.filter(b=>b.status==='completed').length;
+  const totalDone=noShows+completed;
+  const noShowRate=totalDone>0?Math.round(noShows/totalDone*100):0;
+  return `
+<div>
+  <div class="eyebrow">Business Intelligence</div>
+  <div class="sec-title">Performance <em>Analytics</em></div>
+  <div class="gold-line"></div>
+</div>
+<div class="stats-grid" style="margin-bottom:2px">
+  <div class="stat-card">
+    <div class="stat-label">Completed bookings</div>
+    <div class="stat-val">${completed}</div>
+    <div class="stat-sub">All time</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">No-show rate</div>
+    <div class="stat-val" style="color:${noShowRate>10?'var(--red)':noShowRate>5?'var(--amber)':'var(--green)'}">${noShowRate}<span style="font-size:1rem;color:var(--muted)">%</span></div>
+    <div class="stat-sub">${noShows} no-show${noShows!==1?'s':''} of ${totalDone} resolved</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Pay-now bookings</div>
+    <div class="stat-val">${bks.filter(b=>b.payMode==='online').length}</div>
+    <div class="stat-sub">vs ${bks.filter(b=>b.payMode==='venue').length} pay-at-venue</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Reliability score</div>
+    <div class="stat-val" style="color:${settings.reliabilityScore>=90?'var(--green)':'var(--amber)'}">${settings.reliabilityScore}<span style="font-size:1rem;color:var(--muted)">%</span></div>
+    <div class="stat-sub">Auto-accept ${settings.autoAccept?'active':'paused'}</div>
+  </div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+  <div class="card">
+    <div class="eyebrow">Revenue by Category</div>
+    ${Object.entries(byCat).map(([cat,amt])=>{
+      const pct=total?Math.round(amt/total*100):0;
+      return `<div style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+          <span style="color:var(--mauve)">${cat}</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:15px">${fmtINR(amt)}</span>
+        </div>
+        <div class="pb"><div class="pf" style="width:${pct}%;background:linear-gradient(90deg,var(--rose),var(--terra))"></div></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px">${pct}% of total</div>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="card" style="background:var(--linen)">
+    <div class="eyebrow">Top Clients by Spend</div>
+    ${topCust.map((c,i)=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:300;color:var(--muted);width:20px;text-align:center">${i+1}</div>
+      <div class="av" style="width:32px;height:32px;background:${avColor(i)};color:var(--cream);font-size:10px;flex-shrink:0">${initials(c.name)}</div>
+      <div style="flex:1"><div style="font-size:13px;color:var(--dark);font-weight:400">${c.name}</div><div style="font-size:10px;color:var(--muted)">${c.visits} visits${(c.noShows||0)>0?` · <span style="color:var(--red)">${c.noShows} no-show${c.noShows>1?'s':''}</span>`:''}</div></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--terra)">${fmtINR(c.spend)}</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Service Popularity</div>
+    ${svcs.map(s=>{
+      const cnt=bks.filter(b=>b.svcId===s.id).length;
+      const maxCnt=Math.max(...svcs.map(sv=>bks.filter(b=>b.svcId===sv.id).length),1);
+      return `<div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+          <span style="color:var(--mauve)">${s.name}</span>
+          <span style="color:var(--muted);font-size:10px">${cnt} booking${cnt!==1?'s':''}</span>
+        </div>
+        <div class="pb"><div class="pf" style="width:${Math.round(cnt/maxCnt*100)}%;background:var(--rose)"></div></div>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="card" style="background:var(--linen)">
+    <div class="eyebrow">Payment Summary</div>
+    ${['paid','partial','unpaid','pay-at-venue','refunded'].map(p=>{
+      const cnt=bks.filter(b=>b.pay===p).length;
+      const amt=bks.filter(b=>b.pay===p).reduce((s,b)=>s+b.amt,0);
+      const [bg,fg]=PAY_COLORS[p]||['var(--linen)','var(--muted)','var(--border-soft)'];
+      return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+        <div style="width:8px;height:8px;background:${fg};flex-shrink:0"></div>
+        <div style="flex:1;font-size:12px;color:var(--mauve);text-transform:capitalize">${p}</div>
+        <div style="font-size:11px;color:var(--muted)">${cnt} booking${cnt!==1?'s':''}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--dark)">${fmtINR(amt)}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>`;}
+
+function renderWaitlist(){
+  const wlItems=[];
+  svcs.forEach(s=>s.slots.forEach(sl=>{
+    if(sl.wl.length>0)sl.wl.forEach((cid,i)=>{
+      const c=custs.find(x=>x.id===cid);
+      wlItems.push({svc:s.name,svcId:s.id,time:sl.time,cid,cName:c?.name||cid,pos:i+1,full:sl.conf+sl.holds>=sl.cap});
+    });
+  }));
+  return `
+<div class="card">
+  <div class="eyebrow">Queue Management</div>
+  <div class="sec-title">Waitlist <em>Tracker</em></div>
+  <div class="gold-line"></div>
+  ${wlItems.length===0
+    ?`<div style="padding:32px;text-align:center;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">No clients on waitlist</div>`
+    :`<table class="tbl">
+      <thead><tr><th>Position</th><th>Client</th><th>Service</th><th>Slot</th><th>Slot Status</th><th>Action</th></tr></thead>
+      <tbody>
+      ${wlItems.map(w=>`<tr>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--gold)">#${w.pos}</td>
+        <td style="color:var(--dark);font-weight:400">${w.cName}</td>
+        <td>${w.svc}</td>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold)">${w.time}</td>
+        <td>${w.full?`<span style="font-size:9px;color:var(--red);letter-spacing:1px;text-transform:uppercase">Full</span>`:`<span style="font-size:9px;color:var(--green);letter-spacing:1px;text-transform:uppercase">Available</span>`}</td>
+        <td><button class="btn-danger" onclick="removeWL('${w.svcId}','${w.time}','${w.cid}')">Remove</button></td>
+      </tr>`).join('')}
+      </tbody>
+    </table>`}
+</div>`;
+}
+
+function renderDocuments(){
+  const statusCfg={
+    verified:{fg:'#3a7a3a',bg:'rgba(90,154,90,.1)',border:'rgba(90,154,90,.2)',label:'✔ Verified'},
+    expiring:{fg:'#8a6200',bg:'rgba(184,134,11,.1)',border:'rgba(184,134,11,.2)',label:'⚠ Expiring'},
+    pending: {fg:'var(--red)',bg:'rgba(192,80,80,.1)',border:'rgba(192,80,80,.2)',label:'⊘ Pending'},
+    uploaded:{fg:'#3a4aaa',bg:'rgba(100,120,200,.1)',border:'rgba(100,120,200,.2)',label:'↑ Under Review'},
+  };
+  const expiring=docs.filter(d=>d.status==='expiring'||d.status==='pending').length;
+  return `
+<div class="sec-row">
+  <div>
+    <div class="eyebrow">Compliance & Licensing</div>
+    <div class="sec-title" style="margin-bottom:0">Business <em>Documents</em></div>
+  </div>
+  <button class="btn-primary" onclick="showModal('uploadDoc',null)">+ Upload Document</button>
+</div>
+<div class="gold-line"></div>
+${expiring>0?`<div style="background:rgba(184,134,11,.06);border:1px solid rgba(184,134,11,.2);padding:14px 18px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+  <span style="color:var(--amber);font-size:14px">⚠</span>
+  <div style="font-size:12px;color:var(--dark)">${expiring} document${expiring!==1?'s':''} require attention — upload renewed copies to keep your listing active.</div>
+</div>`:''}
+<div class="card" style="padding:0;overflow:hidden">
+  <table class="tbl">
+    <thead><tr><th>Document</th><th>Category</th><th>Status</th><th>Expiry</th><th>File</th><th>Action</th></tr></thead>
+    <tbody>
+    ${docs.map(d=>{
+      const cfg=statusCfg[d.status]||statusCfg.pending;
+      return `<tr>
+        <td style="color:var(--dark);font-weight:400">${d.name}</td>
+        <td><span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">${d.type}</span></td>
+        <td><span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;background:${cfg.bg};color:${cfg.fg};border:1px solid ${cfg.border}">${cfg.label}</span></td>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:${d.status==='expiring'?'var(--terra)':'var(--mauve)'}">${d.expiry}</td>
+        <td style="font-size:11px;color:var(--muted)">${d.fileName?`<span style="color:var(--terra)">📎 ${d.fileName}</span>`:'—'}</td>
+        <td><button class="btn-outline" style="font-size:9px;padding:4px 10px" onclick="showModal('uploadDoc','${d.id}')">
+          ${d.status==='verified'?'Replace':'Upload'}
+        </button></td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>
+</div>
+<div style="margin-top:8px;font-size:11px;color:var(--muted);padding:0 4px;line-height:1.6">
+  Accepted formats: PDF, JPG, PNG · Max 10MB per file · Uploads are reviewed by the platform team within 1–2 business days.
+</div>`;
+}
+
+function renderReviews(){
+  const avg=(reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1);
+  return `
+<div style="display:grid;grid-template-columns:220px 1fr;gap:2px;align-items:start">
+  <div class="card" style="background:var(--dark);text-align:center;padding:32px">
+    <div class="eyebrow" style="color:rgba(212,175,122,.5)">Average Rating</div>
+    <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:300;color:var(--cream);line-height:1">${avg}</div>
+    <div style="color:var(--gold);font-size:1.3rem;margin:8px 0;letter-spacing:4px">${'★'.repeat(Math.round(avg))}</div>
+    <div style="font-size:10px;color:rgba(212,175,122,.4);letter-spacing:2px">${reviews.length} REVIEWS</div>
+    <div style="margin-top:20px">
+      ${[5,4,3,2,1].map(r=>{
+        const cnt=reviews.filter(rv=>rv.rating===r).length;
+        const pct=Math.round(cnt/reviews.length*100);
+        return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:10px;color:rgba(212,175,122,.5);width:12px">${r}</span>
+          <div class="pb" style="flex:1;background:rgba(255,255,255,.08)"><div class="pf" style="width:${pct}%;background:var(--gold)"></div></div>
+          <span style="font-size:10px;color:rgba(212,175,122,.4);width:16px">${cnt}</span>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+  <div>
+    <div class="eyebrow" style="margin-bottom:12px">Guest Reviews</div>
+    ${reviews.map(r=>`<div class="review-card" style="margin-bottom:2px;background:${r.rating===5?'#fff':'var(--linen)'}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-size:14px;color:var(--dark);font-weight:400">${r.client}</div>
+          <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:2px">${r.service} · ${r.date}</div>
+        </div>
+        <div style="color:var(--gold);letter-spacing:2px">${'★'.repeat(r.rating)}<span style="color:var(--linen)">${'★'.repeat(5-r.rating)}</span></div>
+      </div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--mauve);line-height:1.7">"${r.text}"</div>
+    </div>`).join('')}
+  </div>
+</div>`;
+}
+
+function renderSettings(){
+  const reqsMet=[
+    {label:'Calendar updated within 24h',    met:true},
+    {label:'No unresolved complaints (30d)',  met:true},
+    {label:'Cancellation rate below 5%',      met:settings.reliabilityScore>=85},
+    {label:'Commission invoices settled',     met:!payouts.some(p=>p.status==='pending')},
+  ];
+  const allMet=reqsMet.every(r=>r.met);
+  return `
+<div>
+  <div class="eyebrow">Configuration</div>
+  <div class="sec-title">Spa <em>Settings</em></div>
+  <div class="gold-line"></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="eyebrow" style="margin-bottom:0">Spa Information</div>
+      <button class="btn-primary" style="font-size:9px;padding:7px 16px" onclick="saveProfileSettings()">Save Changes</button>
+    </div>
+    <div style="display:grid;gap:14px">
+      ${[
+        ['spaName','Spa Name','text',settings.spaName],
+        ['owner','Owner / Contact Name','text',settings.owner],
+        ['phone','Phone','tel',settings.phone],
+        ['email','Email','email',settings.email],
+        ['city','City','text',settings.city],
+      ].map(([id,label,type,val])=>`
+      <div style="padding-bottom:12px;border-bottom:1px solid var(--border-soft)">
+        <div class="lbl">${label}</div>
+        <input type="${type}" class="inp" id="set-${id}" value="${val}">
+      </div>`).join('')}
+      <div style="padding-bottom:12px;border-bottom:1px solid var(--border-soft)">
+        <div class="lbl">Description</div>
+        <textarea class="inp" id="set-desc" rows="3" style="resize:vertical;line-height:1.6">${settings.desc}</textarea>
+      </div>
+      <div style="padding-bottom:12px;border-bottom:1px solid var(--border-soft)">
+        <div class="lbl">Opening Time</div>
+        <input type="time" class="inp" id="set-open" value="${settings.open}">
+      </div>
+      <div style="padding-bottom:12px;border-bottom:1px solid var(--border-soft)">
+        <div class="lbl">Closing Time</div>
+        <input type="time" class="inp" id="set-close" value="${settings.close}">
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border-soft)">
+      <div class="eyebrow" style="margin-bottom:12px">Storefront Photos</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">These photos are shown to customers on your listing. Upload up to 8 high-quality images. First image will be your cover photo.</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px" id="photo-grid">
+        ${(settings.photos||[]).map((p,i)=>`
+        <div style="position:relative;aspect-ratio:1;background:var(--linen);border:1px solid var(--border-soft);overflow:hidden">
+          <img src="${p}" style="width:100%;height:100%;object-fit:cover">
+          ${i===0?`<div style="position:absolute;top:4px;left:4px;font-size:8px;letter-spacing:1px;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:2px 6px">Cover</div>`:''}
+          <button onclick="removePhoto(${i})" style="position:absolute;top:4px;right:4px;background:rgba(46,26,26,.7);border:none;color:var(--cream);cursor:pointer;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center">✕</button>
+        </div>`).join('')}
+        ${(settings.photos||[]).length<8?`
+        <label style="aspect-ratio:1;border:1px dashed var(--border-mid);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:6px;background:var(--cream);transition:border-color .2s" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border-mid)'">
+          <span style="font-size:20px;color:var(--muted)">+</span>
+          <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Add Photo</span>
+          <input type="file" accept="image/*" multiple style="display:none" onchange="handlePhotoUpload(event)">
+        </label>`:''}
+      </div>
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px">JPG, PNG or WEBP · Max 5MB per image · Recommended 1200×800px</div>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:2px">
+
+    <div class="card" style="background:${settings.autoAccept?'rgba(90,154,90,.04)':'#fff'};border:1px solid ${settings.autoAccept?'rgba(90,154,90,.25)':'var(--border-soft)'}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div style="flex:1">
+          <div class="eyebrow" style="color:${settings.autoAccept?'#3a7a3a':'var(--gold)'}">Instant Booking (Auto-Accept)</div>
+          <div style="font-size:13px;color:var(--dark);font-weight:400;margin-bottom:4px">${settings.autoAccept?'Enabled — slots confirm on payment':'Disabled — manual accept required'}</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">${settings.autoAccept?'Bookings confirm the moment a user pays. Your "Instant Booking" badge is visible on your listing.':'You must accept each booking within 30 minutes. No-response auto-cancels and refunds the user.'}</div>
+        </div>
+        <button onclick="toggleAutoAccept()" style="background:${settings.autoAccept?'rgba(90,154,90,.1)':'rgba(192,80,80,.08)'};color:${settings.autoAccept?'#3a7a3a':'var(--red)'};border:1px solid ${settings.autoAccept?'rgba(90,154,90,.25)':'rgba(192,80,80,.2)'};padding:8px 14px;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;flex-shrink:0;transition:all .2s">${settings.autoAccept?'Turn Off':'Turn On'}</button>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft)">
+        <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Requirements</div>
+        ${reqsMet.map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:${r.met?'#3a7a3a':'var(--red)'}">
+          <span>${r.met?'✔':'✕'}</span><span>${r.label}</span>
+        </div>`).join('')}
+        ${!allMet?`<div style="margin-top:8px;font-size:11px;color:var(--red);background:rgba(192,80,80,.06);border:1px solid rgba(192,80,80,.15);padding:8px 10px">Auto-accept paused until all requirements are met.</div>`:''}
+        <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:12px;color:var(--mauve)">
+          <span>Reliability score</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:${settings.reliabilityScore>=90?'var(--green)':settings.reliabilityScore>=75?'var(--amber)':'var(--red)'}">${settings.reliabilityScore}%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--linen)">
+      <div class="eyebrow">Cancellation Policy</div>
+      ${[
+        ['More than 24h before','Full refund'],
+        ['2h – 24h before','50% refund or wallet credit'],
+        ['Less than 2h before','No refund (pay-now). No charge (pay-at-venue).'],
+      ].map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:12px">
+        <span style="color:var(--mauve)">${k}</span>
+        <span style="color:var(--dark);font-weight:400;text-align:right">${v}</span>
+      </div>`).join('')}
+      <div style="margin-top:10px;font-size:11px;color:var(--muted)">These policies are shown to customers at checkout. Contact support to adjust your policy windows.</div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Notification Preferences</div>
+      ${Object.entries({bookings:'New Bookings',reviews:'New Reviews',documents:'Document Alerts',payments:'Payment Updates'}).map(([k,label])=>`
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-soft)">
+        <span style="font-size:12px;color:var(--mauve)">${label}</span>
+        <span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;background:${settings.notif?.[k]?'rgba(90,154,90,.1)':'rgba(176,144,128,.1)'};color:${settings.notif?.[k]?'#3a7a3a':'var(--muted)'};border:1px solid ${settings.notif?.[k]?'rgba(90,154,90,.2)':'var(--border-soft)'}">${settings.notif?.[k]?'On':'Off'}</span>
+      </div>`).join('')}
+    </div>
+
+  </div>
+</div>`;}
+
+function renderAudit(){
+  return `
+<div class="card">
+  <div class="eyebrow">System Log</div>
+  <div class="sec-title">Audit <em>Trail</em></div>
+  <div class="gold-line"></div>
+  <table class="tbl">
+    <thead><tr><th>Time</th><th>Action</th><th>Entity</th><th>Detail</th><th>By</th></tr></thead>
+    <tbody>
+    ${audit.slice(0,50).map((a,i)=>`<tr>
+      <td style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:14px">${a.ts}</td>
+      <td style="color:var(--dark);font-weight:400">${a.action}</td>
+      <td style="font-family:monospace;font-size:11px;color:var(--muted)">${a.entity}</td>
+      <td style="font-size:12px">${a.detail}</td>
+      <td style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase">${a.user}</td>
+    </tr>`).join('')}
+    </tbody>
+  </table>
+</div>`;
+}
+
+// ─── MODALS ───────────────────────────────────────────────────────────────
+function renderNewBookingModal(){
+  const activeStaff=staff.filter(s=>!s.inactive&&!s.leaves.some(l=>l.date===TODAY&&l.type==='full'));
+  return `
+<div style="margin-bottom:24px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">New Booking</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--dark)">Reserve a <em style="font-style:italic;color:var(--rose)">Slot</em></div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:16px">
+  <div><div class="lbl">Client</div><select class="inp" id="bk-cust">${custs.map(c=>`<option value="${c.id}">${c.name} · ${c.phone}</option>`).join('')}</select></div>
+  <div><div class="lbl">Service</div><select class="inp" id="bk-svc" onchange="updateSlots()">${svcs.filter(s=>s.active).map(s=>`<option value="${s.id}">${s.name} — ${fmtINR(s.price)} (${s.dur})</option>`).join('')}</select></div>
+  <div><div class="lbl">Time Slot</div><select class="inp" id="bk-slot">${svcs.filter(s=>s.active)[0]?.slots.map(sl=>`<option value="${sl.time}" ${sl.conf+sl.holds>=sl.cap?'disabled':''}>${sl.time} (${sl.conf}/${sl.cap})${sl.conf+sl.holds>=sl.cap?' — Full':''}</option>`).join('')||''}</select></div>
+  <div><div class="lbl">Therapist</div><select class="inp" id="bk-th">${activeStaff.map(s=>`<option value="${s.id}">${s.name} — ${s.role}</option>`).join('')}</select></div>
+  <div>
+    <div class="lbl">Payment Method</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--mauve);padding:10px 12px;border:1px solid var(--rose);background:rgba(201,137,122,.06)" id="bk-pm-online-lbl">
+        <input type="radio" name="bk-paymode" value="online" checked onchange="updateBookingPayUI()" style="accent-color:var(--rose)"> Online (paid now)
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--mauve);padding:10px 12px;border:1px solid var(--border-soft)" id="bk-pm-venue-lbl">
+        <input type="radio" name="bk-paymode" value="venue" onchange="updateBookingPayUI()" style="accent-color:var(--rose)"> Pay at venue
+      </label>
+    </div>
+  </div>
+  <div id="bk-paid-row" style="display:none;align-items:center;gap:10px;padding:10px 14px;background:var(--linen);border:1px solid var(--border-soft)">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--mauve)">
+      <input type="checkbox" id="bk-mark-paid" style="accent-color:var(--rose)"> Mark as already paid (cash / UPI at desk)
+    </label>
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-top:24px">
+  <button class="btn-primary" style="flex:1" onclick="confirmNewBooking()">Confirm Booking</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;
+}
+
+function updateBookingPayUI(){
+  const isOnline=document.querySelector('input[name="bk-paymode"]:checked')?.value==='online';
+  const paidRow=document.getElementById('bk-paid-row');
+  const onlineLbl=document.getElementById('bk-pm-online-lbl');
+  const venueLbl=document.getElementById('bk-pm-venue-lbl');
+  if(paidRow) paidRow.style.display=isOnline?'none':'flex';
+  if(onlineLbl) onlineLbl.style.border=`1px solid ${isOnline?'var(--rose)':'var(--border-soft)'}`;
+  if(onlineLbl) onlineLbl.style.background=isOnline?'rgba(201,137,122,.06)':'transparent';
+  if(venueLbl)  venueLbl.style.border=`1px solid ${!isOnline?'var(--rose)':'var(--border-soft)'}`;
+  if(venueLbl)  venueLbl.style.background=!isOnline?'rgba(201,137,122,.06)':'transparent';
+}
+
+function updateSlots(){
+  const svc=svcs.find(s=>s.id===document.getElementById('bk-svc')?.value);
+  const sel=document.getElementById('bk-slot');
+  if(!svc||!sel) return;
+  sel.innerHTML=svc.slots.map(sl=>`<option value="${sl.time}" ${sl.conf+sl.holds>=sl.cap?'disabled':''}>${sl.time} (${sl.conf}/${sl.cap})${sl.conf+sl.holds>=sl.cap?' — Full':''}</option>`).join('');
+}
+
+function confirmNewBooking(){
+  const cid=document.getElementById('bk-cust')?.value;
+  const svcId=document.getElementById('bk-svc')?.value;
+  const time=document.getElementById('bk-slot')?.value;
+  const thId=document.getElementById('bk-th')?.value;
+  const payMode=document.querySelector('input[name="bk-paymode"]:checked')?.value||'online';
+  const markPaidNow=payMode==='venue'&&document.getElementById('bk-mark-paid')?.checked;
+  if(!cid||!svcId||!time||!thId){toast('Please fill in all fields','⚠');return;}
+  const svc=svcs.find(s=>s.id===svcId),cust=custs.find(c=>c.id===cid),th=staff.find(s=>s.id===thId);
+  if(!svc||!cust||!th) return;
+  const slot=svc.slots.find(sl=>sl.time===time);
+  if(!slot||slot.conf+slot.holds>=slot.cap){toast('This slot is currently full.','⚠');return;}
+  const id='BK'+String(bks.length+100).padStart(3,'0');
+  const isVenue=payMode==='venue';
+  const payStatus=isVenue?(markPaidNow?'paid':'pay-at-venue'):'paid';
+  const status=settings.autoAccept&&!isVenue?'confirmed':'pending';
+  bks.push({id,cid,name:cust.name,svcId,svc:svc.name,th:th.name.split(' ')[0]+' '+th.name.split(' ')[1][0]+'.',thId,time,date:TODAY,status,pay:payStatus,payMode,amt:svc.price,outcome:null,createdAt:Date.now(),dispute:null});
+  svcs=svcs.map(s=>s.id!==svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==time?sl:{...sl,conf:sl.conf+1})});
+  custs=custs.map(c=>c.id!==cid?c:{...c,visits:c.visits+1,spend:c.spend+svc.price});
+  log('Booking Created',id,`${cust.name} · ${svc.name} · ${time} · ${payMode}`);
+  addNotif('booking',`Booking ${status==='confirmed'?'confirmed':'pending'}: ${cust.name} · ${svc.name} · ${time}`);
+  closeModal();render();
+  toast(`${id} ${status==='confirmed'?'confirmed':'pending vendor acceptance'} for ${cust.name}`,'✦');
+}
+
+function renderCustomerModal(cid){
+  const c=custs.find(x=>x.id===cid);
+  if(!c) return'<p>Not found</p>';
+  const custBks=bks.filter(b=>b.cid===cid);
+  return `
+<div style="display:flex;align-items:center;gap:14px;margin-bottom:24px">
+  <div class="av" style="width:54px;height:54px;background:var(--rose);color:var(--cream);font-size:18px">${initials(c.name)}</div>
+  <div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--dark)">${c.name}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">${c.email} · ${c.phone}</div>
+  </div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:20px">
+  <div style="background:var(--linen);padding:18px;text-align:center"><div class="eyebrow">Total Visits</div><div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:300;color:var(--dark)">${c.visits}</div></div>
+  <div style="background:var(--dark);padding:18px;text-align:center"><div class="eyebrow" style="color:rgba(212,175,122,.5)">Total Spend</div><div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:300;color:var(--gold)">${fmtINR(c.spend)}</div></div>
+</div>
+<div style="display:grid;gap:12px;margin-bottom:20px">
+  <div style="padding-bottom:10px;border-bottom:1px solid var(--border-soft)"><div class="eyebrow">Preferences</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--mauve)">${c.pref}</div></div>
+  ${c.allergy!=='None'?`<div><div class="eyebrow">Allergy Alert</div><span style="font-size:10px;color:#8a6200;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.2);padding:5px 12px;letter-spacing:2px;text-transform:uppercase">${c.allergy}</span></div>`:''}
+</div>
+<div class="eyebrow" style="margin-bottom:10px">Booking History</div>
+${custBks.length===0?`<p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:14px">No bookings recorded yet</p>`:
+custBks.map(b=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:12px">
+  <span style="color:var(--mauve)">${b.svc}</span>
+  <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:14px">${b.time}</span>
+  <span>${stTag(b.status)}</span>
+  <span style="color:var(--terra)">${fmtINR(b.amt)}</span>
+</div>`).join('')}
+<button class="btn-ghost" style="margin-top:20px;width:100%;text-align:center" onclick="closeModal()">Close</button>`;
+}
+
+function renderBookingDetail(bkId){
+  const b=bks.find(x=>x.id===bkId);
+  if(!b) return'<p>Not found</p>';
+  const isActive=!['cancelled','completed','no-show'].includes(b.status);
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Booking Details</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--dark)">${b.id}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:0">
+  ${[['Client',b.name],['Service',b.svc],['Therapist',b.th]].map(([k,v])=>`
+  <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">${k}</span>
+    <span style="font-size:13px;color:var(--mauve);font-weight:300">${v}</span>
+  </div>`).join('')}
+  <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Time</span>
+    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--gold)">${b.time}</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Status</span>
+    ${stTag(b.status)}
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Payment</span>
+    ${payTag(b.pay)}
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Payment mode</span>
+    <span style="font-size:11px;color:var(--mauve);text-transform:capitalize">${b.payMode==='venue'?'Pay at venue':'Online payment'}</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:14px 0">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Amount</span>
+    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--terra)">${fmtINR(b.amt)}</span>
+  </div>
+</div>
+${isActive?`
+<div style="margin-top:4px;margin-bottom:12px">
+  <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Mark outcome</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+    <button style="background:rgba(90,154,90,.1);color:#3a7a3a;border:1px solid rgba(90,154,90,.25);padding:10px 6px;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;transition:all .2s" onmouseover="this.style.background='rgba(90,154,90,.2)'" onmouseout="this.style.background='rgba(90,154,90,.1)'" onclick="markCompleted('${b.id}');closeModal()">✔ Completed</button>
+    <button style="background:rgba(120,80,120,.1);color:#7a3a7a;border:1px solid rgba(120,80,120,.25);padding:10px 6px;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;transition:all .2s" onmouseover="this.style.background='rgba(120,80,120,.2)'" onmouseout="this.style.background='rgba(120,80,120,.1)'" onclick="markNoShow('${b.id}');closeModal()">⊘ No-show</button>
+    <button class="btn-danger" style="padding:10px 6px;font-size:10px;letter-spacing:1px" onclick="cancelBk('${b.id}');closeModal()">✕ Cancel</button>
+  </div>
+</div>`:''}
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+  ${b.pay==='unpaid'&&isActive?`<button class="btn-warn" onclick="markPaid('${b.id}');closeModal()">Mark as Paid</button>`:''}
+  ${b.pay==='pay-at-venue'&&isActive?`<button class="btn-warn" onclick="markPaid('${b.id}');closeModal()">Collected at Venue</button>`:''}
+  <button class="btn-ghost" style="margin-left:auto" onclick="closeModal()">Close</button>
+</div>`;}
+
+// ─── ACTIONS ──────────────────────────────────────────────────────────────
+function cancelBk(id){
+  const b=bks.find(x=>x.id===id);if(!b||b.status==='cancelled')return;
+  bks=bks.map(x=>x.id!==id?x:{...x,status:'cancelled',outcome:'cancelled_by_vendor'});
+  svcs=svcs.map(s=>{if(s.id!==b.svcId)return s;return{...s,slots:s.slots.map(sl=>sl.time!==b.time?sl:{...sl,conf:Math.max(0,sl.conf-1)})};});
+  log('Booking Cancelled',id,`${b.name} · ${b.svc} · ${b.time}`);
+  addNotif('booking',`Booking ${id} cancelled: ${b.name}`);
+  render();toast(`Booking ${id} cancelled — slot reopened`,'✦');
+}
+function markPaid(id){
+  const b=bks.find(x=>x.id===id);
+  bks=bks.map(x=>x.id!==id?x:{...x,pay:'paid'});
+  log('Payment Received',id,`${b?.name} · ${fmtINR(b?.amt||0)}`);
+  addNotif('payment',`Payment received: ${b?.name} · ${fmtINR(b?.amt||0)}`);
+  render();toast(`Payment recorded for ${id}`,'✦');
+}
+function markCompleted(id){
+  const b=bks.find(x=>x.id===id);if(!b)return;
+  bks=bks.map(x=>x.id!==id?x:{...x,status:'completed',outcome:'completed'});
+  const commAmt=Math.round(b.amt*COMMISSION_RATE);
+  const existingPO=payouts.find(p=>p.status==='pending');
+  if(existingPO){
+    payouts=payouts.map(p=>p.status!=='pending'?p:{...p,totalRev:p.totalRev+b.amt,commission:p.commission+commAmt,netPayout:p.netPayout+(b.amt-commAmt)});
+  }
+  log('Service Completed',id,`${b.name} · ${b.svc} · commission ₹${commAmt}`);
+  addNotif('payment',`Service completed: ${b.name} · Commission ₹${commAmt} due`);
+  render();toast(`Marked complete — ₹${commAmt} commission logged`,'✦');
+}
+function markNoShow(id){
+  const b=bks.find(x=>x.id===id);if(!b)return;
+  bks=bks.map(x=>x.id!==id?x:{...x,status:'no-show',outcome:'no_show'});
+  custs=custs.map(c=>c.id!==b.cid?c:{...c,noShows:(c.noShows||0)+1});
+  svcs=svcs.map(s=>{if(s.id!==b.svcId)return s;return{...s,slots:s.slots.map(sl=>sl.time!==b.time?sl:{...sl,conf:Math.max(0,sl.conf-1)})};});
+  log('No-Show',id,`${b.name} · ${b.svc} · trust score reduced`);
+  addNotif('warning',`No-show recorded: ${b.name} — trust score updated`);
+  render();toast(`No-show recorded for ${b.name}`,'⚠');
+}
+function toggleAutoAccept(){
+  settings={...settings,autoAccept:!settings.autoAccept};
+  log('Settings Changed','autoAccept',`Instant booking ${settings.autoAccept?'enabled':'disabled'}`);
+  addNotif('booking',`Instant booking ${settings.autoAccept?'enabled':'disabled'}`);
+  render();toast(`Instant booking ${settings.autoAccept?'enabled':'disabled'}`,'⊛');
+}
+function removeWL(svcId,time,cid){
+  svcs=svcs.map(s=>s.id!==svcId?s:{...s,slots:s.slots.map(sl=>sl.time!==time?sl:{...sl,wl:sl.wl.filter(id=>id!==cid)})});
+  log('Waitlist Removed',svcId+' · '+time,'Customer removed');
+  render();toast('Removed from waitlist','✦');
+}
+function addLeaveUI(staffId){
+  showModal('addLeave',staffId);
+}
+function confirmLeave(staffId){
+  const date=document.getElementById('leave-date')?.value;
+  const type=document.getElementById('leave-type')?.value;
+  const reason=document.getElementById('leave-reason')?.value||'Personal';
+  if(!date||!type){toast('Please fill in all fields','⚠');return;}
+  staff=staff.map(s=>s.id!==staffId?s:{...s,leaves:[...s.leaves,{date,type,reason}]});
+  log('Leave Added',staffId,`Leave marked: ${date} · ${type}`);
+  closeModal();render();toast('Leave added','✦');
+}
+function showPublicPortal(){toast('Customer portal opened (demo)','◎')}
+
+function renderLeaveModal(staffId){
+  const s=staff.find(x=>x.id===staffId);
+  if(!s)return'<p>Not found</p>';
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Mark Leave</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--dark)">${s.name}</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:2px">${s.role}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:16px">
+  <div>
+    <div class="lbl">Leave Date</div>
+    <input type="date" class="inp" id="leave-date" value="${TODAY}" min="${TODAY}">
+  </div>
+  <div>
+    <div class="lbl">Leave Type</div>
+    <select class="inp" id="leave-type">
+      <option value="full">Full day</option>
+      <option value="morning">Morning half</option>
+      <option value="afternoon">Afternoon half</option>
+    </select>
+  </div>
+  <div>
+    <div class="lbl">Reason</div>
+    <input type="text" class="inp" id="leave-reason" placeholder="Personal, Medical, Training…">
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-top:24px">
+  <button class="btn-primary" style="flex:1" onclick="confirmLeave('${staffId}')">Confirm Leave</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;}
+
+function renderPayouts(){
+  const pending=payouts.find(p=>p.status==='pending');
+  const totalEarned=payouts.reduce((s,p)=>s+p.totalRev,0);
+  const totalComm=payouts.reduce((s,p)=>s+p.commission,0);
+  const totalNet=payouts.reduce((s,p)=>s+p.netPayout,0);
+  return `
+<div>
+  <div class="eyebrow">Financial Summary</div>
+  <div class="sec-title">Payouts & <em>Commission</em></div>
+  <div class="gold-line"></div>
+</div>
+
+<div class="stats-grid" style="margin-bottom:2px">
+  <div class="stat-card">
+    <div class="stat-label">Commission Rate</div>
+    <div class="stat-val">${Math.round(COMMISSION_RATE*100)}<span style="font-size:1.2rem;color:var(--muted)">%</span></div>
+    <div class="stat-sub">Platform fee per booking</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Next Payout Due</div>
+    <div class="stat-val" style="color:var(--terra);font-size:1.4rem">${pending?fmtINR(pending.netPayout):'—'}</div>
+    <div class="stat-sub">${pending?`Period: ${pending.period}`:'All settled'}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total Revenue (all time)</div>
+    <div class="stat-val" style="font-size:1.5rem">${fmtINR(totalEarned)}</div>
+    <div class="stat-sub">Gross before commission</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Net Earned (all time)</div>
+    <div class="stat-val" style="color:var(--green);font-size:1.5rem">${fmtINR(totalNet)}</div>
+    <div class="stat-sub">${fmtINR(totalComm)} paid in commission</div>
+  </div>
+</div>
+
+${pending?`
+<div style="background:rgba(184,134,11,.06);border:1px solid rgba(184,134,11,.2);padding:18px 22px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <div>
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:4px">Outstanding Invoice</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dark)">Period ${pending.period}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">Revenue: ${fmtINR(pending.totalRev)} · Commission owed: <span style="color:var(--terra)">${fmtINR(pending.commission)}</span></div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:300;color:var(--terra)">${fmtINR(pending.commission)}</div>
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-top:3px">Due to platform</div>
+  </div>
+</div>`:''}
+
+<div class="card" style="margin-top:2px">
+  <div class="eyebrow">Payout History</div>
+  <table class="tbl">
+    <thead><tr><th>Period</th><th>Gross Revenue</th><th>Commission (${Math.round(COMMISSION_RATE*100)}%)</th><th>Net Payout</th><th>Status</th><th>Paid On</th></tr></thead>
+    <tbody>
+    ${[...payouts].reverse().map(p=>{
+      const isPaid=p.status==='paid';
+      return `<tr>
+        <td style="color:var(--dark);font-weight:400">${p.period}</td>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--mauve)">${fmtINR(p.totalRev)}</td>
+        <td style="color:var(--terra)">${fmtINR(p.commission)}</td>
+        <td style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:${isPaid?'var(--green)':'var(--amber)'}">${fmtINR(p.netPayout)}</td>
+        <td><span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;background:${isPaid?'rgba(90,154,90,.1)':'rgba(184,134,11,.1)'};color:${isPaid?'#3a7a3a':'#8a6200'};border:1px solid ${isPaid?'rgba(90,154,90,.2)':'rgba(184,134,11,.2)'}">${isPaid?'Paid':'Pending'}</span></td>
+        <td style="font-size:12px;color:var(--muted)">${p.paidOn}</td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>
+</div>
+
+<div class="card" style="margin-top:2px;background:var(--linen)">
+  <div class="eyebrow" style="margin-bottom:10px">How commission works</div>
+  ${[
+    ['Pay-now bookings','Platform holds full payment. After 2h dispute window, net amount transferred to your account.'],
+    ['Pay-at-venue bookings','You collect full payment from client. Platform invoices you the commission weekly.'],
+    ['Unpaid invoices','Settlements more than 7 days overdue will pause new bookings on your listing.'],
+    ['Refunds','If a refund is issued by the platform, it is deducted from your next payout.'],
+  ].map(([k,v])=>`
+  <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+    <div style="font-size:11px;font-weight:400;color:var(--dark);min-width:160px;flex-shrink:0">${k}</div>
+    <div style="font-size:12px;color:var(--mauve);line-height:1.6">${v}</div>
+  </div>`).join('')}
+</div>
+
+<div class="card" style="margin-top:2px;border:1px solid ${settings.bank?.accountNumber||settings.bank?.upiId?'rgba(90,154,90,.25)':'rgba(201,137,122,0.35)'}">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+    <div>
+      <div class="eyebrow" style="color:${settings.bank?.accountNumber||settings.bank?.upiId?'#3a7a3a':'var(--terra)'}">
+        ${settings.bank?.accountNumber||settings.bank?.upiId?'Payout Routing — Configured':'Payout Routing — Action Required'}
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">
+        ${settings.bank?.accountNumber||settings.bank?.upiId
+          ?`Payouts sent to: ${settings.bank.preferredMethod==='upi'?settings.bank.upiId:`••••${settings.bank.accountNumber.slice(-4)} · ${settings.bank.bankName||'Bank'}`}`
+          :'Enter your bank account or UPI ID so we know where to send your earnings.'}
+      </div>
+    </div>
+    ${settings.bank?.accountNumber||settings.bank?.upiId?'<span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;background:rgba(90,154,90,.1);color:#3a7a3a;border:1px solid rgba(90,154,90,.2)">✔ Verified</span>':''}
+  </div>
+
+  <div style="margin-bottom:14px">
+    <div class="lbl" style="margin-bottom:8px">Preferred payout method</div>
+    <div style="display:flex;gap:8px">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--mauve);padding:8px 14px;border:1px solid ${(settings.bank?.preferredMethod||'bank')==='bank'?'var(--rose)':'var(--border-soft)'};background:${(settings.bank?.preferredMethod||'bank')==='bank'?'rgba(201,137,122,.06)':'transparent'};transition:all .2s">
+        <input type="radio" name="bank-method" value="bank" ${(settings.bank?.preferredMethod||'bank')==='bank'?'checked':''} onchange="toggleBankMethod(this.value)" style="accent-color:var(--rose)"> Bank Transfer (NEFT/IMPS)
+      </label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--mauve);padding:8px 14px;border:1px solid ${settings.bank?.preferredMethod==='upi'?'var(--rose)':'var(--border-soft)'};background:${settings.bank?.preferredMethod==='upi'?'rgba(201,137,122,.06)':'transparent'};transition:all .2s">
+        <input type="radio" name="bank-method" value="upi" ${settings.bank?.preferredMethod==='upi'?'checked':''} onchange="toggleBankMethod(this.value)" style="accent-color:var(--rose)"> UPI
+      </label>
+    </div>
+  </div>
+
+  <div id="bank-fields-bank" style="display:${(settings.bank?.preferredMethod||'bank')==='bank'?'grid':'none'};gap:12px;grid-template-columns:1fr 1fr">
+    <div style="grid-column:1/-1">
+      <div class="lbl">Account Holder Name</div>
+      <input class="inp" id="bank-name" type="text" value="${settings.bank?.accountName||''}" placeholder="As per bank records">
+    </div>
+    <div>
+      <div class="lbl">Account Number</div>
+      <input class="inp" id="bank-account" type="text" value="${settings.bank?.accountNumber||''}" placeholder="XXXXXXXXXXXX">
+    </div>
+    <div>
+      <div class="lbl">IFSC Code</div>
+      <input class="inp" id="bank-ifsc" type="text" value="${settings.bank?.ifsc||''}" placeholder="SBIN0001234" style="text-transform:uppercase">
+    </div>
+    <div style="grid-column:1/-1">
+      <div class="lbl">Bank Name</div>
+      <input class="inp" id="bank-bankName" type="text" value="${settings.bank?.bankName||''}" placeholder="e.g. State Bank of India">
+    </div>
+  </div>
+
+  <div id="bank-fields-upi" style="display:${settings.bank?.preferredMethod==='upi'?'grid':'none'};gap:12px">
+    <div>
+      <div class="lbl">Business UPI ID</div>
+      <input class="inp" id="bank-upi" type="text" value="${settings.bank?.upiId||''}" placeholder="yourbusiness@upi">
+    </div>
+    <div style="font-size:11px;color:var(--muted);line-height:1.6">Make sure this UPI ID is linked to your business account and can receive large transfers. Payouts above ₹1 lakh may require bank transfer.</div>
+  </div>
+
+  <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="font-size:11px;color:var(--muted);line-height:1.5">Details are encrypted and only used for payout routing. Changes take effect from the next billing cycle.</div>
+    <button class="btn-primary" onclick="saveBankDetails()" style="flex-shrink:0">Save Bank Details</button>
+  </div>
+</div>`;}
+
+function toggleBankMethod(method){
+  document.getElementById('bank-fields-bank').style.display=method==='bank'?'grid':'none';
+  document.getElementById('bank-fields-upi').style.display=method==='upi'?'grid':'none';
+}
+function saveProfileSettings(){
+  const get=id=>document.getElementById('set-'+id)?.value||'';
+  settings={...settings,
+    spaName:get('spaName'),owner:get('owner'),phone:get('phone'),
+    email:get('email'),city:get('city'),desc:get('desc'),
+    open:get('open'),close:get('close'),
+  };
+  log('Settings Updated','Profile','Spa information saved');
+  addNotif('booking','Spa profile updated successfully');
+  render();toast('Profile saved successfully','✦');
+}
+
+function handlePhotoUpload(event){
+  const files=Array.from(event.target.files);
+  const current=settings.photos||[];
+  const remaining=8-current.length;
+  files.slice(0,remaining).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      settings={...settings,photos:[...(settings.photos||[]),e.target.result]};
+      render();
+    };
+    reader.readAsDataURL(file);
+  });
+  if(files.length>remaining) toast(`Only ${remaining} slot${remaining!==1?'s':''} left — some photos skipped`,'⚠');
+}
+
+function removePhoto(idx){
+  settings={...settings,photos:(settings.photos||[]).filter((_,i)=>i!==idx)};
+  log('Photo Removed','Settings','Storefront photo removed');
+  render();toast('Photo removed','✦');
+}
+
+function generateTimeSlots(startH,endH,intervalMin,cap){
+  const slots=[];
+  for(let h=startH;h<endH;h++){
+    for(let m=0;m<60;m+=intervalMin){
+      if(h===endH-1&&m>0&&intervalMin>30)break;
+      const hh=h%12||12;
+      const mm=String(m).padStart(2,'0');
+      const ampm=h<12?'AM':'PM';
+      slots.push({time:`${hh}:${mm} ${ampm}`,cap,conf:0,holds:0,wl:[]});
+    }
+  }
+  return slots;
+}
+
+function renderServiceModal(svcId){
+  const s=svcId?svcs.find(x=>x.id===svcId):null;
+  const isEdit=!!s;
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">${isEdit?'Edit Service':'New Service'}</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--dark)">${isEdit?s.name:'Add a <em style="color:var(--rose)">Service</em>'}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:14px">
+  <div>
+    <div class="lbl">Service Name</div>
+    <input class="inp" id="svc-name" type="text" value="${s?s.name:''}" placeholder="e.g. Hot Stone Therapy">
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div>
+      <div class="lbl">Category</div>
+      <select class="inp" id="svc-cat">
+        ${['Massage','Beauty','Wellness','Yoga','Meditation','Hair','Nails','Other'].map(c=>`<option value="${c}" ${s&&s.cat===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div>
+      <div class="lbl">Duration</div>
+      <select class="inp" id="svc-dur">
+        ${['30 min','45 min','60 min','75 min','90 min','120 min','150 min','180 min'].map(d=>`<option value="${d}" ${s&&s.dur===d?'selected':''}>${d}</option>`).join('')}
+      </select>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div>
+      <div class="lbl">Price (₹)</div>
+      <input class="inp" id="svc-price" type="number" value="${s?s.price:''}" placeholder="1500" min="0">
+    </div>
+    <div>
+      <div class="lbl">Capacity per slot</div>
+      <input class="inp" id="svc-cap" type="number" value="${s?s.slots[0]?.cap||1:1}" min="1" max="20" placeholder="1">
+    </div>
+  </div>
+  <div style="padding:14px;background:var(--linen);border:1px solid var(--border-soft)">
+    <div class="lbl" style="margin-bottom:10px">Daily time slots</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Start hour</div>
+        <select class="inp" id="svc-start" style="padding:8px 10px">
+          ${Array.from({length:14},(_,i)=>i+7).map(h=>`<option value="${h}" ${(!s&&h===9)||false?'selected':''}>${h<12?h+':00 AM':h===12?'12:00 PM':(h-12)+':00 PM'}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px">End hour</div>
+        <select class="inp" id="svc-end" style="padding:8px 10px">
+          ${Array.from({length:14},(_,i)=>i+8).map(h=>`<option value="${h}" ${(!s&&h===21)||false?'selected':''}>${h<12?h+':00 AM':h===12?'12:00 PM':(h-12)+':00 PM'}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Interval</div>
+        <select class="inp" id="svc-interval" style="padding:8px 10px">
+          <option value="30">Every 30 min</option>
+          <option value="60" selected>Every 60 min</option>
+          <option value="90">Every 90 min</option>
+          <option value="120">Every 2 hours</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" class="btn-outline" style="font-size:10px;width:100%" onclick="previewSlots()">Preview slots</button>
+    <div id="slot-preview" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px"></div>
+  </div>
+  ${isEdit?`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--linen);border:1px solid var(--border-soft)">
+    <span style="font-size:12px;color:var(--mauve)">Service status</span>
+    <button onclick="toggleServiceActive('${s.id}')" style="background:${s.active?'rgba(192,80,80,.08)':'rgba(90,154,90,.1)'};color:${s.active?'var(--red)':'#3a7a3a'};border:1px solid ${s.active?'rgba(192,80,80,.2)':'rgba(90,154,90,.2)'};padding:6px 14px;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase">${s.active?'Deactivate':'Activate'}</button>
+  </div>`:''}
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+  <button class="btn-primary" style="flex:1" onclick="confirmServiceSave('${svcId||''}')">
+    ${isEdit?'Save Changes':'Add Service'}
+  </button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;
+}
+
+function previewSlots(){
+  const start=parseInt(document.getElementById('svc-start')?.value||9);
+  const end=parseInt(document.getElementById('svc-end')?.value||21);
+  const interval=parseInt(document.getElementById('svc-interval')?.value||60);
+  const cap=parseInt(document.getElementById('svc-cap')?.value||1);
+  if(end<=start){document.getElementById('slot-preview').innerHTML='<span style="font-size:11px;color:var(--red)">End hour must be after start hour</span>';return;}
+  const slots=generateTimeSlots(start,end,interval,cap);
+  document.getElementById('slot-preview').innerHTML=slots.map(sl=>`<span class="slot-pill">${sl.time}</span>`).join('');
+}
+
+function confirmServiceSave(svcId){
+  const name=document.getElementById('svc-name')?.value?.trim();
+  const cat=document.getElementById('svc-cat')?.value;
+  const dur=document.getElementById('svc-dur')?.value;
+  const price=parseInt(document.getElementById('svc-price')?.value||0);
+  const cap=parseInt(document.getElementById('svc-cap')?.value||1);
+  const start=parseInt(document.getElementById('svc-start')?.value||9);
+  const end=parseInt(document.getElementById('svc-end')?.value||21);
+  const interval=parseInt(document.getElementById('svc-interval')?.value||60);
+  if(!name){toast('Please enter a service name','⚠');return;}
+  if(!price||price<1){toast('Please enter a valid price','⚠');return;}
+  if(end<=start){toast('End hour must be after start hour','⚠');return;}
+  const newSlots=generateTimeSlots(start,end,interval,cap);
+  if(svcId){
+    svcs=svcs.map(s=>s.id!==svcId?s:{...s,name,cat,dur,price,slots:newSlots.map(sl=>{
+      const existing=s.slots.find(e=>e.time===sl.time);
+      return existing?{...existing,cap}:sl;
+    })});
+    log('Service Updated',svcId,`${name} · ${cat} · ${fmtINR(price)}`);
+    toast(`${name} updated`,'✦');
+  } else {
+    const id='s'+Date.now();
+    svcs=[...svcs,{id,name,cat,dur,price,active:true,slots:newSlots}];
+    log('Service Added',id,`${name} · ${cat} · ${fmtINR(price)}`);
+    toast(`${name} added to services`,'✦');
+  }
+  addNotif('booking',`Service ${svcId?'updated':'created'}: ${name}`);
+  closeModal();render();
+}
+
+function toggleServiceActive(svcId){
+  svcs=svcs.map(s=>s.id!==svcId?s:{...s,active:!s.active});
+  const s=svcs.find(x=>x.id===svcId);
+  log('Service '+(s.active?'Activated':'Deactivated'),svcId,s.name);
+  closeModal();render();toast(`${s.name} ${s.active?'activated':'deactivated'}`,'✦');
+}
+
+function renderAddStaffModal(){
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">New Staff Member</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--dark)">Add to <em style="color:var(--rose);font-style:italic">Roster</em></div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:14px">
+  <div>
+    <div class="lbl">Full Name</div>
+    <input class="inp" id="st-name" type="text" placeholder="e.g. Anjali Kumar">
+  </div>
+  <div>
+    <div class="lbl">Role / Title</div>
+    <select class="inp" id="st-role">
+      ${['Senior Therapist','Wellness Therapist','Beauty Specialist','Therapist','Yoga Instructor','Meditation Coach','Hair Stylist','Nail Technician','Receptionist','Manager'].map(r=>`<option value="${r}">${r}</option>`).join('')}
+    </select>
+  </div>
+  <div>
+    <div class="lbl">Specialisations</div>
+    <input class="inp" id="st-spec" type="text" placeholder="e.g. Deep Tissue, Hot Stone, Aromatherapy">
+    <div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px">Separate multiple specialisations with commas</div>
+  </div>
+  <div style="padding:14px;background:var(--linen);border:1px solid var(--border-soft)">
+    <div class="lbl" style="margin-bottom:4px">Profile Photo</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div id="st-av-preview" style="width:50px;height:50px;border-radius:50%;background:var(--rose);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;letter-spacing:1px;flex-shrink:0">?</div>
+      <div>
+        <label style="cursor:pointer">
+          <span class="btn-outline" style="display:inline-block;font-size:9px;padding:6px 14px">Upload Photo</span>
+          <input type="file" accept="image/*" style="display:none" onchange="previewStaffPhoto(event)">
+        </label>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px">Optional · JPG or PNG</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+  <button class="btn-primary" style="flex:1" onclick="confirmAddStaff()">Add to Roster</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;
+}
+
+function previewStaffPhoto(event){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const preview=document.getElementById('st-av-preview');
+    if(preview){
+      preview.style.backgroundImage=`url(${e.target.result})`;
+      preview.style.backgroundSize='cover';
+      preview.style.backgroundPosition='center';
+      preview.textContent='';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function confirmAddStaff(){
+  const name=document.getElementById('st-name')?.value?.trim();
+  const role=document.getElementById('st-role')?.value;
+  const spec=document.getElementById('st-spec')?.value?.trim();
+  if(!name){toast('Please enter a name','⚠');return;}
+  if(!spec){toast('Please enter at least one specialisation','⚠');return;}
+  const parts=name.trim().split(' ');
+  const av=(parts[0][0]+(parts[1]?parts[1][0]:parts[0][1]||'')).toUpperCase();
+  const id='st'+Date.now();
+  staff=[...staff,{id,name,av,role,spec,rating:5.0,leaves:[]}];
+  log('Staff Added',id,`${name} · ${role}`);
+  addNotif('booking',`New staff member added: ${name}`);
+  closeModal();render();toast(`${name} added to roster`,'✦');
+}
+
+function deactivateStaff(id){
+  const s=staff.find(x=>x.id===id);if(!s)return;
+  const activeBks=bks.filter(b=>b.thId===id&&b.date>=TODAY&&!['cancelled','completed','no-show'].includes(b.status));
+  const pendingBks=activeBks.filter(b=>b.status==='pending');
+  const confirmedBks=activeBks.filter(b=>b.status!=='pending');
+  if(confirmedBks.length>0){
+    toast(`${s.name} has ${confirmedBks.length} confirmed booking${confirmedBks.length>1?'s':''}. Reassign before removing. <span onclick="dismissToast();navigate('bookings')" style="color:var(--gold);cursor:pointer;text-decoration:underline;margin-left:6px">View Bookings →</span>`,'⚠');return;
+  }
+  if(pendingBks.length>0){
+    toast(`${s.name} has ${pendingBks.length} pending booking${pendingBks.length>1?'s':''} awaiting acceptance. Decline or reassign first. <span onclick="dismissToast();navigate('bookings')" style="color:var(--gold);cursor:pointer;text-decoration:underline;margin-left:6px">View Bookings →</span>`,'⚠');return;
+  }
+  staff=staff.map(x=>x.id!==id?x:{...x,inactive:true,removedOn:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})});
+  log('Staff Deactivated',id,`${s.name} removed from roster`);
+  addNotif('warning',`${s.name} removed from bookable roster`);
+  render();toast(`${s.name} removed — they will no longer appear as a bookable option`,'✦');
+}
+
+function reactivateStaff(id){
+  const s=staff.find(x=>x.id===id);if(!s)return;
+  staff=staff.map(x=>x.id!==id?x:{...x,inactive:false,removedOn:null});
+  log('Staff Reactivated',id,`${s.name} restored to roster`);
+  render();toast(`${s.name} is now active and bookable again`,'✦');
+}
+
+function renderEditStaffModal(staffId){
+  const s=staff.find(x=>x.id===staffId);
+  if(!s)return'<p>Not found</p>';
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Edit Staff Member</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--dark)">${s.name}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:14px">
+  <div>
+    <div class="lbl">Full Name</div>
+    <input class="inp" id="est-name" type="text" value="${s.name}">
+  </div>
+  <div>
+    <div class="lbl">Role / Title</div>
+    <select class="inp" id="est-role">
+      ${['Senior Therapist','Wellness Therapist','Beauty Specialist','Therapist','Yoga Instructor','Meditation Coach','Hair Stylist','Nail Technician','Receptionist','Manager'].map(r=>`<option value="${r}" ${s.role===r?'selected':''}>${r}</option>`).join('')}
+    </select>
+  </div>
+  <div>
+    <div class="lbl">Specialisations</div>
+    <input class="inp" id="est-spec" type="text" value="${s.spec}">
+    <div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px">Separate multiple specialisations with commas</div>
+  </div>
+  <div style="padding:14px;background:var(--linen);border:1px solid var(--border-soft)">
+    <div class="lbl" style="margin-bottom:8px">Profile Photo</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div id="est-av-preview" style="width:50px;height:50px;border-radius:50%;background:var(--rose);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;overflow:hidden">
+        ${s.photo?`<img src="${s.photo}" style="width:100%;height:100%;object-fit:cover">`:s.av}
+      </div>
+      <label style="cursor:pointer">
+        <span class="btn-outline" style="display:inline-block;font-size:9px;padding:6px 14px">Change Photo</span>
+        <input type="file" accept="image/*" style="display:none" onchange="previewEditStaffPhoto(event)">
+      </label>
+    </div>
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+  <button class="btn-primary" style="flex:1" onclick="confirmEditStaff('${staffId}')">Save Changes</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;}
+
+function previewEditStaffPhoto(event){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const preview=document.getElementById('est-av-preview');
+    if(preview){preview.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;preview._newPhoto=e.target.result;}
+  };
+  reader.readAsDataURL(file);
+}
+
+function confirmEditStaff(staffId){
+  const name=document.getElementById('est-name')?.value?.trim();
+  const role=document.getElementById('est-role')?.value;
+  const spec=document.getElementById('est-spec')?.value?.trim();
+  if(!name){toast('Please enter a name','⚠');return;}
+  if(!spec){toast('Please enter at least one specialisation','⚠');return;}
+  const preview=document.getElementById('est-av-preview');
+  const newPhoto=preview?._newPhoto||null;
+  const parts=name.trim().split(' ');
+  const av=(parts[0][0]+(parts[1]?parts[1][0]:parts[0][1]||'')).toUpperCase();
+  staff=staff.map(s=>s.id!==staffId?s:{...s,name,role,spec,av,...(newPhoto?{photo:newPhoto}:{})});
+  log('Staff Updated',staffId,`${name} · ${role}`);
+  addNotif('booking',`Staff profile updated: ${name}`);
+  closeModal();render();toast(`${name}'s profile updated`,'✦');
+}
+
+function renderUploadDocModal(docId){
+  const d=docId?docs.find(x=>x.id===docId):null;
+  const isNew=!d;
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">${isNew?'Upload New Document':'Replace Document'}</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--dark)">${d?d.name:'Add a Compliance <em style="color:var(--rose);font-style:italic">Document</em>'}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+<div style="display:grid;gap:14px">
+  ${isNew?`<div>
+    <div class="lbl">Document Name</div>
+    <input class="inp" id="doc-name" type="text" placeholder="e.g. GST Certificate">
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div>
+      <div class="lbl">Category</div>
+      <select class="inp" id="doc-type">
+        ${['Legal','Tax','Safety','Platform','Insurance','Other'].map(t=>`<option>${t}</option>`).join('')}
+      </select>
+    </div>
+    <div>
+      <div class="lbl">Expiry Date</div>
+      <input class="inp" id="doc-expiry" type="text" placeholder="e.g. Dec 2026 or Perpetual">
+    </div>
+  </div>`:''}
+  <div style="padding:20px;border:2px dashed var(--border-mid);text-align:center;cursor:pointer;transition:border-color .2s;position:relative" id="doc-drop-zone" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border-mid)'">
+    <div id="doc-file-label">
+      <div style="font-size:24px;color:var(--muted);margin-bottom:8px">📄</div>
+      <div style="font-size:13px;color:var(--dark);font-weight:400;margin-bottom:4px">Click to select file</div>
+      <div style="font-size:11px;color:var(--muted)">PDF, JPG or PNG · Max 10MB</div>
+    </div>
+    <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="position:absolute;inset:0;opacity:0;cursor:pointer" id="doc-file-input" onchange="handleDocFileSelect(event)">
+  </div>
+  ${d?`<div style="padding:10px 14px;background:var(--linen);border:1px solid var(--border-soft);font-size:12px;color:var(--mauve)">
+    <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:3px">Current file</span>
+    ${d.fileName?`📎 ${d.fileName}`:'No file currently on record'}
+  </div>`:''}
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+  <button class="btn-primary" style="flex:1" id="doc-upload-btn" onclick="confirmDocUpload('${docId||''}')">
+    ${isNew?'Upload Document':'Replace Document'}
+  </button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;}
+
+function handleDocFileSelect(event){
+  const file=event.target.files[0];if(!file)return;
+  const label=document.getElementById('doc-file-label');
+  if(label){
+    const kb=Math.round(file.size/1024);
+    const size=kb>1024?`${(kb/1024).toFixed(1)} MB`:`${kb} KB`;
+    label.innerHTML=`<div style="font-size:16px;color:var(--terra);margin-bottom:6px">📎</div><div style="font-size:13px;color:var(--dark);font-weight:400">${file.name}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${size}</div>`;
+  }
+}
+
+function confirmDocUpload(docId){
+  const fileInput=document.getElementById('doc-file-input');
+  const file=fileInput?.files[0];
+  if(!file){toast('Please select a file to upload','⚠');return;}
+  if(file.size>10*1024*1024){toast('File too large — maximum 10MB','⚠');return;}
+  if(docId){
+    docs=docs.map(d=>d.id!==docId?d:{...d,status:'uploaded',fileName:file.name});
+    log('Document Uploaded',docId,`${file.name} — under review`);
+    addNotif('document',`Document uploaded for review: ${file.name}`);
+    toast('Document uploaded — under review by platform team','✦');
+  } else {
+    const name=document.getElementById('doc-name')?.value?.trim();
+    const type=document.getElementById('doc-type')?.value||'Other';
+    const expiry=document.getElementById('doc-expiry')?.value||'—';
+    if(!name){toast('Please enter a document name','⚠');return;}
+    const id='d'+Date.now();
+    docs=[...docs,{id,name,type,status:'uploaded',expiry,fileName:file.name}];
+    log('Document Added',id,`${name} — under review`);
+    addNotif('document',`New document uploaded: ${name}`);
+    toast(`${name} uploaded — under review`,'✦');
+  }
+  closeModal();render();
+}
+
+function saveBankDetails(){
+  const get=id=>document.getElementById('bank-'+id)?.value?.trim()||'';
+  const method=document.querySelector('input[name="bank-method"]:checked')?.value||'bank';
+  if(method==='bank'){
+    const acct=get('account');
+    const ifsc=get('ifsc').toUpperCase();
+    if(!acct){toast('Please enter account number','⚠');return;}
+    if(acct.length<9||acct.length>18||!/^\d+$/.test(acct)){toast('Account number must be 9–18 digits','⚠');return;}
+    if(!ifsc){toast('Please enter IFSC code','⚠');return;}
+    if(!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)){toast('Invalid IFSC format — should be like SBIN0001234','⚠');return;}
+    if(!get('name')){toast('Please enter account holder name','⚠');return;}
+  } else {
+    const upi=get('upi');
+    if(!upi){toast('Please enter UPI ID','⚠');return;}
+    if(!/^[\w.\-]+@[\w]+$/.test(upi)){toast('Invalid UPI ID format — should be like name@upi','⚠');return;}
+  }
+  settings={...settings,bank:{
+    accountName:get('name'),accountNumber:get('account'),
+    ifsc:get('ifsc').toUpperCase(),bankName:get('bankName'),
+    upiId:get('upi'),preferredMethod:method
+  }};
+  log('Bank Details Saved','Settings','Payout routing updated');
+  addNotif('payment','Bank details updated — payouts will be routed to new account');
+  render();toast('Bank details saved — payouts will be routed here','✦');
+}
+
+function renderRespondDisputeModal(bkId){
+  const b=bks.find(x=>x.id===bkId);
+  if(!b||!b.dispute)return'<p>Not found</p>';
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Respond to Dispute</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--dark)">${b.id} · ${b.name}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:16px"></div>
+
+<div style="padding:14px;background:rgba(184,134,11,.06);border:1px solid rgba(184,134,11,.2);margin-bottom:16px">
+  <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Customer's claim</div>
+  <div style="font-size:13px;color:var(--dark);margin-bottom:6px">${b.dispute.issue}</div>
+  ${b.dispute.evidence?`<div style="font-size:11px;color:var(--muted)">📎 ${b.dispute.evidence}</div>`:''}
+  <div style="font-size:10px;color:var(--muted);margin-top:4px">${b.svc} · ${b.time} · ${fmtINR(b.amt)}</div>
+</div>
+
+<div style="display:grid;gap:14px">
+  <div>
+    <div class="lbl" style="margin-bottom:6px">Your position</div>
+    <div style="display:grid;gap:6px">
+      ${[
+        ['accept','I accept responsibility — happy to offer a refund or resolution'],
+        ['partial','I partially accept — the service was completed but I understand the concern'],
+        ['dispute','I dispute this claim — the service was delivered as described'],
+      ].map(([v,label])=>`<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--mauve);padding:10px 12px;border:1px solid var(--border-soft);background:#fff;transition:all .2s" onclick="this.style.border='1px solid var(--rose)';this.style.background='rgba(201,137,122,.04)';document.querySelectorAll('.dispute-pos-lbl').forEach(e=>{if(e!==this){e.style.border='1px solid var(--border-soft)';e.style.background='#fff';}});" class="dispute-pos-lbl">
+        <input type="radio" name="dispute-pos" value="${v}" style="accent-color:var(--rose);margin-top:2px"> <span>${label}</span>
+      </label>`).join('')}
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Your response <span style="color:var(--muted);font-weight:300">(required)</span></div>
+    <textarea class="inp" id="dispute-response" rows="4" placeholder="Describe what happened during the service, any relevant context, and your proposed resolution if applicable..." style="resize:vertical;line-height:1.6"></textarea>
+  </div>
+  <div>
+    <div class="lbl">Supporting evidence <span style="color:var(--muted);font-weight:300">(optional)</span></div>
+    <div style="position:relative;border:1px dashed var(--border-mid);padding:14px;text-align:center;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border-mid)'">
+      <div id="disp-file-label" style="font-size:12px;color:var(--muted)">Click to attach photos, receipts, or documents</div>
+      <input type="file" id="disp-file-input" accept="image/*,.pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="const f=this.files[0];if(f){document.getElementById('disp-file-label').innerHTML='<span style=\'color:var(--terra)\'>📎 '+f.name+'</span> <span style=\'font-size:10px;color:var(--muted)\'>('+Math.round(f.size/1024)+'KB)</span>';this.dataset.selectedName=f.name;}">
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px">Demo — filename saved to dispute record; in production files upload to secure storage.</div>
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+  <button class="btn-primary" style="flex:1" onclick="confirmDisputeResponse('${bkId}')">Submit Response</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;}
+
+function confirmDisputeResponse(bkId){
+  const response=document.getElementById('dispute-response')?.value?.trim();
+  const position=document.querySelector('input[name="dispute-pos"]:checked')?.value;
+  const evidenceFile=document.getElementById('disp-file-input')?.dataset?.selectedName||null;
+  if(!response){toast('Please write a response before submitting','⚠');return;}
+  if(!position){toast('Please select your position','⚠');return;}
+  bks=bks.map(b=>b.id!==bkId?b:{...b,dispute:{...b.dispute,vendorResponse:response,vendorPosition:position,vendorEvidence:evidenceFile,respondedAt:Date.now(),status:'under_review'}});
+  log('Dispute Response Submitted',bkId,`Position: ${position}${evidenceFile?' · Evidence: '+evidenceFile:''}`);
+  addNotif('booking',`Dispute response submitted for ${bkId} — platform team will review`);
+  closeModal();render();toast('Response submitted — platform team will review within 24h','✦');
+}
+
+function simulateSoftHold(svcId){
+  const s=svcs.find(x=>x.id===svcId);if(!s)return;
+  const freeSlot=s.slots.find(sl=>sl.conf+sl.holds<sl.cap);
+  if(!freeSlot){toast(`No free slots to hold for ${s.name}`,'⚠');return;}
+  addSoftHold(svcId,freeSlot.time,s.name);
+  log('Soft Hold Created',svcId,`${s.name} · ${freeSlot.time} · simulated customer hold`);
+  render();toast(`Soft hold placed on ${s.name} · ${freeSlot.time} — auto-releases in 15 min`,'⊕');
+}
+
+function renderMarketing(){
+  const active=adCampaigns.filter(a=>a.status==='active');
+  const totalSpend=adCampaigns.reduce((s,a)=>s+a.price,0);
+  const totalViews=adCampaigns.reduce((s,a)=>s+a.views,0);
+  const totalClicks=adCampaigns.reduce((s,a)=>s+a.clicks,0);
+  const avgCtr=totalViews>0?((totalClicks/totalViews)*100).toFixed(1):0;
+  const activeAd=active[0]||null;
+
+  return `
+<div>
+  <div class="eyebrow">Sponsored Listings</div>
+  <div class="sec-title">Marketing & <em>Ads</em></div>
+  <div class="gold-line"></div>
+</div>
+
+${activeAd?`
+<div style="background:rgba(90,154,90,.06);border:1px solid rgba(90,154,90,.25);padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div>
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:5px">Active campaign</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--dark)">${activeAd.label}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:3px">${activeAd.startDate} — ${activeAd.endDate} · ${fmtINR(activeAd.price)}</div>
+  </div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <div style="text-align:center">
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:var(--dark)">${activeAd.views.toLocaleString('en-IN')}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Views</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:var(--terra)">${activeAd.clicks}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Clicks</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:var(--gold)">${activeAd.impressions.toLocaleString('en-IN')}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Impressions</div>
+    </div>
+  </div>
+</div>`:`
+<div style="background:var(--linen);border:1px solid var(--border-soft);padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div>
+    <div style="font-size:13px;font-weight:400;color:var(--dark);margin-bottom:4px">No active campaign</div>
+    <div style="font-size:12px;color:var(--muted)">Boost your listing to appear at the top of search results and category pages.</div>
+  </div>
+  <button class="btn-primary" onclick="showModal('boostListing')">◭ Boost My Listing</button>
+</div>`}
+
+<div class="stats-grid" style="margin-bottom:2px">
+  <div class="stat-card">
+    <div class="stat-label">Total ad spend</div>
+    <div class="stat-val" style="color:var(--terra)">${fmtINR(totalSpend)}</div>
+    <div class="stat-sub">All campaigns</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Total views earned</div>
+    <div class="stat-val">${totalViews.toLocaleString('en-IN')}</div>
+    <div class="stat-sub">From sponsored placements</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total clicks</div>
+    <div class="stat-val">${totalClicks}</div>
+    <div class="stat-sub">Profile visits from ads</div>
+  </div>
+  <div class="stat-card" style="background:var(--linen)">
+    <div class="stat-label">Avg click rate</div>
+    <div class="stat-val">${avgCtr}<span style="font-size:1rem;color:var(--muted)">%</span></div>
+    <div class="stat-sub">Clicks ÷ views</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px">
+
+  <div class="card">
+    <div class="eyebrow">Sponsored vs organic — this week</div>
+    <div style="display:grid;gap:14px;margin-top:4px">
+      ${[
+        {label:'Profile views',sponsored:activeAd?activeAd.views:0,organic:BASELINE_WEEKLY.views},
+        {label:'Listing clicks',sponsored:activeAd?activeAd.clicks:0,organic:BASELINE_WEEKLY.clicks},
+        {label:'Impressions',sponsored:activeAd?activeAd.impressions:0,organic:BASELINE_WEEKLY.impressions},
+      ].map(m=>{
+        const total=m.sponsored+m.organic||1;
+        const sPct=Math.round(m.sponsored/total*100);
+        const oPct=100-sPct;
+        return `<div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+            <span style="color:var(--mauve)">${m.label}</span>
+            <span style="color:var(--dark);font-weight:400">${(m.sponsored+m.organic).toLocaleString('en-IN')}</span>
+          </div>
+          <div style="height:8px;display:flex;border-radius:4px;overflow:hidden;gap:2px">
+            <div style="width:${sPct}%;background:var(--terra);border-radius:4px 0 0 4px;min-width:${m.sponsored>0?4:0}px"></div>
+            <div style="width:${oPct}%;background:var(--linen);border-radius:0 4px 4px 0;min-width:${m.organic>0?4:0}px"></div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:4px;font-size:10px;color:var(--muted)">
+            <span style="color:var(--terra)">■ Sponsored: ${m.sponsored.toLocaleString('en-IN')}</span>
+            <span>■ Organic: ${m.organic.toLocaleString('en-IN')}</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--linen)">
+    <div class="eyebrow" style="margin-bottom:12px">Boost packages</div>
+    ${AD_PACKAGES.map(p=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font-size:13px;color:var(--dark);font-weight:400">${p.label}</span>
+          ${p.badge?`<span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;background:var(--dark);color:var(--cream)">${p.badge}</span>`:''}
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${p.duration} · ~${p.views.toLocaleString('en-IN')} views · ~${p.clicks} clicks</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--terra)">${fmtINR(p.price)}</div>
+      </div>
+    </div>`).join('')}
+    <button class="btn-primary" style="margin-top:14px;width:100%" onclick="showModal('boostListing')">◭ Boost My Listing</button>
+  </div>
+</div>
+
+<div class="card" style="margin-top:2px">
+  <div class="eyebrow">Campaign history</div>
+  <table class="tbl" style="margin-top:8px">
+    <thead><tr><th>Campaign</th><th>Period</th><th>Budget</th><th>Views</th><th>Clicks</th><th>CTR</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    ${[...adCampaigns].reverse().map(a=>{
+      const ctr=a.views>0?((a.clicks/a.views)*100).toFixed(1):'—';
+      const isPaid=a.status==='active'||a.status==='completed';
+      return `<tr>
+        <td style="color:var(--dark);font-weight:400">${a.label}</td>
+        <td style="font-size:11px;color:var(--muted)">${a.startDate} → ${a.endDate}</td>
+        <td style="color:var(--terra);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px">${fmtINR(a.price)}</td>
+        <td style="color:var(--dark);font-weight:400">${a.views.toLocaleString('en-IN')}</td>
+        <td>${a.clicks}</td>
+        <td style="color:var(--gold)">${ctr}%</td>
+        <td><span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;background:${a.status==='active'?'rgba(90,154,90,.1)':'var(--linen)'};color:${a.status==='active'?'#3a7a3a':'var(--muted)'};border:1px solid ${a.status==='active'?'rgba(90,154,90,.2)':'var(--border-soft)'}">${a.status}</span></td>
+        <td><button class="btn-outline" style="font-size:9px;padding:4px 10px" onclick="showModal('adDetail','${a.id}')">Details</button></td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>
+</div>
+
+<div class="card" style="margin-top:2px;background:var(--linen)">
+  <div class="eyebrow" style="margin-bottom:10px">How sponsored listings work</div>
+  ${[
+    ['Placement','Your listing appears at the top of search results and category pages with a "Sponsored" label.'],
+    ['Billing','Ad spend is charged upfront via Razorpay/Stripe. Completely separate from your booking payouts.'],
+    ['Refunds','If you cancel a campaign within 1 hour of purchase, unused days are refunded to your original payment method.'],
+    ['Analytics','Views, clicks, and impressions are tracked in real time. Compare against your organic baseline below.'],
+    ['Fair auction','If multiple vendors boost simultaneously, placement is rotated to ensure fair exposure for all.'],
+  ].map(([k,v])=>`
+  <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+    <div style="font-size:11px;font-weight:400;color:var(--dark);min-width:130px;flex-shrink:0">${k}</div>
+    <div style="font-size:12px;color:var(--mauve);line-height:1.6">${v}</div>
+  </div>`).join('')}
+</div>`;
+}
+
+function renderBoostModal(){
+  let sel='p2';
+  const pkgCards=AD_PACKAGES.map(p=>`
+  <div id="pkg-${p.id}" onclick="selectPkg('${p.id}')" style="border:1px solid ${p.id===sel?'var(--gold)':'var(--border-soft)'};background:${p.id===sel?'rgba(212,175,122,.08)':'#fff'};padding:14px 16px;cursor:pointer;transition:all .2s;position:relative;margin-bottom:8px">
+    ${p.badge?`<div style="position:absolute;top:-9px;right:10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:var(--dark);color:var(--gold);padding:2px 10px">${p.badge}</div>`:''}
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--dark)">${p.label}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">${p.duration}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">~${p.views.toLocaleString('en-IN')} views · ~${p.clicks} profile clicks</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--terra)">${fmtINR(p.price)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">one-time</div>
+      </div>
+    </div>
+  </div>`).join('');
+
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Sponsored Placement</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--dark)">Boost My <em style="font-style:italic;color:var(--rose)">Listing</em></div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:20px"></div>
+
+<div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Choose a package</div>
+${pkgCards}
+
+<div style="height:1px;background:var(--border-soft);margin:16px 0"></div>
+<div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Payment method</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+  ${['UPI','Card','Wallet','Net banking'].map((m,i)=>`
+  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--mauve);padding:10px 12px;border:1px solid ${i===0?'var(--rose)':'var(--border-soft)'};background:${i===0?'rgba(201,137,122,.06)':'#fff'};transition:all .2s" id="pm-lbl-${i}">
+    <input type="radio" name="boost-pm" value="${m}" ${i===0?'checked':''} onchange="highlightPM(${i})" style="accent-color:var(--rose)"> ${m}
+  </label>`).join('')}
+</div>
+<div style="background:rgba(90,154,90,.06);border:1px solid rgba(90,154,90,.2);padding:10px 14px;font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:16px">
+  Ad spend is charged separately from your booking payouts. Billed immediately. Cancel within 1 hour for a full refund of unused days.
+</div>
+<div style="display:flex;gap:10px">
+  <button class="btn-primary" style="flex:1" id="boost-pay-btn" onclick="confirmBoost()">Pay ${fmtINR(AD_PACKAGES.find(p=>p.id===sel)?.price||1200)} & Go Live</button>
+  <button class="btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+</div>`;
+}
+
+function selectPkg(id){
+  AD_PACKAGES.forEach(p=>{
+    const el=document.getElementById('pkg-'+p.id);
+    if(!el)return;
+    el.style.border=p.id===id?'1px solid var(--gold)':'1px solid var(--border-soft)';
+    el.style.background=p.id===id?'rgba(212,175,122,.08)':'#fff';
+  });
+  const pkg=AD_PACKAGES.find(p=>p.id===id);
+  const btn=document.getElementById('boost-pay-btn');
+  if(btn&&pkg) btn.textContent=`Pay ${fmtINR(pkg.price)} & Go Live`;
+  document.getElementById('boost-pay-btn')?.setAttribute('data-pkg',id);
+}
+
+function highlightPM(idx){
+  for(let i=0;i<4;i++){
+    const el=document.getElementById('pm-lbl-'+i);
+    if(!el)continue;
+    el.style.border=i===idx?'1px solid var(--rose)':'1px solid var(--border-soft)';
+    el.style.background=i===idx?'rgba(201,137,122,.06)':'#fff';
+  }
+}
+
+function confirmBoost(){
+  const btn=document.getElementById('boost-pay-btn');
+  const pkgId=btn?.getAttribute('data-pkg')||'p2';
+  const pm=document.querySelector('input[name="boost-pm"]:checked')?.value||'UPI';
+  const pkg=AD_PACKAGES.find(p=>p.id===pkgId);
+  if(!pkg)return;
+  const now=new Date();
+  const end=new Date(now.getTime()+parseInt(pkg.duration)*24*60*60*1000);
+  const fmt=d=>d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  const id='AD'+String(adCampaigns.length+1).toString().padStart(3,'0');
+  adCampaigns.unshift({
+    id,pkg:pkgId,label:pkg.label,price:pkg.price,
+    status:'active',
+    startDate:fmt(now),endDate:fmt(end),
+    views:0,clicks:0,impressions:0,paidVia:pm
+  });
+  log('Ad Campaign Started',id,`${pkg.label} · ${fmtINR(pkg.price)} · paid via ${pm}`);
+  addNotif('payment',`Campaign live: ${pkg.label} · ${fmtINR(pkg.price)} charged via ${pm}`);
+  closeModal();render();
+  toast(`${pkg.label} is now live — your listing is sponsored for ${pkg.duration}`,'◭');
+}
+
+function renderAdDetailModal(adId){
+  const a=adCampaigns.find(x=>x.id===adId);
+  if(!a)return'<p>Not found</p>';
+  const ctr=a.views>0?((a.clicks/a.views)*100).toFixed(1):'—';
+  const pkg=AD_PACKAGES.find(p=>p.id===a.pkg);
+  const lift=a.views>0?Math.round((a.views/BASELINE_WEEKLY.views-1)*100):0;
+  return `
+<div style="margin-bottom:20px">
+  <div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Campaign Details</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--dark)">${a.label}</div>
+  <div style="font-size:11px;color:var(--muted);margin-top:3px">${a.startDate} — ${a.endDate}</div>
+</div>
+<div style="height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,122,.1));margin-bottom:16px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:16px">
+  ${[['Views',a.views.toLocaleString('en-IN'),'var(--dark)'],['Clicks',a.clicks,'var(--terra)'],['Impressions',a.impressions.toLocaleString('en-IN'),'var(--dark)'],['CTR',ctr+'%','var(--gold)']].map(([k,v,c])=>`
+  <div style="background:var(--linen);padding:14px;text-align:center">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:5px">${k}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:${c}">${v}</div>
+  </div>`).join('')}
+</div>
+${a.views>0?`<div style="background:${lift>0?'rgba(90,154,90,.06)':'var(--linen)'};border:1px solid ${lift>0?'rgba(90,154,90,.2)':'var(--border-soft)'};padding:12px 16px;margin-bottom:16px">
+  <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Views vs organic baseline</div>
+  <div style="font-size:14px;font-weight:400;color:${lift>0?'#3a7a3a':'var(--muted)'}">
+    ${lift>0?`+${lift}% more views compared to an average non-boosted week (${BASELINE_WEEKLY.views} views)`:`Data still accumulating — baseline is ${BASELINE_WEEKLY.views} views/week`}
+  </div>
+</div>`:''}
+<div style="display:grid;gap:0">
+  ${[['Budget',fmtINR(a.price)],['Package',pkg?.duration||'—'],['Payment method',a.paidVia],['Status',a.status.charAt(0).toUpperCase()+a.status.slice(1)]].map(([k,v])=>`
+  <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-soft)">
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">${k}</span>
+    <span style="font-size:13px;color:var(--mauve);font-weight:300">${v}</span>
+  </div>`).join('')}
+</div>
+<button class="btn-ghost" style="width:100%;margin-top:20px" onclick="closeModal()">Close</button>`;
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────
+function render(){
+  const map={overview:renderOverview,bookings:renderBookings,services:renderServices,customers:renderCustomers,staff:renderStaff,analytics:renderAnalytics,payouts:renderPayouts,marketing:renderMarketing,waitlist:renderWaitlist,documents:renderDocuments,reviews:renderReviews,settings:renderSettings,audit:renderAudit};
+  document.getElementById('content').innerHTML=(map[currentNav]||renderOverview)();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+buildNav();render();
+
+// Live countdown ticker — updates every second
+setInterval(()=>{
+  const now=Date.now();
+  // Update all pending booking countdowns (both online and venue)
+  bks.filter(b=>b.status==='pending'&&b.createdAt).forEach(b=>{
+    const el=document.getElementById('cd-'+b.id);
+    if(el){
+      const windowMs=b.pay==='pay-at-venue'?VENUE_ACCEPT_WINDOW_MS:ACCEPT_WINDOW_MS;
+      const remaining=Math.max(0,windowMs-(now-b.createdAt));
+      el.textContent=fmtCountdown(remaining);
+      const urgent=(b.pay!=='pay-at-venue'&&remaining<5*60*1000)||(b.pay==='pay-at-venue'&&remaining<10*60*1000);
+      el.style.color=urgent?'var(--red)':'var(--terra)';
+    }
+  });
+  // Check pending expiry every 10s
+  if(Math.floor(now/1000)%10===0) checkPendingExpiry();
+  // Check soft hold expiry every 30s
+  if(Math.floor(now/1000)%30===0) checkHoldExpiry();
+},1000);
+</script>
+</body>
+</html>

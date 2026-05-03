@@ -1,0 +1,260 @@
+
+<style>
+  * { box-sizing: border-box; }
+  .group { margin-bottom: 2rem; }
+  .group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .group-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+  .group-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .q-block { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .q-head { padding: 11px 14px 8px; }
+  .q-num { font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 3px; }
+  .q-text { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0; line-height: 1.4; }
+  .q-type { font-size: 11px; color: var(--color-text-secondary); margin: 4px 0 0; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 12px; }
+  .pill { font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 20px; padding: 5px 12px; line-height: 1.3; }
+  .pill.highlight { background: var(--color-background-info); color: var(--color-text-info); border-color: transparent; }
+  .note { font-size: 11px; color: var(--color-text-tertiary); padding: 0 14px 10px; font-style: italic; }
+  .input-mock { margin: 0 14px 12px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--color-text-tertiary); }
+</style>
+
+<!-- Group 1 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:var(--color-background-info);color:var(--color-text-info)">Group 1</span>
+    <span class="group-title">Basic profile</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q1</p><p class="q-text">What is your gender?</p><p class="q-type">Single select · 2 options</p></div>
+    <div class="pills">
+      <span class="pill">Female</span><span class="pill">Male</span><span class="pill">Prefer not to say</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q2</p><p class="q-text">What is your age range?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Under 18</span><span class="pill">18–24</span><span class="pill">25–34</span><span class="pill">35–44</span><span class="pill">45+</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q3</p><p class="q-text">What is your skin tone?</p><p class="q-type">Single select · helps calibrate ML output for Indian skin</p></div>
+    <div class="pills">
+      <span class="pill">Fair / Light</span><span class="pill">Medium / Wheatish</span><span class="pill">Olive / Tan</span><span class="pill">Deep / Dark</span>
+    </div>
+    <p class="note">Use small colour swatches next to each option — no text description needed</p>
+  </div>
+</div>
+
+<!-- Group 2 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:var(--color-background-warning);color:var(--color-text-warning)">Group 2</span>
+    <span class="group-title">Skin type — oiliness & hydration</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q4</p><p class="q-text">After washing your face, how does it feel within 15 minutes?</p><p class="q-type">Single select · core skin type classifier</p></div>
+    <div class="pills">
+      <span class="pill">Tight and dry — needs moisturiser immediately</span>
+      <span class="pill">Comfortable and balanced</span>
+      <span class="pill">Dry on cheeks, normal elsewhere</span>
+      <span class="pill">Gets oily quickly all over</span>
+      <span class="pill">Oily on forehead/nose, dry on cheeks</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q5</p><p class="q-text">How quickly does your T-zone get shiny after washing?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Within 30 mins</span><span class="pill">After 1–2 hours</span><span class="pill">By end of day</span><span class="pill">Rarely or never</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q6</p><p class="q-text">How does your skin feel in AC rooms or cold weather?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Gets flaky or very dry</span><span class="pill">Feels tight but okay</span><span class="pill">No change at all</span><span class="pill">Gets itchy or irritated</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q7</p><p class="q-text">After applying moisturiser, does your skin still feel tight after 30 minutes?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, always</span><span class="pill">Sometimes</span><span class="pill">No, feels fine</span><span class="pill">I don't use moisturiser</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q8</p><p class="q-text">How much water do you drink daily?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Less than 4 glasses</span><span class="pill">4–6 glasses</span><span class="pill">6–8 glasses</span><span class="pill">8+ glasses</span>
+    </div>
+  </div>
+</div>
+
+<!-- Group 3 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:var(--color-background-danger);color:var(--color-text-danger)">Group 3</span>
+    <span class="group-title">Acne & blemishes</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q9</p><p class="q-text">How often do you get pimples or blackheads?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Almost never</span><span class="pill">Once a month or less</span><span class="pill">Few times a month</span><span class="pill">Every week</span><span class="pill">Almost always have some</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q10</p><p class="q-text">When do breakouts usually happen for you?</p><p class="q-type">Multi-select · user can pick more than one</p></div>
+    <div class="pills">
+      <span class="pill">Stress or poor sleep</span><span class="pill">Oily / junk food</span><span class="pill">Before my period</span><span class="pill">After trying new products</span><span class="pill">Random — no clear trigger</span><span class="pill">I rarely break out</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q11</p><p class="q-text">Do pimples leave dark marks that take a long time to fade?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, they stay for months</span><span class="pill">Yes, but they fade in weeks</span><span class="pill">Rarely</span><span class="pill">No, they fade quickly</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q12</p><p class="q-text">What does your acne mostly look like?</p><p class="q-type">Multi-select · most analytically important question</p></div>
+    <div class="pills">
+      <span class="pill highlight">Blackheads / open pores</span>
+      <span class="pill highlight">Whiteheads / closed bumps</span>
+      <span class="pill highlight">Red inflamed pimples</span>
+      <span class="pill highlight">Deep painful cysts</span>
+      <span class="pill highlight">Tiny flesh-coloured bumps all over</span>
+      <span class="pill">I don't have acne</span>
+    </div>
+    <p class="note">Tiny flesh-coloured bumps = likely fungal acne → completely different product set. Highlight options with a small visual example.</p>
+  </div>
+</div>
+
+<!-- Group 4 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:var(--color-background-success);color:var(--color-text-success)">Group 4</span>
+    <span class="group-title">Pigmentation, tone & texture</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q13</p><p class="q-text">Do you have dark spots, sun spots, or uneven patches?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, very noticeable</span><span class="pill">A few spots</span><span class="pill">Very faint / minor</span><span class="pill">No, my tone is even</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q14</p><p class="q-text">Does your skin look dull or tired even after sleeping well?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, almost always looks dull</span><span class="pill">Sometimes, especially in the evening</span><span class="pill">Rarely</span><span class="pill">No, my skin looks bright</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q15</p><p class="q-text">Does your skin feel rough or look uneven in texture?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, rough and bumpy</span><span class="pill">Slightly uneven in some areas</span><span class="pill">Mostly smooth</span><span class="pill">Very smooth</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q16</p><p class="q-text">How much direct sunlight do you get on your face daily?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Mostly indoors</span><span class="pill">30 mins or less</span><span class="pill">1–2 hours</span><span class="pill">3+ hours outdoors</span>
+    </div>
+  </div>
+</div>
+
+<!-- Group 5 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:#EEEDFE;color:#534AB7">Group 5</span>
+    <span class="group-title">Sensitivity & reactions</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q17</p><p class="q-text">Does your skin sting, itch, or turn red after applying new products?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, very easily</span><span class="pill">Sometimes with certain products</span><span class="pill">Rarely</span><span class="pill">Never</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q18</p><p class="q-text">Do you have any diagnosed skin conditions?</p><p class="q-type">Multi-select</p></div>
+    <div class="pills">
+      <span class="pill">Eczema</span><span class="pill">Rosacea</span><span class="pill">Psoriasis</span><span class="pill">Seborrheic dermatitis</span><span class="pill">Melasma</span><span class="pill">None of these</span>
+    </div>
+    <p class="note">If any condition selected → show "For best results, consult a dermatologist. Our recommendations are general suggestions only."</p>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q19</p><p class="q-text">Are there ingredients you know cause a reaction for you?</p><p class="q-type">Multi-select + optional free text</p></div>
+    <div class="pills">
+      <span class="pill">Fragrance / Parfum</span><span class="pill">Alcohol</span><span class="pill">Retinol</span><span class="pill">AHAs / BHAs</span><span class="pill">Essential oils</span><span class="pill">Sulphates</span><span class="pill">None that I know of</span>
+    </div>
+    <div class="input-mock">+ Add another ingredient…</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q20</p><p class="q-text">When you switch skincare products, how does your skin usually react?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Fine — adapts quickly</span><span class="pill">Needs a few days to settle</span><span class="pill">Often breaks out or gets irritated</span><span class="pill">I rarely switch products</span>
+    </div>
+  </div>
+</div>
+
+<!-- Group 6 -->
+<div class="group">
+  <div class="group-header">
+    <span class="group-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">Group 6</span>
+    <span class="group-title">Habits & preferences</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q21</p><p class="q-text">How often do you currently use skincare products?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Morning and night, daily</span><span class="pill">Once a day</span><span class="pill">A few times a week</span><span class="pill">Rarely</span><span class="pill">I'm just starting out</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q22</p><p class="q-text">Do you use sunscreen daily?</p><p class="q-type">Single select</p></div>
+    <div class="pills">
+      <span class="pill">Yes, every single day</span><span class="pill">Only when going outside</span><span class="pill">Occasionally</span><span class="pill">Never</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q23</p><p class="q-text">What is your monthly skincare budget?</p><p class="q-type">Single select · directly filters product recommendations</p></div>
+    <div class="pills">
+      <span class="pill">Under ₹500</span><span class="pill">₹500 – ₹1,500</span><span class="pill">₹1,500 – ₹3,000</span><span class="pill">₹3,000+</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q24</p><p class="q-text">What is your biggest skincare concern right now?</p><p class="q-type">Single select · weights the entire analysis</p></div>
+    <div class="pills">
+      <span class="pill highlight">Acne & breakouts</span>
+      <span class="pill highlight">Dark spots & pigmentation</span>
+      <span class="pill highlight">Dryness & dehydration</span>
+      <span class="pill highlight">Oiliness & shine</span>
+      <span class="pill highlight">Dullness — want more glow</span>
+      <span class="pill highlight">Anti-ageing & fine lines</span>
+      <span class="pill highlight">Sensitive / reactive skin</span>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head"><p class="q-num">Q25</p><p class="q-text">What influences your product choice the most?</p><p class="q-type">Single select · shapes how product cards are displayed</p></div>
+    <div class="pills">
+      <span class="pill">Ingredient list</span><span class="pill">Customer reviews</span><span class="pill">Dermatologist recommended</span><span class="pill">Brand name</span><span class="pill">Price / value for money</span>
+    </div>
+  </div>
+</div>
